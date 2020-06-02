@@ -1,0 +1,50 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="inOutRepositoryDetails">
+            <h2><span jhiTranslate="medicalEquipmentManagerApp.inOutRepositoryDetails.detail.title">In Out Repository Details</span> {{ inOutRepositoryDetails.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.inOutRepositoryDetails.prodID">Prod ID</span></dt>
+                <dd>
+                    <span>{{ inOutRepositoryDetails.prodID }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.inOutRepositoryDetails.prodName">Prod Name</span></dt>
+                <dd>
+                    <span>{{ inOutRepositoryDetails.prodName }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.inOutRepositoryDetails.quantity">Quantity</span></dt>
+                <dd>
+                    <span>{{ inOutRepositoryDetails.quantity }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.inOutRepositoryDetails.unit">Unit</span></dt>
+                <dd>
+                    <span>{{ inOutRepositoryDetails.unit }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.inOutRepositoryDetails.unitPrice">Unit Price</span></dt>
+                <dd>
+                    <span>{{ inOutRepositoryDetails.unitPrice }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.inOutRepositoryDetails.amount">Amount</span></dt>
+                <dd>
+                    <span>{{ inOutRepositoryDetails.amount }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/in-out-repository-details', inOutRepositoryDetails.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,70 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="repositoryLedger">
+            <h2><span jhiTranslate="medicalEquipmentManagerApp.repositoryLedger.detail.title">Repository Ledger</span> {{ repositoryLedger.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.repositoryLedger.refID">Ref ID</span></dt>
+                <dd>
+                    <span>{{ repositoryLedger.refID }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.repositoryLedger.detailID">Detail ID</span></dt>
+                <dd>
+                    <span>{{ repositoryLedger.detailID }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.repositoryLedger.date">Date</span></dt>
+                <dd>
+                    <span>{{ repositoryLedger.date }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.repositoryLedger.postedDate">Posted Date</span></dt>
+                <dd>
+                    <span>{{ repositoryLedger.postedDate }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.repositoryLedger.no">No</span></dt>
+                <dd>
+                    <span>{{ repositoryLedger.no }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.repositoryLedger.deliver">Deliver</span></dt>
+                <dd>
+                    <span>{{ repositoryLedger.deliver }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.repositoryLedger.phoneContact">Phone Contact</span></dt>
+                <dd>
+                    <span>{{ repositoryLedger.phoneContact }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.repositoryLedger.quantity">Quantity</span></dt>
+                <dd>
+                    <span>{{ repositoryLedger.quantity }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.repositoryLedger.unit">Unit</span></dt>
+                <dd>
+                    <span>{{ repositoryLedger.unit }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.repositoryLedger.unitPrice">Unit Price</span></dt>
+                <dd>
+                    <span>{{ repositoryLedger.unitPrice }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.repositoryLedger.amount">Amount</span></dt>
+                <dd>
+                    <span>{{ repositoryLedger.amount }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/repository-ledger', repositoryLedger.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

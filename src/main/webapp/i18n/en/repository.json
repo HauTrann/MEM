@@ -1,0 +1,26 @@
+{
+  "medicalEquipmentManagerApp": {
+    "repository": {
+      "home": {
+        "title": "Repositories",
+        "createLabel": "Create a new Repository",
+        "createOrEditLabel": "Create or edit a Repository",
+        "notFound": "No Repositories found"
+      },
+      "created": "A new Repository is created with identifier {{ param }}",
+      "updated": "A Repository is updated with identifier {{ param }}",
+      "deleted": "A Repository is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Repository {{ id }}?"
+      },
+      "detail": {
+        "title": "Repository"
+      },
+      "organizationUnitID": "Organization Unit ID",
+      "code": "Code",
+      "name": "Name",
+      "description": "Description",
+      "status": "Status"
+    }
+  }
+}

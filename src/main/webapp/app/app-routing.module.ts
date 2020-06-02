@@ -6,8 +6,10 @@ import { DEBUG_INFO_ENABLED } from 'app/app.constants';
 import { Authority } from 'app/shared/constants/authority.constants';
 
 import { UserRouteAccessService } from 'app/core/auth/user-route-access-service';
+import { navbarBottomRoute } from 'app/layouts/navbar-bottom/navbar-bottom.route';
+import { sidebarRoute } from 'app/layouts/sidebar/sidebar.route';
 
-const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
+const LAYOUT_ROUTES = [navbarRoute, sidebarRoute, navbarBottomRoute, ...errorRoute];
 
 @NgModule({
   imports: [

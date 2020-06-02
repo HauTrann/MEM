@@ -37,9 +37,9 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:sqlserver://localhost:1433;database=MedicalEquipmentManager
+    url: jdbc:sqlserver://localhost:1433;database=MedicalEquipmentManager;integratedSecurity=true;
     username: SA
-    password: yourStrong(!)Password
+    password: 04101997
     hikari:
       poolName: Hikari
       auto-commit: false

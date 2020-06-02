@@ -1,0 +1,46 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="inRepository">
+            <h2><span jhiTranslate="medicalEquipmentManagerApp.inRepository.detail.title">In Repository</span> {{ inRepository.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.inRepository.date">Date</span></dt>
+                <dd>
+                    <span>{{ inRepository.date }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.inRepository.postedDate">Posted Date</span></dt>
+                <dd>
+                    <span>{{ inRepository.postedDate }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.inRepository.no">No</span></dt>
+                <dd>
+                    <span>{{ inRepository.no }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.inRepository.deliver">Deliver</span></dt>
+                <dd>
+                    <span>{{ inRepository.deliver }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.inRepository.phoneContact">Phone Contact</span></dt>
+                <dd>
+                    <span>{{ inRepository.phoneContact }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/in-repository', inRepository.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

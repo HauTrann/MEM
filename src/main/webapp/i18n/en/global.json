@@ -7,6 +7,16 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entities",
+        "department": "Department",
+        "equipment": "Equipment",
+        "equipmentType": "Equipment Type",
+        "inOutRepository": "In Out Repository",
+        "inOutRepositoryDetails": "In Out Repository Details",
+        "medicalSupplies": "Medical Supplies",
+        "medicalSuppliesType": "Medical Supplies Type",
+        "organizationUnit": "Organization Unit",
+        "repository": "Repository",
+        "repositoryLedger": "Repository Ledger",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

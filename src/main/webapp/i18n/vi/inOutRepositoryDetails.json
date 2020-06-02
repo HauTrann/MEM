@@ -1,0 +1,27 @@
+{
+  "medicalEquipmentManagerApp": {
+    "inOutRepositoryDetails": {
+      "home": {
+        "title": "In Out Repository Details",
+        "createLabel": "Thêm mới một In Out Repository Details",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật In Out Repository Details",
+        "notFound": "No In Out Repository Details found"
+      },
+      "created": "Một In Out Repository Details mới được tạo với định danh {{ param }}",
+      "updated": "Một In Out Repository Details cập nhật với định danh {{ param }}",
+      "deleted": "Một In Out Repository Details đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa In Out Repository Details {{ id }}?"
+      },
+      "detail": {
+        "title": "In Out Repository Details"
+      },
+      "prodID": "Prod ID",
+      "prodName": "Prod Name",
+      "quantity": "Quantity",
+      "unit": "Unit",
+      "unitPrice": "Unit Price",
+      "amount": "Amount"
+    }
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "medicalEquipmentManagerApp": {
+    "repositoryLedger": {
+      "home": {
+        "title": "Repository Ledgers",
+        "createLabel": "Create a new Repository Ledger",
+        "createOrEditLabel": "Create or edit a Repository Ledger",
+        "notFound": "No Repository Ledgers found"
+      },
+      "created": "A new Repository Ledger is created with identifier {{ param }}",
+      "updated": "A Repository Ledger is updated with identifier {{ param }}",
+      "deleted": "A Repository Ledger is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Repository Ledger {{ id }}?"
+      },
+      "detail": {
+        "title": "Repository Ledger"
+      },
+      "organizationUnitID": "Organization Unit ID",
+      "refID": "Ref ID",
+      "detailID": "Detail ID",
+      "date": "Date",
+      "postedDate": "Posted Date",
+      "no": "No",
+      "deliver": "Deliver",
+      "phoneContact": "Phone Contact",
+      "quantity": "Quantity",
+      "unit": "Unit",
+      "unitPrice": "Unit Price",
+      "amount": "Amount",
+      "outOfStock": "Out Of Stock"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "medicalEquipmentManagerApp": {
+    "equipment": {
+      "home": {
+        "title": "Thiết bị y tế",
+        "createLabel": "Thêm mới một Equipment",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Equipment",
+        "notFound": "No Equipment found"
+      },
+      "created": "Một Equipment mới được tạo với định danh {{ param }}",
+      "updated": "Một Equipment cập nhật với định danh {{ param }}",
+      "deleted": "Một Equipment đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Equipment {{ id }}?"
+      },
+      "detail": {
+        "title": "Equipment"
+      },
+      "code": "Mã",
+      "name": "Tên",
+      "equipmentTypeID": "Loại thiết bị",
+      "status": "TT",
+      "description": "Mô tả",
+      "qrcode": "Qrcode"
+    }
+  }
+}

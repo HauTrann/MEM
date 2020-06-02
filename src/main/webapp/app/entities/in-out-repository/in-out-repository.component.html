@@ -1,0 +1,85 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="medicalEquipmentManagerApp.inOutRepository.home.title">In Out Repositories</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-in-out-repository" [routerLink]="['/in-out-repository/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="medicalEquipmentManagerApp.inOutRepository.home.createLabel">
+            Create a new In Out Repository
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <!--    <jhi-alert></jhi-alert>-->
+
+    <div class="alert alert-warning" id="no-result" *ngIf="inOutRepositories?.length === 0">
+        <span jhiTranslate="medicalEquipmentManagerApp.inOutRepository.home.notFound">No inOutRepositories found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="inOutRepositories?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="organizationUnitID"><span jhiTranslate="medicalEquipmentManagerApp.inOutRepository.organizationUnitID">Organization Unit ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="date"><span jhiTranslate="medicalEquipmentManagerApp.inOutRepository.date">Date</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="postedDate"><span jhiTranslate="medicalEquipmentManagerApp.inOutRepository.postedDate">Posted Date</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="no"><span jhiTranslate="medicalEquipmentManagerApp.inOutRepository.no">No</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="deliver"><span jhiTranslate="medicalEquipmentManagerApp.inOutRepository.deliver">Deliver</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="phoneContact"><span jhiTranslate="medicalEquipmentManagerApp.inOutRepository.phoneContact">Phone Contact</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="outOfStock"><span jhiTranslate="medicalEquipmentManagerApp.inOutRepository.outOfStock">Out Of Stock</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="recorded"><span jhiTranslate="medicalEquipmentManagerApp.inOutRepository.recorded">Recorded</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let inOutRepository of inOutRepositories ;trackBy: trackId">
+                    <td><a [routerLink]="['/in-out-repository', inOutRepository.id, 'view']">{{ inOutRepository.id }}</a></td>
+                    <td>{{ inOutRepository.organizationUnitID }}</td>
+                    <td>{{ inOutRepository.date | date:'mediumDate' }}</td>
+                    <td>{{ inOutRepository.postedDate | date:'mediumDate' }}</td>
+                    <td>{{ inOutRepository.no }}</td>
+                    <td>{{ inOutRepository.deliver }}</td>
+                    <td>{{ inOutRepository.phoneContact }}</td>
+                    <td>{{ inOutRepository.outOfStock }}</td>
+                    <td>{{ inOutRepository.recorded }}</td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/in-out-repository', inOutRepository.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/in-out-repository', inOutRepository.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(inOutRepository)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="inOutRepositories?.length > 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

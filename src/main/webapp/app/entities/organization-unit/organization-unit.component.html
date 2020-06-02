@@ -1,0 +1,93 @@
+<div>
+    <div class="ptitle">
+        <span jhiTranslate="medicalEquipmentManagerApp.organizationUnit.home.title">Organization Units</span>
+    </div>
+    <div>
+        <a [routerLink]="['/organization-unit/new']"><i class="mdi mdi-plus"></i> <span>Thêm</span></a>
+    </div>
+</div>
+<div>
+    <!--<h2 id="page-heading">
+        <span jhiTranslate="medicalEquipmentManagerApp.organizationUnit.home.title">Organization Units</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-organization-unit" [routerLink]="['/organization-unit/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="medicalEquipmentManagerApp.organizationUnit.home.createLabel">
+            Create a new Organization Unit
+            </span>
+        </button>
+    </h2>-->
+    <jhi-alert-error></jhi-alert-error>
+
+    <!--    <jhi-alert></jhi-alert>-->
+
+    <div class="alert alert-warning" id="no-result" *ngIf="organizationUnits?.length === 0">
+        <span jhiTranslate="medicalEquipmentManagerApp.organizationUnit.home.notFound">No organizationUnits found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="organizationUnits?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+                    <th scope="col"  jhiSortBy="code"><span jhiTranslate="medicalEquipmentManagerApp.organizationUnit.code">Code</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="name"><span jhiTranslate="medicalEquipmentManagerApp.organizationUnit.name">Name</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="description"><span jhiTranslate="medicalEquipmentManagerApp.organizationUnit.description">Description</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="status"><span jhiTranslate="medicalEquipmentManagerApp.organizationUnit.status">Status</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let organizationUnit of organizationUnits ;trackBy: trackId; let i = index;">
+                    <td>{{ organizationUnit.code }}</td>
+                    <td>{{ organizationUnit.name }}</td>
+                    <td>{{ organizationUnit.description }}</td>
+                    <td class="text-center">
+                        <div class="custom-control custom-checkbox">
+                            <input [disabled]="true" type="checkbox" class="custom-control-input" name="{{'status' + i}}"
+                                   id="{{'status' + i}}" [ngModel]="organizationUnit.status === 1">
+                            <label class="custom-control-label" for="{{'status' + i}}"></label>
+                        </div>
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/organization-unit', organizationUnit.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/organization-unit', organizationUnit.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(organizationUnit)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="5"> Số dòng : {{organizationUnits?.length}}</td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div *ngIf="organizationUnits?.length > 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

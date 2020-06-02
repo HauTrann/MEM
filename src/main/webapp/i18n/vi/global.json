@@ -1,12 +1,23 @@
 {
   "global": {
-    "title": "MedicalEquipmentManager",
+    "title": "MedicalDeviceMNG",
     "browsehappy": "Bạn đang sử dụng một trình duyệt <strong>quá cũ</strong>. Vui lòng <a href=\"http://browsehappy.com/?locale=en\">nâng cấp trình duyệt</a> của bạn để có trải nghiệm tốt nhất.",
     "menu": {
       "home": "Trang chủ",
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Thực thể",
+        "department": "Department",
+        "departmentEmployee": "Department Employee",
+        "equipment": "Equipment",
+        "equipmentType": "Equipment Type",
+        "medicalSupplies": "Medical Supplies",
+        "medicalSuppliesType": "Medical Supplies Type",
+        "organizationUnit": "Organization Unit",
+        "repository": "Repository",
+        "repositoryLedger": "Repository Ledger",
+        "inRepository": "In Repository",
+        "inRepositoryDetails": "In Repository Details",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {
@@ -96,7 +107,8 @@
       "edit": "Sửa",
       "open": "Mở",
       "save": "Lưu",
-      "view": "Xem"
+      "view": "Xem",
+      "create": "Thêm"
     },
     "detail": {
       "field": "Trường",

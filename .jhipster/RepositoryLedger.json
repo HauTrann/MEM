@@ -1,0 +1,68 @@
+{
+  "fluentMethods": true,
+  "clientRootFolder": "",
+  "relationships": [],
+  "fields": [
+    {
+      "fieldName": "organizationUnitID",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "refID",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "detailID",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "date",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "postedDate",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "no",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "deliver",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "phoneContact",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "quantity",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "unit",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "unitPrice",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "amount",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "outOfStock",
+      "fieldType": "Boolean"
+    }
+  ],
+  "changelogDate": "20200526202723",
+  "dto": "no",
+  "searchEngine": false,
+  "service": "serviceImpl",
+  "entityTableName": "repository_ledger",
+  "databaseType": "sql",
+  "readOnly": false,
+  "jpaMetamodelFiltering": false,
+  "pagination": "infinite-scroll"
+}

@@ -1,0 +1,27 @@
+{
+  "medicalEquipmentManagerApp": {
+    "inOutRepositoryDetails": {
+      "home": {
+        "title": "In Out Repository Details",
+        "createLabel": "Create a new In Out Repository Details",
+        "createOrEditLabel": "Create or edit a In Out Repository Details",
+        "notFound": "No In Out Repository Details found"
+      },
+      "created": "A new In Out Repository Details is created with identifier {{ param }}",
+      "updated": "A In Out Repository Details is updated with identifier {{ param }}",
+      "deleted": "A In Out Repository Details is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete In Out Repository Details {{ id }}?"
+      },
+      "detail": {
+        "title": "In Out Repository Details"
+      },
+      "prodID": "Prod ID",
+      "prodName": "Prod Name",
+      "quantity": "Quantity",
+      "unit": "Unit",
+      "unitPrice": "Unit Price",
+      "amount": "Amount"
+    }
+  }
+}

@@ -14,6 +14,16 @@
     <property name="uuidType" value="uuid" dbms="h2, mssql"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200324161054_added_entity_Department.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200326185445_added_entity_Equipment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200325180345_added_entity_EquipmentType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200526203220_added_entity_InOutRepository.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200526204829_added_entity_InOutRepositoryDetails.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200326185844_added_entity_MedicalSupplies.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200326185653_added_entity_MedicalSuppliesType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200525171743_added_entity_OrganizationUnit.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200526202007_added_entity_Repository.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200526202723_added_entity_RepositoryLedger.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

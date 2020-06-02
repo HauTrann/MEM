@@ -1,0 +1,100 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-repository-ledger-heading" jhiTranslate="medicalEquipmentManagerApp.repositoryLedger.home.createOrEditLabel">Create or edit a Repository Ledger</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.repositoryLedger.refID" for="field_refID">Ref ID</label>
+                    <input type="number" class="form-control" name="refID" id="field_refID"
+                           formControlName="refID"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.repositoryLedger.detailID" for="field_detailID">Detail ID</label>
+                    <input type="number" class="form-control" name="detailID" id="field_detailID"
+                           formControlName="detailID"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.repositoryLedger.date" for="field_date">Date</label>
+                    <div class="input-group">
+                        <input id="field_date" type="text" class="form-control" name="date" ngbDatepicker #dateDp="ngbDatepicker" formControlName="date"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="dateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.repositoryLedger.postedDate" for="field_postedDate">Posted Date</label>
+                    <div class="input-group">
+                        <input id="field_postedDate" type="text" class="form-control" name="postedDate" ngbDatepicker #postedDateDp="ngbDatepicker" formControlName="postedDate"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="postedDateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.repositoryLedger.no" for="field_no">No</label>
+                    <input type="text" class="form-control" name="no" id="field_no"
+                           formControlName="no"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.repositoryLedger.deliver" for="field_deliver">Deliver</label>
+                    <input type="text" class="form-control" name="deliver" id="field_deliver"
+                           formControlName="deliver"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.repositoryLedger.phoneContact" for="field_phoneContact">Phone Contact</label>
+                    <input type="text" class="form-control" name="phoneContact" id="field_phoneContact"
+                           formControlName="phoneContact"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.repositoryLedger.quantity" for="field_quantity">Quantity</label>
+                    <input type="number" class="form-control" name="quantity" id="field_quantity"
+                           formControlName="quantity"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.repositoryLedger.unit" for="field_unit">Unit</label>
+                    <input type="text" class="form-control" name="unit" id="field_unit"
+                           formControlName="unit"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.repositoryLedger.unitPrice" for="field_unitPrice">Unit Price</label>
+                    <input type="number" class="form-control" name="unitPrice" id="field_unitPrice"
+                           formControlName="unitPrice"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.repositoryLedger.amount" for="field_amount">Amount</label>
+                    <input type="number" class="form-control" name="amount" id="field_amount"
+                           formControlName="amount"/>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
