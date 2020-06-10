@@ -1,5 +1,6 @@
 package com.mycompany.myapp.domain;
 
+import com.mycompany.myapp.service.dto.DeviceModelDTO;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -14,6 +15,26 @@ import java.util.Objects;
 @Entity
 @Table(name = "equipment")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@SqlResultSetMappings({
+    @SqlResultSetMapping(
+        name = "DeviceModelDTO",
+        classes = {
+            @ConstructorResult(
+                targetClass = DeviceModelDTO.class,
+                columns = {
+                    @ColumnResult(name = "id", type = Long.class),
+                    @ColumnResult(name = "organizationUnitID", type = Long.class),
+                    @ColumnResult(name = "code", type = String.class),
+                    @ColumnResult(name = "name", type = String.class),
+                    @ColumnResult(name = "equipmentTypeID", type = Long.class),
+                    @ColumnResult(name = "medicalSuppliesTypeID", type = Long.class),
+                    @ColumnResult(name = "status", type = Integer.class),
+                    @ColumnResult(name = "description", type = String.class),
+                }
+            )
+        }
+    )})
+
 public class Equipment implements Serializable {
 
     private static final long serialVersionUID = 1L;

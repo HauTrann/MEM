@@ -98,6 +98,34 @@ public class InOutRepositoryResource {
     }
 
     /**
+     * {@code GET  /in-out-repositories} : get all the inOutRepositories.
+     *
+     * @param pageable the pagination information.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of inOutRepositories in body.
+     */
+    @GetMapping("/in-out-repositories/in")
+    public ResponseEntity<List<InOutRepository>> getAllInOutRepositoriesIn(Pageable pageable) {
+        log.debug("REST request to get a page of InOutRepositories");
+        Page<InOutRepository> page = inOutRepositoryService.findAllInRp(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /in-out-repositories} : get all the inOutRepositories.
+     *
+     * @param pageable the pagination information.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of inOutRepositories in body.
+     */
+    @GetMapping("/in-out-repositories/out")
+    public ResponseEntity<List<InOutRepository>> getAllInOutRepositoriesOut(Pageable pageable) {
+        log.debug("REST request to get a page of InOutRepositories");
+        Page<InOutRepository> page = inOutRepositoryService.findAllOutRp(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
      * {@code GET  /in-out-repositories/:id} : get the "id" inOutRepository.
      *
      * @param id the id of the inOutRepository to retrieve.

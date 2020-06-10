@@ -2,7 +2,7 @@
     <div class="ptitle">
         <span jhiTranslate="medicalEquipmentManagerApp.medicalSuppliesType.home.title">Medical Supplies Types</span>
     </div>
-    <div>
+    <div *jhiHasAnyAuthority="'USER_MANAGER'">
         <a [routerLink]="['/medical-supplies-type/new']"><i class="mdi mdi-plus"></i> <span>Thêm</span></a>
     </div>
 </div>
@@ -38,11 +38,17 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let medicalSuppliesType of medicalSuppliesTypes ;trackBy: trackId">
+                <tr *ngFor="let medicalSuppliesType of medicalSuppliesTypes ;trackBy: trackId; let i = index;">
                     <td>{{ medicalSuppliesType.code }}</td>
                     <td>{{ medicalSuppliesType.name }}</td>
                     <td>{{ medicalSuppliesType.description }}</td>
-                    <td>{{ medicalSuppliesType.status }}</td>
+                    <td class="text-center">
+                        <div class="custom-control custom-checkbox">
+                            <input [disabled]="true" type="checkbox" class="custom-control-input" name="{{'status' + i}}"
+                                   id="{{'status' + i}}" [ngModel]="medicalSuppliesType.status === 1">
+                            <label class="custom-control-label" for="{{'status' + i}}"></label>
+                        </div>
+                    </td>
                     <td class="text-right">
                         <div class="btn-group">
                             <button type="submit"

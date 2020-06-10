@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 
 import { IMedicalSuppliesType, MedicalSuppliesType } from 'app/shared/model/medical-supplies-type.model';
 import { MedicalSuppliesTypeService } from './medical-supplies-type.service';
+import { UtilsService } from 'app/entities/utils/utils.service';
 
 @Component({
   selector: 'jhi-medical-supplies-type-update',
@@ -26,7 +27,8 @@ export class MedicalSuppliesTypeUpdateComponent implements OnInit {
   constructor(
     protected medicalSuppliesTypeService: MedicalSuppliesTypeService,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public utilsService: UtilsService
   ) {}
 
   ngOnInit(): void {
@@ -41,7 +43,7 @@ export class MedicalSuppliesTypeUpdateComponent implements OnInit {
       code: medicalSuppliesType.code,
       name: medicalSuppliesType.name,
       description: medicalSuppliesType.description,
-      status: medicalSuppliesType.status
+      status: medicalSuppliesType.status === undefined ? 1 : medicalSuppliesType.status
     });
   }
 

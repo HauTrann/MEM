@@ -1,5 +1,6 @@
 package com.mycompany.myapp.service.impl;
 
+import com.mycompany.myapp.security.SecurityUtils;
 import com.mycompany.myapp.service.RepositoryLedgerService;
 import com.mycompany.myapp.domain.RepositoryLedger;
 import com.mycompany.myapp.repository.RepositoryLedgerRepository;
@@ -37,6 +38,9 @@ public class RepositoryLedgerServiceImpl implements RepositoryLedgerService {
     @Override
     public RepositoryLedger save(RepositoryLedger repositoryLedger) {
         log.debug("Request to save RepositoryLedger : {}", repositoryLedger);
+        if (repositoryLedger.getOrganizationUnitID() == null) {
+            repositoryLedger.setOrganizationUnitID(SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg());
+        }
         return repositoryLedgerRepository.save(repositoryLedger);
     }
 

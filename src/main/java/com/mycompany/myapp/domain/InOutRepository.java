@@ -1,19 +1,22 @@
 package com.mycompany.myapp.domain;
 
+import liquibase.pro.packaged.S;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
 import java.time.LocalDate;
+import java.util.Set;
 
 /**
  * A InOutRepository.
  */
 @Entity
-@Table(name = "in_repository")
+@Table(name = "in_out_repository")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class InOutRepository implements Serializable {
 
@@ -30,7 +33,7 @@ public class InOutRepository implements Serializable {
     @Column(name = "date")
     private LocalDate date;
 
-    @Column(name = "posted_date")
+    @Column(name = "posteddate")
     private LocalDate postedDate;
 
     @Column(name = "no")
@@ -39,14 +42,21 @@ public class InOutRepository implements Serializable {
     @Column(name = "deliver")
     private String deliver;
 
-    @Column(name = "phone_contact")
+    @Column(name = "phonecontact")
     private String phoneContact;
 
-    @Column(name = "out_of_stock")
+    @Column(name = "outofstock")
     private Boolean outOfStock;
 
     @Column(name = "recorded")
     private Boolean recorded;
+
+    @Column(name = "reason")
+    private String reason;
+
+    @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "in_out_repository_id")
+    private Set<InOutRepositoryDetails> inOutRepositoryDetails = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -160,6 +170,23 @@ public class InOutRepository implements Serializable {
     public void setRecorded(Boolean recorded) {
         this.recorded = recorded;
     }
+
+    public Set<InOutRepositoryDetails> getInOutRepositoryDetails() {
+        return inOutRepositoryDetails;
+    }
+
+    public void setInOutRepositoryDetails(Set<InOutRepositoryDetails> inOutRepositoryDetails) {
+        this.inOutRepositoryDetails = inOutRepositoryDetails;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override

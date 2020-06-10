@@ -97,6 +97,13 @@ public class OrganizationUnitResource {
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
 
+    @GetMapping("/organization-units-all")
+    public ResponseEntity<List<OrganizationUnit>> getAllOrganizationUnitsAll(Pageable pageable) {
+        log.debug("REST request to get a page of OrganizationUnits");
+        List<OrganizationUnit> organizationUnits = organizationUnitService.findAll();
+        return ResponseEntity.ok(organizationUnits);
+    }
+
     /**
      * {@code GET  /organization-units/:id} : get the "id" organizationUnit.
      *

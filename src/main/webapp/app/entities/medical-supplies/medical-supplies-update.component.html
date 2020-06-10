@@ -1,3 +1,8 @@
+<div>
+    <div class="ptitle">
+        <span jhiTranslate="medicalEquipmentManagerApp.medicalSupplies.home.title">Equipment Types</span>
+    </div>
+</div>
 <div class="row justify-content-center">
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
@@ -25,8 +30,19 @@
 
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.medicalSupplies.medicalSuppliesTypeID" for="field_medicalSuppliesTypeID">Medical Supplies Type ID</label>
-                    <input type="number" class="form-control" name="medicalSuppliesTypeID" id="field_medicalSuppliesTypeID"
-                           formControlName="medicalSuppliesTypeID"/>
+                    <!--<input type="number" class="form-control" name="medicalSuppliesTypeID" id="field_medicalSuppliesTypeID"
+                           formControlName="medicalSuppliesTypeID"/>-->
+                    <ng-select [items]="medicalSuppliesTypes"
+                               id="field_medicalSuppliesTypeID"
+                               name="field_medicalSuppliesTypeID"
+                               bindLabel="name"
+                               bindValue="id"
+                               placeholder="Chọn loại vật tư"
+                               formControlName="medicalSuppliesTypeID"
+                               style="border-left: none"
+                               [required]="true"
+                    >
+                    </ng-select>
                 </div>
 
                 <div class="form-group">
@@ -37,8 +53,11 @@
 
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.medicalSupplies.status" for="field_status">Status</label>
-                    <input type="number" class="form-control" name="status" id="field_status"
-                           formControlName="status"/>
+                    <!--<input type="number" class="form-control" name="status" id="field_status"
+                           formControlName="status"/>-->
+                    <select class="form-control" name="authority" formControlName="status">
+                        <option *ngFor="let status of utilsService.statuss" [value]="status.status"  id="field_status">{{ status.name }}</option>
+                    </select>
                 </div>
             </div>
 

@@ -1,5 +1,8 @@
 package com.mycompany.myapp.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.mycompany.myapp.config.Constants;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -102,6 +105,22 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @Column(name = "vice")
     private String vice;
+
+    @Column(name = "employee")
+    private Boolean employee;
+
+    @Column(name = "organization_unit_id")
+    private Long organizationUnitID;
+
+    @Transient
+    @JsonDeserialize
+    @JsonSerialize
+    private String organizationUnitCode;
+
+    @Transient
+    @JsonDeserialize
+    @JsonSerialize
+    private String organizationUnitName;
 
     @JsonIgnore
     @ManyToMany
@@ -272,6 +291,38 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setVice(String vice) {
         this.vice = vice;
+    }
+
+    public Boolean getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Boolean employee) {
+        this.employee = employee;
+    }
+
+    public Long getOrganizationUnitID() {
+        return organizationUnitID;
+    }
+
+    public void setOrganizationUnitID(Long organizationUnitID) {
+        this.organizationUnitID = organizationUnitID;
+    }
+
+    public String getOrganizationUnitCode() {
+        return organizationUnitCode;
+    }
+
+    public void setOrganizationUnitCode(String organizationUnitCode) {
+        this.organizationUnitCode = organizationUnitCode;
+    }
+
+    public String getOrganizationUnitName() {
+        return organizationUnitName;
+    }
+
+    public void setOrganizationUnitName(String organizationUnitName) {
+        this.organizationUnitName = organizationUnitName;
     }
 
     @Override

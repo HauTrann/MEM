@@ -30,7 +30,6 @@
         <table class="table table-striped" aria-describedby="page-heading">
             <thead>
                 <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
-                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="code"><span jhiTranslate="medicalEquipmentManagerApp.repository.code">Code</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="name"><span jhiTranslate="medicalEquipmentManagerApp.repository.name">Name</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="description"><span jhiTranslate="medicalEquipmentManagerApp.repository.description">Description</span> <fa-icon icon="sort"></fa-icon></th>
@@ -39,12 +38,17 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let repository of repositories ;trackBy: trackId">
-                    <td><a [routerLink]="['/repository', repository.id, 'view']">{{ repository.id }}</a></td>
+                <tr *ngFor="let repository of repositories ;trackBy: trackId; let i = index;">
                     <td>{{ repository.code }}</td>
                     <td>{{ repository.name }}</td>
                     <td>{{ repository.description }}</td>
-                    <td>{{ repository.status }}</td>
+                    <td class="text-center">
+                        <div class="custom-control custom-checkbox">
+                            <input [disabled]="true" type="checkbox" class="custom-control-input" name="{{'status' + i}}"
+                                   id="{{'status' + i}}" [ngModel]="repository.status === 1">
+                            <label class="custom-control-label" for="{{'status' + i}}"></label>
+                        </div>
+                    </td>
                     <td class="text-right">
                         <div class="btn-group">
                             <button type="submit"
@@ -70,6 +74,11 @@
                     </td>
                 </tr>
             </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="5"> Số dòng : {{repositories?.length}}</td>
+            </tr>
+            </tfoot>
         </table>
     </div>
 

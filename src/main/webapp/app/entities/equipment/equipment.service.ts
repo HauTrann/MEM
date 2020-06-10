@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IEquipment } from 'app/shared/model/equipment.model';
+import { DeviceModel } from 'app/entities/in-out-repository/device.model';
 
 type EntityResponseType = HttpResponse<IEquipment>;
 type EntityArrayResponseType = HttpResponse<IEquipment[]>;
@@ -21,6 +22,14 @@ export class EquipmentService {
 
   update(equipment: IEquipment): Observable<EntityResponseType> {
     return this.http.put<IEquipment>(this.resourceUrl, equipment, { observe: 'response' });
+  }
+
+  findAllbyCodeText(text: string): Observable<HttpResponse<DeviceModel[]>> {
+    return this.http.get<DeviceModel[]>(SERVER_API_URL + 'api/device/find', { params: { text }, observe: 'response' });
+  }
+
+  findAllDevice(): Observable<HttpResponse<DeviceModel[]>> {
+    return this.http.get<DeviceModel[]>(SERVER_API_URL + 'api/device/findAll', { params: {}, observe: 'response' });
   }
 
   find(id: number): Observable<EntityResponseType> {

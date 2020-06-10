@@ -1,57 +1,61 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { IInOutRepository, InOutRepository } from 'app/shared/model/in-out-repository.model';
+import { IInOutRepository } from 'app/shared/model/in-out-repository.model';
 import { InOutRepositoryService } from './in-out-repository.service';
+import { InOutRepositoryDetails } from 'app/shared/model/in-out-repository-details.model';
+import { IRepository } from 'app/shared/model/repository.model';
+import { RepositoryService } from 'app/entities/repository/repository.service';
+import { DeviceModel } from 'app/entities/in-out-repository/device.model';
+import { EquipmentService } from 'app/entities/equipment/equipment.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'jhi-in-out-repository-update',
-  templateUrl: './in-out-repository-update.component.html'
+  templateUrl: './in-out-repository-update.component.html',
+  styleUrls: ['in-out-repository.scss']
 })
 export class InOutRepositoryUpdateComponent implements OnInit {
   isSaving = false;
   dateDp: any;
   postedDateDp: any;
-
-  editForm = this.fb.group({
-    id: [],
-    organizationUnitID: [],
-    date: [],
-    postedDate: [],
-    no: [],
-    deliver: [],
-    phoneContact: [],
-    outOfStock: [],
-    recorded: []
-  });
+  isNhapKho?: boolean;
+  inOutRepositoryDetails: InOutRepositoryDetails[] = [];
+  repositorys?: IRepository[] | null;
+  deviceModels?: DeviceModel[] | null;
+  inOutRepository: IInOutRepository = {};
 
   constructor(
     protected inOutRepositoryService: InOutRepositoryService,
     protected activatedRoute: ActivatedRoute,
+    protected repositoryService: RepositoryService,
+    protected equipmentService: EquipmentService,
     private fb: FormBuilder
-  ) {}
+  ) {
+    this.isNhapKho = window.location.href.includes('in-out-repository/in');
+    repositoryService.query().subscribe(res => {
+      this.repositorys = res.body;
+    });
 
-  ngOnInit(): void {
-    this.activatedRoute.data.subscribe(({ inOutRepository }) => {
-      this.updateForm(inOutRepository);
+    equipmentService.findAllDevice().subscribe(res => {
+      this.deviceModels = res.body;
     });
   }
 
-  updateForm(inOutRepository: IInOutRepository): void {
-    this.editForm.patchValue({
-      id: inOutRepository.id,
-      organizationUnitID: inOutRepository.organizationUnitID,
-      date: inOutRepository.date,
-      postedDate: inOutRepository.postedDate,
-      no: inOutRepository.no,
-      deliver: inOutRepository.deliver,
-      phoneContact: inOutRepository.phoneContact,
-      outOfStock: inOutRepository.outOfStock,
-      recorded: inOutRepository.recorded
+  ngOnInit(): void {
+    this.activatedRoute.data.subscribe((inOutRepository: any) => {
+      if (inOutRepository.inOutRepository.id) {
+        this.inOutRepository = inOutRepository.inOutRepository;
+        this.inOutRepositoryDetails = this.inOutRepository.inOutRepositoryDetails ? this.inOutRepository.inOutRepositoryDetails : [];
+      } else {
+        this.inOutRepository = inOutRepository.inOutRepository;
+        this.inOutRepository.date = moment(moment.now());
+        this.inOutRepository.postedDate = moment(moment.now());
+      }
     });
   }
 
@@ -61,27 +65,17 @@ export class InOutRepositoryUpdateComponent implements OnInit {
 
   save(): void {
     this.isSaving = true;
-    const inOutRepository = this.createFromForm();
-    if (inOutRepository.id !== undefined) {
-      this.subscribeToSaveResponse(this.inOutRepositoryService.update(inOutRepository));
+    this.inOutRepository.inOutRepositoryDetails = this.inOutRepositoryDetails;
+    if (this.isNhapKho) {
+      this.inOutRepository.outOfStock = false;
     } else {
-      this.subscribeToSaveResponse(this.inOutRepositoryService.create(inOutRepository));
+      this.inOutRepository.outOfStock = true;
     }
-  }
-
-  private createFromForm(): IInOutRepository {
-    return {
-      ...new InOutRepository(),
-      id: this.editForm.get(['id'])!.value,
-      organizationUnitID: this.editForm.get(['organizationUnitID'])!.value,
-      date: this.editForm.get(['date'])!.value,
-      postedDate: this.editForm.get(['postedDate'])!.value,
-      no: this.editForm.get(['no'])!.value,
-      deliver: this.editForm.get(['deliver'])!.value,
-      phoneContact: this.editForm.get(['phoneContact'])!.value,
-      outOfStock: this.editForm.get(['outOfStock'])!.value,
-      recorded: this.editForm.get(['recorded'])!.value
-    };
+    if (this.inOutRepository?.id !== undefined) {
+      this.subscribeToSaveResponse(this.inOutRepositoryService.update(this.inOutRepository));
+    } else {
+      this.subscribeToSaveResponse(this.inOutRepositoryService.create(this.inOutRepository));
+    }
   }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IInOutRepository>>): void {
@@ -98,5 +92,41 @@ export class InOutRepositoryUpdateComponent implements OnInit {
 
   protected onSaveError(): void {
     this.isSaving = false;
+  }
+
+  newArr(lenght: number): any[] {
+    if (lenght > 0) {
+      return new Array(lenght);
+    } else {
+      return new Array(0);
+    }
+  }
+
+  addNewRow(): void {
+    this.inOutRepositoryDetails?.push({});
+  }
+
+  removeRow(detail: any): void {
+    this.inOutRepositoryDetails?.splice(this.inOutRepositoryDetails.indexOf(detail), 1);
+  }
+
+  quantityChange(detail: InOutRepositoryDetails): void {
+    detail.amount = (detail.quantity ? detail.quantity : 0) * (detail.unitPrice ? detail.unitPrice : 0);
+  }
+
+  unitPriceChange(detail: InOutRepositoryDetails): void {
+    detail.amount = (detail.quantity ? detail.quantity : 0) * (detail.unitPrice ? detail.unitPrice : 0);
+  }
+
+  deviceChange(detail: InOutRepositoryDetails): void {
+    detail.prodName = this.deviceModels?.find(n => n.id === detail.prodID)?.name;
+  }
+
+  sumDT(prop: string): number {
+    let total = 0;
+    for (let i = 0; i < this.inOutRepositoryDetails?.length; i++) {
+      total += this.inOutRepositoryDetails[i][prop];
+    }
+    return isNaN(total) ? 0 : total;
   }
 }

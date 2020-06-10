@@ -15,7 +15,6 @@ import { Subscription } from 'rxjs';
 })
 export class SidebarComponent implements OnInit {
   inProduction?: boolean;
-  isNavbarCollapsed?: boolean;
   languages?: any[];
   modalRef?: NgbModalRef;
   version: string;
@@ -27,12 +26,11 @@ export class SidebarComponent implements OnInit {
     private loginService: LoginService,
     private languageService: JhiLanguageService,
     private loginModalService: LoginModalService,
-    private router: Router,
+    public router: Router,
     private modalService: NgbModal,
     private eventManager: JhiEventManager
   ) {
     this.version = VERSION ? 'v' + VERSION : '';
-    this.isNavbarCollapsed = true;
   }
 
   ngOnInit(): void {
@@ -43,18 +41,9 @@ export class SidebarComponent implements OnInit {
     this.languageService.changeLanguage(languageKey);
   }
 
-  collapseNavbar(): void {
-    this.isNavbarCollapsed = true;
-  }
-
   logout(): void {
-    this.collapseNavbar();
     this.loginService.logout();
-    this.router.navigate(['']);
-  }
-
-  toggleNavbar(): void {
-    this.isNavbarCollapsed = !this.isNavbarCollapsed;
+    this.router.navigate(['login']);
   }
 
   registerShowSidebar(): void {

@@ -43,7 +43,7 @@ export class OrganizationUnitUpdateComponent implements OnInit {
       code: organizationUnit.code,
       name: organizationUnit.name,
       description: organizationUnit.description,
-      status: organizationUnit.status
+      status: organizationUnit.status === undefined ? 1 : 0
     });
   }
 

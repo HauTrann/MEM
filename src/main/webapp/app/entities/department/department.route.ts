@@ -43,7 +43,7 @@ export const departmentRoute: Routes = [
       pagingParams: JhiResolvePagingParams
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.USER_MANAGER, Authority.ADMIN],
       defaultSort: 'id,asc',
       pageTitle: 'MedicalEquipmentManagerApp.department.home.title'
     },
@@ -56,7 +56,7 @@ export const departmentRoute: Routes = [
       department: DepartmentResolve
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.USER_MANAGER, Authority.ADMIN],
       pageTitle: 'MedicalEquipmentManagerApp.department.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -68,7 +68,7 @@ export const departmentRoute: Routes = [
       department: DepartmentResolve
     },
     data: {
-      authorities: [Authority.ADMIN],
+      authorities: [Authority.USER_MANAGER, Authority.ADMIN],
       pageTitle: 'MedicalEquipmentManagerApp.department.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -80,7 +80,7 @@ export const departmentRoute: Routes = [
       department: DepartmentResolve
     },
     data: {
-      authorities: [Authority.ADMIN],
+      authorities: [Authority.USER_MANAGER, Authority.ADMIN],
       pageTitle: 'MedicalEquipmentManagerApp.department.home.title'
     },
     canActivate: [UserRouteAccessService]

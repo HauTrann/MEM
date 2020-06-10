@@ -13,7 +13,7 @@ import java.math.BigDecimal;
  * A InOutRepositoryDetails.
  */
 @Entity
-@Table(name = "in_repository_details")
+@Table(name = "in_out_repository_details")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 public class InOutRepositoryDetails implements Serializable {
 
@@ -26,6 +26,12 @@ public class InOutRepositoryDetails implements Serializable {
 
     @Column(name = "prod_id")
     private Long prodID;
+
+    @Column(name = "in_out_repository_id")
+    private Long inOutRepositoryID;
+
+    @Column(name = "repository_id")
+    private Long repositoryID;
 
     @Column(name = "prod_name")
     private String prodName;
@@ -62,6 +68,14 @@ public class InOutRepositoryDetails implements Serializable {
 
     public void setProdID(Long prodID) {
         this.prodID = prodID;
+    }
+
+    public Long getInOutRepositoryID() {
+        return inOutRepositoryID;
+    }
+
+    public void setInOutRepositoryID(Long inOutRepositoryID) {
+        this.inOutRepositoryID = inOutRepositoryID;
     }
 
     public String getProdName() {
@@ -128,6 +142,15 @@ public class InOutRepositoryDetails implements Serializable {
     public void setAmount(BigDecimal amount) {
         this.amount = amount;
     }
+
+    public Long getRepositoryID() {
+        return repositoryID;
+    }
+
+    public void setRepositoryID(Long repositoryID) {
+        this.repositoryID = repositoryID;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override

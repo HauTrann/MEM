@@ -1,4 +1,5 @@
 import { Moment } from 'moment';
+import { InOutRepositoryDetails } from 'app/shared/model/in-out-repository-details.model';
 
 export interface IInOutRepository {
   id?: number;
@@ -10,6 +11,8 @@ export interface IInOutRepository {
   phoneContact?: string;
   outOfStock?: boolean;
   recorded?: boolean;
+  reason?: string;
+  inOutRepositoryDetails?: InOutRepositoryDetails[];
 }
 
 export class InOutRepository implements IInOutRepository {
@@ -22,7 +25,9 @@ export class InOutRepository implements IInOutRepository {
     public deliver?: string,
     public phoneContact?: string,
     public outOfStock?: boolean,
-    public recorded?: boolean
+    public recorded?: boolean,
+    public reason?: string,
+    public inOutRepositoryDetails?: InOutRepositoryDetails[]
   ) {
     this.outOfStock = this.outOfStock || false;
     this.recorded = this.recorded || false;

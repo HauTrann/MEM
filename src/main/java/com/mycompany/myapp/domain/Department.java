@@ -1,5 +1,7 @@
 package com.mycompany.myapp.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -25,6 +27,19 @@ public class Department implements Serializable {
 
     @Column(name = "organization_unit_id")
     private Long organizationUnitID;
+
+    @Transient
+    @JsonSerialize
+    @JsonDeserialize
+    private String organizationUnitName;
+
+    @Transient
+    @JsonSerialize
+    @JsonDeserialize
+    private String organizationUnitCode;
+
+    @Column(name = "code")
+    private String code;
 
     @Column(name = "name")
     private String name;
@@ -55,6 +70,14 @@ public class Department implements Serializable {
 
     public void setOrganizationUnitID(Long organizationUnitID) {
         this.organizationUnitID = organizationUnitID;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {
@@ -95,6 +118,23 @@ public class Department implements Serializable {
     public void setStatus(Integer status) {
         this.status = status;
     }
+
+    public String getOrganizationUnitName() {
+        return organizationUnitName;
+    }
+
+    public void setOrganizationUnitName(String organizationUnitName) {
+        this.organizationUnitName = organizationUnitName;
+    }
+
+    public String getOrganizationUnitCode() {
+        return organizationUnitCode;
+    }
+
+    public void setOrganizationUnitCode(String organizationUnitCode) {
+        this.organizationUnitCode = organizationUnitCode;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override

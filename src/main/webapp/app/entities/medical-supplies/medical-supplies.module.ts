@@ -7,9 +7,10 @@ import { MedicalSuppliesDetailComponent } from './medical-supplies-detail.compon
 import { MedicalSuppliesUpdateComponent } from './medical-supplies-update.component';
 import { MedicalSuppliesDeleteDialogComponent } from './medical-supplies-delete-dialog.component';
 import { medicalSuppliesRoute } from './medical-supplies.route';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
-  imports: [MedicalEquipmentManagerSharedModule, RouterModule.forChild(medicalSuppliesRoute)],
+  imports: [MedicalEquipmentManagerSharedModule, RouterModule.forChild(medicalSuppliesRoute), NgSelectModule],
   declarations: [
     MedicalSuppliesComponent,
     MedicalSuppliesDetailComponent,

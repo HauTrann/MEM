@@ -1,82 +1,183 @@
+<div>
+    <div class="ptitle">
+        <span *ngIf="isNhapKho">Nhập kho</span>
+        <span *ngIf="!isNhapKho">Xuất kho</span>
+    </div>
+</div>
 <div class="row justify-content-center">
-    <div class="col-8">
-        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-            <h2 id="jhi-in-out-repository-heading" jhiTranslate="medicalEquipmentManagerApp.inOutRepository.home.createOrEditLabel">Create or edit a In Out Repository</h2>
-
-            <div>
-                <jhi-alert-error></jhi-alert-error>
-
-                <div class="form-group" [hidden]="!editForm.get('id')!.value">
-                    <label for="id" jhiTranslate="global.field.id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
-                </div>
-
+    <div class="col-8" style="padding: 0px;">
+        <div class="row">
+            <div class="col-6" style="padding-left: 0px">
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.inOutRepository.organizationUnitID" for="field_organizationUnitID">Organization Unit ID</label>
-                    <input type="number" class="form-control" name="organizationUnitID" id="field_organizationUnitID"
-                           formControlName="organizationUnitID"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.inOutRepository.date" for="field_date">Date</label>
-                    <div class="input-group">
-                        <input id="field_date" type="text" class="form-control" name="date" ngbDatepicker #dateDp="ngbDatepicker" formControlName="date"/>
-                        <span class="input-group-append">
-                            <button type="button" class="btn btn-secondary" (click)="dateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
-                        </span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.inOutRepository.postedDate" for="field_postedDate">Posted Date</label>
-                    <div class="input-group">
-                        <input id="field_postedDate" type="text" class="form-control" name="postedDate" ngbDatepicker #postedDateDp="ngbDatepicker" formControlName="postedDate"/>
-                        <span class="input-group-append">
-                            <button type="button" class="btn btn-secondary" (click)="postedDateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
-                        </span>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.inOutRepository.no" for="field_no">No</label>
-                    <input type="text" class="form-control" name="no" id="field_no"
-                           formControlName="no"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.inOutRepository.deliver" for="field_deliver">Deliver</label>
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.inOutRepository.deliver"
+                           for="field_deliver">Deliver</label>
                     <input type="text" class="form-control" name="deliver" id="field_deliver"
-                           formControlName="deliver"/>
+                           [(ngModel)]="inOutRepository.deliver"
+                           />
                 </div>
 
                 <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.inOutRepository.phoneContact" for="field_phoneContact">Phone Contact</label>
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.inOutRepository.phoneContact"
+                           for="field_phoneContact">Phone Contact</label>
                     <input type="text" class="form-control" name="phoneContact" id="field_phoneContact"
-                           formControlName="phoneContact"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.inOutRepository.outOfStock" for="field_outOfStock">Out Of Stock</label>
-                    <input type="checkbox" class="form-control" name="outOfStock" id="field_outOfStock"
-                           formControlName="outOfStock"/>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.inOutRepository.recorded" for="field_recorded">Recorded</label>
-                    <input type="checkbox" class="form-control" name="recorded" id="field_recorded"
-                           formControlName="recorded"/>
+                           [(ngModel)]="inOutRepository.phoneContact"
+                           />
                 </div>
             </div>
+            <div class="col-6" style="padding: 0px">
+                <div>
+                    <div class="form-group">
+                        <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.inOutRepository.no" for="field_no">No</label>
+                        <input type="text" class="form-control" name="no" id="field_no"  [(ngModel)]="inOutRepository.no" />
+                    </div>
 
+                    <div class="form-group" style="display: flex;">
+                        <div class="col-6" style="padding-left: 0px">
+                            <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.inOutRepository.date" for="field_date">Date</label>
+                            <div class="input-group">
+                                <input id="field_date" type="text" class="form-control" name="date" ngbDatepicker #dateDp="ngbDatepicker"
+                                       [(ngModel)]="inOutRepository.date"/>
+                                <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="dateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+                        </span>
+                            </div>
+                        </div>
+                        <div class="col-6" style="padding-right: 0px">
+                            <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.inOutRepository.postedDate" for="field_postedDate">Posted Date</label>
+                            <div class="input-group">
+                                <input id="field_postedDate" type="text" class="form-control" name="postedDate" ngbDatepicker #postedDateDp="ngbDatepicker"
+                                       [(ngModel)]="inOutRepository.postedDate"/>
+                                <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="postedDateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+                        </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="table-responsive" id="entities">
+                <table class="table table-striped" aria-describedby="page-heading">
+                    <thead>
+                    <tr>
+                        <th scope="col" ><span >Mã thiết bị VT</span> </th>
+                        <th scope="col" ><span > Tên thiết bị VT</span> </th>
+                        <th scope="col" ><span > Kho</span> </th>
+                        <th scope="col" ><span > Số lượng</span> </th>
+                        <th scope="col" ><span> Đơn vị</span> </th>
+                        <th scope="col" ><span > Đơn giá</span> </th>
+                        <th scope="col" ><span > Thành tiền</span> </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr
+                        (keydown.control.delete)="removeRow(detail)"
+                        *ngFor="let detail of inOutRepositoryDetails ; let i= index;">
+                        <td>
+                            <ng-select [items]="deviceModels"
+                                       id="deviceModels"
+                                       name="deviceModels"
+                                       bindLabel="name"
+                                       bindValue="id"
+                                       placeholder=""
+                                       style="border-left: none"
+                                       [(ngModel)]="detail.prodID"
+                                       class="customSelect"
+                                       (change)="deviceChange(detail)"
+                            >
+                            </ng-select>
+                        </td>
+                        <td>
+                            <input type="text" class="input-cell" name="unit {{i}}" [(ngModel)]="detail.prodName" />
+                        </td>
+                        <td>
+                            <ng-select [items]="repositorys"
+                                       id="repositorys"
+                                       name="repositorys"
+                                       bindLabel="name"
+                                       bindValue="id"
+                                       placeholder="Chọn kho"
+                                       style="border-left: none"
+                                       [(ngModel)]="detail.repositoryID"
+                                       class="customSelect"
+                            >
+                            </ng-select>
+                        </td>
+                        <td>
+                            <input currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',', precision : 0 }"
+                                   class="input-cell" name="quantity {{i}}" [(ngModel)]="detail.quantity"
+                                   (ngModelChange)="quantityChange(detail)"
+                            />
+                        </td>
+                        <td>
+                            <input type="text" class="input-cell" name="unit {{i}}" [(ngModel)]="detail.unit" />
+                        </td>
+                        <td>
+                            <input currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',', precision : 0 }"
+                                   class="input-cell" name="unitPrice {{i}}" [(ngModel)]="detail.unitPrice"
+                                   (ngModelChange)="unitPriceChange(detail)"
+                            />
+                        </td>
+                        <td>
+                            <input currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',', precision : 0 }"  class="input-cell" name="amount {{i}}" [(ngModel)]="detail.amount" />
+                        </td>
+
+                    </tr>
+                    <tr (click)="addNewRow()">
+                        <td>
+                            <input disabled type="text" [title]="'Thêm dòng mới ...'" value="Thêm dòng mới ..." class="input-cell" name="no"/>
+                        </td>
+                        <td>
+                            <input disabled type="text" class="input-cell" name="no"/>
+                        </td>
+                        <td>
+                            <input disabled type="text" class="input-cell" name="no"/>
+                        </td>
+                        <td>
+                            <input disabled type="text" class="input-cell" name="no"/>
+                        </td>
+                        <td>
+                            <input disabled type="text" class="input-cell" name="no"/>
+                        </td>
+                        <td>
+                            <input disabled type="text" class="input-cell" name="no"/>
+                        </td>
+                        <td>
+                            <input disabled type="text" class="input-cell" name="no"/>
+                        </td>
+
+                    </tr>
+                    <tr *ngFor="let l of newArr(10 - inOutRepositoryDetails?.length)">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td colspan="6"> Số dòng : {{inOutRepositoryDetails?.length}}</td>
+                        <td>
+                            <input name="total" class="input-cell" currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',', precision : 0 }" [ngModel]="sumDT('amount')"></input>
+                        </td>
+                    </tr>
+                    </tfoot>
+                </table>
+
+            </div>
+        </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
                     <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
                 </button>
 
-                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                <button (click)="save()" type="submit" id="save-entity"  class="btn btn-primary">
                     <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
             </div>
-        </form>
     </div>
 </div>

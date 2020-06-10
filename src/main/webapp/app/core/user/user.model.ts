@@ -20,6 +20,9 @@ export interface IUser {
   code?: string;
   vice?: string;
   fileBase64?: string;
+  organizationUnitID?: number;
+  organizationUnitCode?: string;
+  organizationUnitName?: string;
 }
 
 export class User implements IUser {
@@ -42,6 +45,9 @@ export class User implements IUser {
     public phoneNumber?: string,
     public code?: string,
     public vice?: string,
-    public fileBase64?: string
+    public fileBase64?: string,
+    public organizationUnitID?: number,
+    public organizationUnitCode?: string,
+    public organizationUnitName?: string
   ) {}
 }

@@ -6,6 +6,7 @@ export interface IInOutRepositoryDetails {
   unit?: string;
   unitPrice?: number;
   amount?: number;
+  repositoryID?: number;
 }
 
 export class InOutRepositoryDetails implements IInOutRepositoryDetails {
@@ -16,6 +17,7 @@ export class InOutRepositoryDetails implements IInOutRepositoryDetails {
     public quantity?: number,
     public unit?: string,
     public unitPrice?: number,
-    public amount?: number
+    public amount?: number,
+    public repositoryID?: number
   ) {}
 }

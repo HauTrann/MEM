@@ -16,6 +16,7 @@ import { ActiveMenuDirective } from './layouts/navbar/active-menu.directive';
 import { ErrorComponent } from './layouts/error/error.component';
 import { NavbarBottomComponent } from 'app/layouts/navbar-bottom/navbar-bottom.component';
 import { SidebarComponent } from 'app/layouts/sidebar/sidebar.component';
+import { LoginMainComponent } from 'app/layouts/login/login-main.component';
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import { SidebarComponent } from 'app/layouts/sidebar/sidebar.component';
     ErrorComponent,
     PageRibbonComponent,
     ActiveMenuDirective,
-    FooterComponent
+    FooterComponent,
+    LoginMainComponent
   ],
   bootstrap: [MainComponent]
 })

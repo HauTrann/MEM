@@ -1,8 +1,10 @@
 package com.mycompany.myapp.service.impl;
 
+import com.mycompany.myapp.security.SecurityUtils;
 import com.mycompany.myapp.service.EquipmentService;
 import com.mycompany.myapp.domain.Equipment;
 import com.mycompany.myapp.repository.EquipmentRepository;
+import com.mycompany.myapp.service.dto.DeviceModelDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -37,6 +40,9 @@ public class EquipmentServiceImpl implements EquipmentService {
     @Override
     public Equipment save(Equipment equipment) {
         log.debug("Request to save Equipment : {}", equipment);
+        if (equipment.getOrganizationUnitID() == null) {
+            equipment.setOrganizationUnitID(SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg());
+        }
         return equipmentRepository.save(equipment);
     }
 
@@ -50,7 +56,11 @@ public class EquipmentServiceImpl implements EquipmentService {
     @Transactional(readOnly = true)
     public Page<Equipment> findAll(Pageable pageable) {
         log.debug("Request to get all Equipment");
-        return equipmentRepository.findAll(pageable);
+        if (SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg() == null) {
+            return equipmentRepository.findAll(pageable);
+        } else {
+            return equipmentRepository.findAllByOrganizationUnitIDOrderByCode(pageable, SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg());
+        }
     }
 
     /**
@@ -75,5 +85,15 @@ public class EquipmentServiceImpl implements EquipmentService {
     public void delete(Long id) {
         log.debug("Request to delete Equipment : {}", id);
         equipmentRepository.deleteById(id);
+    }
+
+    @Override
+    public List<DeviceModelDTO> findAllbyCodeText(String text) {
+        return equipmentRepository.findAllbyCodeText(text, SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg());
+    }
+
+    @Override
+    public List<DeviceModelDTO> findAllDevice() {
+        return equipmentRepository.findAllDevice(SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg());
     }
 }

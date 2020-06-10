@@ -31,8 +31,11 @@
 
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.repository.status" for="field_status">Status</label>
-                    <input type="number" class="form-control" name="status" id="field_status"
-                           formControlName="status"/>
+                    <!--<input type="number" class="form-control" name="status" id="field_status"
+                           formControlName="status"/>-->
+                    <select class="form-control" name="authority" formControlName="status">
+                        <option *ngFor="let status of utilsService.statuss" [value]="status.status"  id="field_status">{{ status.name }}</option>
+                    </select>
                 </div>
             </div>
 

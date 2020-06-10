@@ -1,5 +1,6 @@
 package com.mycompany.myapp.service.impl;
 
+import com.mycompany.myapp.security.SecurityUtils;
 import com.mycompany.myapp.service.MedicalSuppliesTypeService;
 import com.mycompany.myapp.domain.MedicalSuppliesType;
 import com.mycompany.myapp.repository.MedicalSuppliesTypeRepository;
@@ -37,6 +38,9 @@ public class MedicalSuppliesTypeServiceImpl implements MedicalSuppliesTypeServic
     @Override
     public MedicalSuppliesType save(MedicalSuppliesType medicalSuppliesType) {
         log.debug("Request to save MedicalSuppliesType : {}", medicalSuppliesType);
+        if (medicalSuppliesType.getOrganizationUnitID() == null) {
+            medicalSuppliesType.setOrganizationUnitID(SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg());
+        }
         return medicalSuppliesTypeRepository.save(medicalSuppliesType);
     }
 

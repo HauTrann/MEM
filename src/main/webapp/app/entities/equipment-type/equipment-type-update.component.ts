@@ -43,7 +43,7 @@ export class EquipmentTypeUpdateComponent implements OnInit {
       code: equipmentType.code,
       name: equipmentType.name,
       description: equipmentType.description,
-      status: equipmentType.status
+      status: equipmentType.status === undefined ? 1 : equipmentType.status
     });
   }
 

@@ -1,15 +1,21 @@
 <!-- Sidebar -->
-<div id="sidebar-wrapper" [class.hide-sidebar] = "!showSb">
+<div [hidden]="this.router.url === '/login'" id="sidebar-wrapper" [class.hide-sidebar] = "!showSb">
     <ul class="sidebar-nav">
-        <li *jhiHasAnyAuthority="'ROLE_ADMIN'" class="sidebar-brand">
+        <li  class="sidebar-brand">
             <!--<a href="#" class="navbar-brand">
                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span> Profile
             </a>-->
             <!--<a class="navbar-brand" routerLink="department" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                 <span jhiTranslate="global.menu.entities.department">Department</span>
             </a>-->
-            <a href="#" class="not-active">
+            <a *jhiHasAnyAuthority="'ROLE_ADMIN'" href="#" class="not-active">
                 <b><span class="glyphicon glyphicon-search" aria-hidden="true"></span><font color="#337AB7"> ADMIN</font></b>
+            </a>
+            <a *jhiHasAnyAuthority="'ROLE_USER'" href="#" class="not-active">
+                <b><span class="glyphicon glyphicon-search" aria-hidden="true"></span><font color="#337AB7"> NHÂN VIÊN</font></b>
+            </a>
+            <a *jhiHasAnyAuthority="'USER_MANAGER'" href="#" class="not-active">
+                <b><span class="glyphicon glyphicon-search" aria-hidden="true"></span><font color="#337AB7"> QUẢN LÝ</font></b>
             </a>
         </li>
         <li *jhiHasAnyAuthority="'ROLE_ADMIN'">
@@ -22,40 +28,49 @@
                 <span jhiTranslate="global.menu.admin.userManagement">User management</span>
             </a>
         </li>
-        <li>
+        <li *jhiHasAnyAuthority="'USER_MANAGER'">
             <!--            <a href="#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a>-->
-            <a class="glyphicon glyphicon-home" routerLink="department" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+            <a class="glyphicon glyphicon-home" routerLink="department" routerLinkActive="active">
                 <span jhiTranslate="global.menu.entities.department">Department</span>
             </a>
         </li>
-        <li>
+        <li *jhiHasAnyAuthority="'USER_MANAGER'">
+            <!--            <a href="#"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Home</a>-->
+            <a class="glyphicon glyphicon-home" routerLink="employee" routerLinkActive="active">
+                <span>Nhân viên</span>
+            </a>
+        </li>
+        <li *jhiHasAnyAuthority="'USER_MANAGER'">
             <span class="glyphicon glyphicon-search" aria-hidden="true"></span><font color="#337AB7"> KHO</font>
         </li>
-        <li>
+        <li *jhiHasAnyAuthority="'USER_MANAGER'">
             <a routerLink="repository"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Kho</a>
         </li>
-        <li>
-            <a routerLink="in-repository"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Nhập Kho</a>
+        <li *jhiHasAnyAuthority="'USER_MANAGER'">
+            <a routerLink="in-out-repository/in"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Nhập Kho</a>
         </li>
-        <li>
+        <li *jhiHasAnyAuthority="'USER_MANAGER'">
+            <a routerLink="in-out-repository/out"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Xuất Kho</a>
+        </li>
+        <li *jhiHasAnyAuthority="['USER_MANAGER', 'ROLE_USER']">
             <span class="glyphicon glyphicon-search" aria-hidden="true"></span><font color="#337AB7"> TRANG THIẾT BỊ Y TẾ</font>
         </li>
-        <li>
+        <li *jhiHasAnyAuthority="['USER_MANAGER', 'ROLE_USER']">
             <a routerLink="equipment-type"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Loại thiết bị</a>
         </li>
-        <li>
+        <li *jhiHasAnyAuthority="['USER_MANAGER', 'ROLE_USER']">
             <a routerLink="equipment"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Thiết bị</a>
         </li>
-        <li>
+        <li *jhiHasAnyAuthority="['USER_MANAGER', 'ROLE_USER']">
             <a routerLink="medical-supplies-type"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Loại vật tư</a>
         </li>
-        <li>
+        <li *jhiHasAnyAuthority="['USER_MANAGER', 'ROLE_USER']">
             <a routerLink="medical-supplies"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Vật tư</a>
         </li>
-        <li>
+        <li *jhiHasAnyAuthority="'USER_MANAGER'">
             <span class="glyphicon glyphicon-search" aria-hidden="true"></span><font color="#337AB7"> BÁO CÁO</font>
         </li>
-        <li>
+        <li *jhiHasAnyAuthority="'USER_MANAGER'">
             <a href="#"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Báo cáo</a>
         </li>
     </ul>

@@ -7,9 +7,11 @@ import { InOutRepositoryDetailComponent } from './in-out-repository-detail.compo
 import { InOutRepositoryUpdateComponent } from './in-out-repository-update.component';
 import { InOutRepositoryDeleteDialogComponent } from './in-out-repository-delete-dialog.component';
 import { inOutRepositoryRoute } from './in-out-repository.route';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 @NgModule({
-  imports: [MedicalEquipmentManagerSharedModule, RouterModule.forChild(inOutRepositoryRoute)],
+  imports: [MedicalEquipmentManagerSharedModule, RouterModule.forChild(inOutRepositoryRoute), NgSelectModule, CurrencyMaskModule],
   declarations: [
     InOutRepositoryComponent,
     InOutRepositoryDetailComponent,

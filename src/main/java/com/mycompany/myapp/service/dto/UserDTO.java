@@ -42,8 +42,15 @@ public class UserDTO {
     private String phoneNumber;
     private String code;
     private String vice;
+    private Long org;
+    private Boolean employee;
 
     private boolean activated = false;
+
+    private String organizationUnitCode;
+    private Long organizationUnitID;
+
+    private String organizationUnitName;
 
     @Size(min = 2, max = 10)
     private String langKey;
@@ -57,6 +64,22 @@ public class UserDTO {
     private Instant lastModifiedDate;
 
     private Set<String> authorities;
+
+    public Long getOrg() {
+        return org;
+    }
+
+    public void setOrg(Long org) {
+        this.org = org;
+    }
+
+    public Boolean getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Boolean employee) {
+        this.employee = employee;
+    }
 
     public UserDTO() {
         // Empty constructor needed for Jackson.
@@ -73,6 +96,8 @@ public class UserDTO {
         this.phoneNumber = user.getPhoneNumber();
         this.code = user.getCode();
         this.vice = user.getVice();
+        this.employee = user.getEmployee();
+        this.org = user.getOrganizationUnitID() != null ? user.getOrganizationUnitID() : -1;
         this.activated = user.getActivated();
         this.imageUrl = user.getImageUrl();
         this.langKey = user.getLangKey();
@@ -80,6 +105,9 @@ public class UserDTO {
         this.createdDate = user.getCreatedDate();
         this.lastModifiedBy = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
+        this.organizationUnitCode = user.getOrganizationUnitCode();
+        this.organizationUnitID = user.getOrganizationUnitID();
+        this.organizationUnitName = user.getOrganizationUnitName();
         this.authorities = user.getAuthorities().stream()
             .map(Authority::getName)
             .collect(Collectors.toSet());
@@ -227,6 +255,30 @@ public class UserDTO {
 
     public void setVice(String vice) {
         this.vice = vice;
+    }
+
+    public String getOrganizationUnitCode() {
+        return organizationUnitCode;
+    }
+
+    public void setOrganizationUnitCode(String organizationUnitCode) {
+        this.organizationUnitCode = organizationUnitCode;
+    }
+
+    public String getOrganizationUnitName() {
+        return organizationUnitName;
+    }
+
+    public void setOrganizationUnitName(String organizationUnitName) {
+        this.organizationUnitName = organizationUnitName;
+    }
+
+    public Long getOrganizationUnitID() {
+        return organizationUnitID;
+    }
+
+    public void setOrganizationUnitID(Long organizationUnitID) {
+        this.organizationUnitID = organizationUnitID;
     }
 
     @Override

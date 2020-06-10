@@ -4,8 +4,16 @@ export interface IOrganizationUnit {
   name?: string;
   description?: string;
   status?: number;
+  organizationUnitID?: number;
 }
 
 export class OrganizationUnit implements IOrganizationUnit {
-  constructor(public id?: number, public code?: string, public name?: string, public description?: string, public status?: number) {}
+  constructor(
+    public id?: number,
+    public code?: string,
+    public name?: string,
+    public description?: string,
+    public status?: number,
+    public organizationUnitID?: number
+  ) {}
 }

@@ -27,6 +27,8 @@ public interface InOutRepositoryService {
      * @return the list of entities.
      */
     Page<InOutRepository> findAll(Pageable pageable);
+    Page<InOutRepository> findAllInRp(Pageable pageable);
+    Page<InOutRepository> findAllOutRp(Pageable pageable);
 
     /**
      * Get the "id" inOutRepository.

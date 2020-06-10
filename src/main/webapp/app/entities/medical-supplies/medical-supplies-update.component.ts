@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { IMedicalSupplies, MedicalSupplies } from 'app/shared/model/medical-supplies.model';
 import { MedicalSuppliesService } from './medical-supplies.service';
+import { UtilsService } from 'app/entities/utils/utils.service';
+import { MedicalSuppliesType } from 'app/shared/model/medical-supplies-type.model';
+import { MedicalSuppliesTypeService } from 'app/entities/medical-supplies-type/medical-supplies-type.service';
 
 @Component({
   selector: 'jhi-medical-supplies-update',
@@ -14,6 +17,8 @@ import { MedicalSuppliesService } from './medical-supplies.service';
 })
 export class MedicalSuppliesUpdateComponent implements OnInit {
   isSaving = false;
+
+  medicalSuppliesTypes: MedicalSuppliesType[] | null = [];
 
   editForm = this.fb.group({
     id: [],
@@ -27,12 +32,17 @@ export class MedicalSuppliesUpdateComponent implements OnInit {
   constructor(
     protected medicalSuppliesService: MedicalSuppliesService,
     protected activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public utilsService: UtilsService,
+    protected medicalSuppliesTypeService: MedicalSuppliesTypeService
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ medicalSupplies }) => {
       this.updateForm(medicalSupplies);
+    });
+    this.medicalSuppliesTypeService.query().subscribe(res => {
+      this.medicalSuppliesTypes = res.body;
     });
   }
 
@@ -43,7 +53,7 @@ export class MedicalSuppliesUpdateComponent implements OnInit {
       name: medicalSupplies.name,
       medicalSuppliesTypeID: medicalSupplies.medicalSuppliesTypeID,
       description: medicalSupplies.description,
-      status: medicalSupplies.status
+      status: medicalSupplies.status === undefined ? 1 : medicalSupplies.status
     });
   }
 

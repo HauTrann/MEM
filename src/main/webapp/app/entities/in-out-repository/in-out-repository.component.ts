@@ -24,6 +24,7 @@ export class InOutRepositoryComponent implements OnInit, OnDestroy {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
+  isNhapKho?: boolean;
 
   constructor(
     protected inOutRepositoryService: InOutRepositoryService,
@@ -31,21 +32,36 @@ export class InOutRepositoryComponent implements OnInit, OnDestroy {
     protected router: Router,
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal
-  ) {}
+  ) {
+    this.isNhapKho = window.location.href.includes('in-out-repository/in');
+  }
 
   loadPage(page?: number): void {
     const pageToLoad: number = page || this.page;
 
-    this.inOutRepositoryService
-      .query({
-        page: pageToLoad - 1,
-        size: this.itemsPerPage,
-        sort: this.sort()
-      })
-      .subscribe(
-        (res: HttpResponse<IInOutRepository[]>) => this.onSuccess(res.body, res.headers, pageToLoad),
-        () => this.onError()
-      );
+    if (this.isNhapKho) {
+      this.inOutRepositoryService
+        .queryin({
+          page: pageToLoad - 1,
+          size: this.itemsPerPage,
+          sort: this.sort()
+        })
+        .subscribe(
+          (res: HttpResponse<IInOutRepository[]>) => this.onSuccess(res.body, res.headers, pageToLoad),
+          () => this.onError()
+        );
+    } else {
+      this.inOutRepositoryService
+        .queryout({
+          page: pageToLoad - 1,
+          size: this.itemsPerPage,
+          sort: this.sort()
+        })
+        .subscribe(
+          (res: HttpResponse<IInOutRepository[]>) => this.onSuccess(res.body, res.headers, pageToLoad),
+          () => this.onError()
+        );
+    }
   }
 
   ngOnInit(): void {
@@ -90,13 +106,23 @@ export class InOutRepositoryComponent implements OnInit, OnDestroy {
   protected onSuccess(data: IInOutRepository[] | null, headers: HttpHeaders, page: number): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
-    this.router.navigate(['/in-out-repository'], {
-      queryParams: {
-        page: this.page,
-        size: this.itemsPerPage,
-        sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc')
-      }
-    });
+    if (this.isNhapKho) {
+      this.router.navigate(['/in-out-repository/in'], {
+        queryParams: {
+          page: this.page,
+          size: this.itemsPerPage,
+          sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc')
+        }
+      });
+    } else {
+      this.router.navigate(['/in-out-repository/out'], {
+        queryParams: {
+          page: this.page,
+          size: this.itemsPerPage,
+          sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc')
+        }
+      });
+    }
     this.inOutRepositories = data || [];
   }
 

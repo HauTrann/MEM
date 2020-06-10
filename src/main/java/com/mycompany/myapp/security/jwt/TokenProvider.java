@@ -6,6 +6,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 
+import com.google.common.base.Strings;
+import com.mycompany.myapp.security.EbUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -60,7 +62,7 @@ public class TokenProvider {
                 .getTokenValidityInSecondsForRememberMe();
     }
 
-    public String createToken(Authentication authentication, boolean rememberMe) {
+    public String createToken(Authentication authentication, boolean rememberMe, Long org) {
         String authorities = authentication.getAuthorities().stream()
             .map(GrantedAuthority::getAuthority)
             .collect(Collectors.joining(","));
@@ -75,6 +77,7 @@ public class TokenProvider {
 
         return Jwts.builder()
             .setSubject(authentication.getName())
+            .claim("org", org != null ? org : -1)
             .claim(AUTHORITIES_KEY, authorities)
             .signWith(key, SignatureAlgorithm.HS512)
             .setExpiration(validity)
@@ -91,8 +94,10 @@ public class TokenProvider {
             Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
+        Long org = !Strings.isNullOrEmpty(String.valueOf(claims.get("org"))) ?Long.valueOf(claims.get("org").toString()) : -1;
+//        User principal = new User(claims.getSubject(), "", authorities);
 
-        User principal = new User(claims.getSubject(), "", authorities);
+        EbUserDetails principal = new EbUserDetails(claims.getSubject(), "", authorities, org, org == null);
 
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }

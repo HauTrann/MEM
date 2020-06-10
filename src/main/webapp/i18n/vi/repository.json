@@ -2,7 +2,7 @@
   "medicalEquipmentManagerApp": {
     "repository": {
       "home": {
-        "title": "Repositories",
+        "title": "Kho",
         "createLabel": "Thêm mới một Repository",
         "createOrEditLabel": "Thêm mới hoặc cập nhật Repository",
         "notFound": "No Repositories found"

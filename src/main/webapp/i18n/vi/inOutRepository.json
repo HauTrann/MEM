@@ -17,11 +17,11 @@
         "title": "In Out Repository"
       },
       "organizationUnitID": "Organization Unit ID",
-      "date": "Date",
-      "postedDate": "Posted Date",
-      "no": "No",
-      "deliver": "Deliver",
-      "phoneContact": "Phone Contact",
+      "date": "Ngày chứng từ",
+      "postedDate": "Ngày ghi sổ",
+      "no": "Số chứng từ",
+      "deliver": "Người giao",
+      "phoneContact": "Điện thoại liên hệ",
       "outOfStock": "Out Of Stock",
       "recorded": "Recorded"
     }

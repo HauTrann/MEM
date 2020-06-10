@@ -7,6 +7,7 @@ import { Account } from 'app/core/user/account.model';
 import { SELECT, SELECT_MENU } from 'app/shared/constants/app.constants';
 import { JhiEventManager } from 'ng-jhipster';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'jhi-home',
@@ -35,12 +36,18 @@ export class HomeComponent implements OnInit, OnDestroy {
     private accountService: AccountService,
     private loginModalService: LoginModalService,
     private eventManager: JhiEventManager,
-    public deviceService: DeviceDetectorService
+    public deviceService: DeviceDetectorService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.authSubscription = this.accountService.getAuthenticationState().subscribe(account => (this.account = account));
-    /*this.scanner?.camerasFound.subscribe((devices: MediaDeviceInfo[]) => {
+    this.accountService.identity().subscribe(account => {
+      if (!account) {
+        this.router.navigate(['/login']);
+      }
+    });
+    /* this.scanner?.camerasFound.subscribe((devices: MediaDeviceInfo[]) => {
       this.hasDevices = true;
       this.currentDevice = devices[0];
 

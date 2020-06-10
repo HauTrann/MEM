@@ -2,9 +2,11 @@ package com.mycompany.myapp.service;
 
 import com.mycompany.myapp.domain.Equipment;
 
+import com.mycompany.myapp.service.dto.DeviceModelDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -42,4 +44,7 @@ public interface EquipmentService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    List<DeviceModelDTO> findAllbyCodeText(String text);
+    List<DeviceModelDTO> findAllDevice();
 }

@@ -7,6 +7,8 @@ import { User } from 'app/core/user/user.model';
 import { UserService } from 'app/core/user/user.service';
 import { IDepartment } from 'app/shared/model/department.model';
 import { DepartmentService } from 'app/entities/department/department.service';
+import { IOrganizationUnit } from 'app/shared/model/organization-unit.model';
+import { OrganizationUnitService } from 'app/entities/organization-unit/organization-unit.service';
 
 @Component({
   selector: 'jhi-user-mgmt-update',
@@ -19,6 +21,8 @@ export class UserManagementUpdateComponent implements OnInit {
   isSaving = false;
   departments: IDepartment[] | null = [];
   departmentID?: number;
+  organizationUnits: IOrganizationUnit[] | null = [];
+  organizationUnitID?: number;
 
   editForm = this.fb.group({
     id: [],
@@ -33,14 +37,16 @@ export class UserManagementUpdateComponent implements OnInit {
     dateOfBirth: [],
     phoneNumber: [],
     code: [],
-    vice: []
+    vice: [],
+    organizationUnitID: []
   });
 
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
     private fb: FormBuilder,
-    private departmentService: DepartmentService
+    private departmentService: DepartmentService,
+    private organizationUnitService: OrganizationUnitService
   ) {}
 
   ngOnInit(): void {
@@ -52,6 +58,9 @@ export class UserManagementUpdateComponent implements OnInit {
         }
         this.updateForm(user);
       }
+    });
+    this.organizationUnitService.getAll().subscribe(res => {
+      this.organizationUnits = res.body;
     });
     this.userService.authorities().subscribe(authorities => {
       this.authorities = authorities;
@@ -96,7 +105,8 @@ export class UserManagementUpdateComponent implements OnInit {
       dateOfBirth: user.dateOfBirth,
       phoneNumber: user.phoneNumber,
       code: user.code,
-      vice: user.vice
+      vice: user.vice,
+      organizationUnitID: user.organizationUnitID
     });
   }
 
@@ -113,6 +123,7 @@ export class UserManagementUpdateComponent implements OnInit {
     user.phoneNumber = this.editForm.get(['phoneNumber'])!.value;
     user.code = this.editForm.get(['code'])!.value;
     user.vice = this.editForm.get(['vice'])!.value;
+    user.organizationUnitID = this.editForm.get(['organizationUnitID'])!.value;
   }
 
   private onSaveSuccess(): void {
@@ -123,4 +134,14 @@ export class UserManagementUpdateComponent implements OnInit {
   private onSaveError(): void {
     this.isSaving = false;
   }
+
+  checkVisiableDepartment(): Boolean {
+    return this.editForm.get(['authorities'])!.value?.includes('ROLE_USER');
+  }
+
+  checkRolAdmin(): Boolean {
+    return this.editForm.get(['authorities'])!.value?.includes('ROLE_ADMIN');
+  }
+
+  authoritieChange(): void {}
 }

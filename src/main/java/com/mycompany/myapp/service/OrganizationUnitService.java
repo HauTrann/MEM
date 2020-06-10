@@ -5,6 +5,7 @@ import com.mycompany.myapp.domain.OrganizationUnit;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -27,6 +28,8 @@ public interface OrganizationUnitService {
      * @return the list of entities.
      */
     Page<OrganizationUnit> findAll(Pageable pageable);
+
+    List<OrganizationUnit> findAll();
 
     /**
      * Get the "id" organizationUnit.

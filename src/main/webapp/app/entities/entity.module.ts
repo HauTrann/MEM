@@ -49,6 +49,10 @@ import { RouterModule } from '@angular/router';
         path: 'repository-ledger',
         loadChildren: () =>
           import('./repository-ledger/repository-ledger.module').then(m => m.MedicalEquipmentManagerRepositoryLedgerModule)
+      },
+      {
+        path: 'employee',
+        loadChildren: () => import('./employee/employee.module').then(m => m.EmployeeModule)
       }
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ])

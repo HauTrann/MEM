@@ -37,50 +37,99 @@ export class InOutRepositoryResolve implements Resolve<IInOutRepository> {
 
 export const inOutRepositoryRoute: Routes = [
   {
-    path: '',
+    path: 'in',
     component: InOutRepositoryComponent,
     resolve: {
       pagingParams: JhiResolvePagingParams
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN, Authority.USER_MANAGER],
       defaultSort: 'id,asc',
       pageTitle: 'medicalEquipmentManagerApp.inOutRepository.home.title'
     },
     canActivate: [UserRouteAccessService]
   },
   {
-    path: ':id/view',
+    path: 'out',
+    component: InOutRepositoryComponent,
+    resolve: {
+      pagingParams: JhiResolvePagingParams
+    },
+    data: {
+      authorities: [Authority.ADMIN, Authority.USER_MANAGER],
+      defaultSort: 'id,asc',
+      pageTitle: 'medicalEquipmentManagerApp.inOutRepository.home.title'
+    },
+    canActivate: [UserRouteAccessService]
+  },
+  {
+    path: 'in/:id/view',
     component: InOutRepositoryDetailComponent,
     resolve: {
       inOutRepository: InOutRepositoryResolve
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN, Authority.USER_MANAGER],
       pageTitle: 'medicalEquipmentManagerApp.inOutRepository.home.title'
     },
     canActivate: [UserRouteAccessService]
   },
   {
-    path: 'new',
-    component: InOutRepositoryUpdateComponent,
+    path: 'out/:id/view',
+    component: InOutRepositoryDetailComponent,
     resolve: {
       inOutRepository: InOutRepositoryResolve
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN, Authority.USER_MANAGER],
       pageTitle: 'medicalEquipmentManagerApp.inOutRepository.home.title'
     },
     canActivate: [UserRouteAccessService]
   },
   {
-    path: ':id/edit',
+    path: 'in/new',
     component: InOutRepositoryUpdateComponent,
     resolve: {
       inOutRepository: InOutRepositoryResolve
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.ADMIN, Authority.USER_MANAGER],
+      pageTitle: 'medicalEquipmentManagerApp.inOutRepository.home.title'
+    },
+    canActivate: [UserRouteAccessService]
+  },
+  {
+    path: 'out/new',
+    component: InOutRepositoryUpdateComponent,
+    resolve: {
+      inOutRepository: InOutRepositoryResolve
+    },
+    data: {
+      authorities: [Authority.ADMIN, Authority.USER_MANAGER],
+      pageTitle: 'medicalEquipmentManagerApp.inOutRepository.home.title'
+    },
+    canActivate: [UserRouteAccessService]
+  },
+  {
+    path: 'in/:id/edit',
+    component: InOutRepositoryUpdateComponent,
+    resolve: {
+      inOutRepository: InOutRepositoryResolve
+    },
+    data: {
+      authorities: [Authority.ADMIN, Authority.USER_MANAGER],
+      pageTitle: 'medicalEquipmentManagerApp.inOutRepository.home.title'
+    },
+    canActivate: [UserRouteAccessService]
+  },
+  {
+    path: 'out/:id/edit',
+    component: InOutRepositoryUpdateComponent,
+    resolve: {
+      inOutRepository: InOutRepositoryResolve
+    },
+    data: {
+      authorities: [Authority.ADMIN, Authority.USER_MANAGER],
       pageTitle: 'medicalEquipmentManagerApp.inOutRepository.home.title'
     },
     canActivate: [UserRouteAccessService]

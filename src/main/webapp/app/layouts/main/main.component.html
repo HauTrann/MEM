@@ -20,7 +20,7 @@
 </div>
 
 <div>
-    <div class="panel-body" [class.panel-body-1] = "!showSideBar">
+    <div  [class.panel-body] = "router.url !== '/login'" [class.panel-body-1] = "!showSideBar">
         <router-outlet></router-outlet>
     </div>
     <jhi-footer></jhi-footer>

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -51,6 +52,12 @@ public class OrganizationUnitServiceImpl implements OrganizationUnitService {
     public Page<OrganizationUnit> findAll(Pageable pageable) {
         log.debug("Request to get all OrganizationUnits");
         return organizationUnitRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<OrganizationUnit> findAll() {
+        log.debug("Request to get all OrganizationUnits");
+        return organizationUnitRepository.findAll();
     }
 
     /**

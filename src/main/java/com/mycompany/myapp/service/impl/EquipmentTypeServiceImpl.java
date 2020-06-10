@@ -1,5 +1,6 @@
 package com.mycompany.myapp.service.impl;
 
+import com.mycompany.myapp.security.SecurityUtils;
 import com.mycompany.myapp.service.EquipmentTypeService;
 import com.mycompany.myapp.domain.EquipmentType;
 import com.mycompany.myapp.repository.EquipmentTypeRepository;
@@ -37,6 +38,9 @@ public class EquipmentTypeServiceImpl implements EquipmentTypeService {
     @Override
     public EquipmentType save(EquipmentType equipmentType) {
         log.debug("Request to save EquipmentType : {}", equipmentType);
+        if (equipmentType.getOrganizationUnitID() == null) {
+            equipmentType.setOrganizationUnitID(SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg());
+        }
         return equipmentTypeRepository.save(equipmentType);
     }
 
@@ -50,7 +54,11 @@ public class EquipmentTypeServiceImpl implements EquipmentTypeService {
     @Transactional(readOnly = true)
     public Page<EquipmentType> findAll(Pageable pageable) {
         log.debug("Request to get all EquipmentTypes");
-        return equipmentTypeRepository.findAll(pageable);
+        if (SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg() == null) {
+            return equipmentTypeRepository.findAll(pageable);
+        } else {
+            return equipmentTypeRepository.findAllByOrganizationUnitIDOrderByCode(pageable, SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg());
+        }
     }
 
     /**

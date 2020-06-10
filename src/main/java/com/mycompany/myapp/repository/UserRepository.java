@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -47,5 +48,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Cacheable(cacheNames = USERS_BY_EMAIL_CACHE)
     Optional<User> findOneWithAuthoritiesByEmailIgnoreCase(String email);
 
-    Page<User> findAllByLoginNot(Pageable pageable, String login);
+    @Query(value = "select u.*, o.code as organizationUnitCode, o.name as organizationUnitName  from jhi_user u left join organization_unit o on u.organization_unit_id = o.id where u.login <> ?1 ", nativeQuery = true)
+    Page<User> findAllByLoginNotCustom(Pageable pageable, String login);
+
+    @Query(value = "select * from jhi_user where organization_unit_id = ?1 and employee = 1", nativeQuery = true)
+    Page<User> findAllEmployee(Pageable pageable, Long org);
+
+    Page<User> findAllByEmployeeTrue(Pageable pageable);
 }

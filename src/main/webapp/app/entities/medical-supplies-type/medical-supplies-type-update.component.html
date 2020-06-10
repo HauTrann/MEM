@@ -1,3 +1,8 @@
+<div>
+    <div class="ptitle">
+        <span jhiTranslate="medicalEquipmentManagerApp.medicalSuppliesType.home.title">Medical Supplies Types</span>
+    </div>
+</div>
 <div class="row justify-content-center">
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
@@ -31,8 +36,11 @@
 
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.medicalSuppliesType.status" for="field_status">Status</label>
-                    <input type="number" class="form-control" name="status" id="field_status"
-                           formControlName="status"/>
+                    <!--<input type="number" class="form-control" name="status" id="field_status"
+                           formControlName="status"/>-->
+                    <select class="form-control" name="authority" formControlName="status">
+                        <option *ngFor="let status of utilsService.statuss" [value]="status.status"  id="field_status">{{ status.name }}</option>
+                    </select>
                 </div>
             </div>
 

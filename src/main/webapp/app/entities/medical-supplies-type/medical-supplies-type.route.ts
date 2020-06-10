@@ -43,7 +43,7 @@ export const medicalSuppliesTypeRoute: Routes = [
       pagingParams: JhiResolvePagingParams
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.USER, Authority.USER_MANAGER, Authority.ADMIN],
       defaultSort: 'id,asc',
       pageTitle: 'MedicalEquipmentManagerApp.medicalSuppliesType.home.title'
     },
@@ -56,7 +56,7 @@ export const medicalSuppliesTypeRoute: Routes = [
       medicalSuppliesType: MedicalSuppliesTypeResolve
     },
     data: {
-      authorities: [Authority.USER],
+      authorities: [Authority.USER, Authority.USER_MANAGER, Authority.ADMIN],
       pageTitle: 'MedicalEquipmentManagerApp.medicalSuppliesType.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -68,7 +68,7 @@ export const medicalSuppliesTypeRoute: Routes = [
       medicalSuppliesType: MedicalSuppliesTypeResolve
     },
     data: {
-      authorities: [Authority.USER_MANAGER],
+      authorities: [Authority.USER_MANAGER, Authority.ADMIN],
       pageTitle: 'MedicalEquipmentManagerApp.medicalSuppliesType.home.title'
     },
     canActivate: [UserRouteAccessService]
@@ -80,7 +80,7 @@ export const medicalSuppliesTypeRoute: Routes = [
       medicalSuppliesType: MedicalSuppliesTypeResolve
     },
     data: {
-      authorities: [Authority.USER_MANAGER],
+      authorities: [Authority.USER_MANAGER, Authority.ADMIN],
       pageTitle: 'MedicalEquipmentManagerApp.medicalSuppliesType.home.title'
     },
     canActivate: [UserRouteAccessService]

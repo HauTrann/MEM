@@ -39,6 +39,21 @@ public final class SecurityUtils {
         return null;
     }
 
+    public static Optional<SecurityDTO> getCurrentUserLoginAndOrg() {
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        return Optional.ofNullable(securityContext.getAuthentication())
+            .map(authentication -> {
+                if (authentication.getPrincipal() instanceof EbUserDetails) {
+                    EbUserDetails springSecurityUser = (EbUserDetails) authentication.getPrincipal();
+                    return new SecurityDTO(springSecurityUser.getUsername(), springSecurityUser.getOrg(), springSecurityUser.getAuthorities());
+                } else if (authentication.getPrincipal() instanceof String) {
+                    return new SecurityDTO((String) authentication.getPrincipal());
+                }
+                return null;
+            });
+
+    }
+
 
     /**
      * Get the JWT of the current user.

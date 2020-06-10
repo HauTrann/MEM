@@ -2,11 +2,13 @@ package com.mycompany.myapp.web.rest;
 
 import com.mycompany.myapp.domain.Equipment;
 import com.mycompany.myapp.service.EquipmentService;
+import com.mycompany.myapp.service.dto.DeviceModelDTO;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import org.hibernate.annotations.Parameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -122,4 +124,28 @@ public class EquipmentResource {
         equipmentService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
+
+    /**
+     * {@code GET  /equipment} : get all the equipment.
+     *
+     * @param text the pagination information.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of equipment in body.
+     */
+    @GetMapping("/device/find")
+    public ResponseEntity<List<DeviceModelDTO>> findAllbyCodeText(@RequestParam String text) {
+        List<DeviceModelDTO> deviceModelDTOS = equipmentService.findAllbyCodeText(text);
+        return new ResponseEntity<>(deviceModelDTOS, HttpStatus.OK);
+    }
+
+    /**
+     * {@code GET  /equipment} : get all the equipment.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of equipment in body.
+     */
+    @GetMapping("/device/findAll")
+    public ResponseEntity<List<DeviceModelDTO>> findAllDevice() {
+        List<DeviceModelDTO> deviceModelDTOS = equipmentService.findAllDevice();
+        return new ResponseEntity<>(deviceModelDTOS, HttpStatus.OK);
+    }
+
 }

@@ -2,6 +2,7 @@ package com.mycompany.myapp.web.rest.vm;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.UUID;
 
 /**
  * View Model object for storing a user's credentials.
@@ -17,6 +18,8 @@ public class LoginVM {
     private String password;
 
     private Boolean rememberMe;
+
+    private UUID org;
 
     public String getUsername() {
         return username;
@@ -40,6 +43,14 @@ public class LoginVM {
 
     public void setRememberMe(Boolean rememberMe) {
         this.rememberMe = rememberMe;
+    }
+
+    public UUID getOrg() {
+        return org;
+    }
+
+    public void setOrg(UUID org) {
+        this.org = org;
     }
 
     @Override

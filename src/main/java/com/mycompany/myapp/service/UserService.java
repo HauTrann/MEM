@@ -6,11 +6,14 @@ import com.mycompany.myapp.domain.User;
 import com.mycompany.myapp.repository.AuthorityRepository;
 import com.mycompany.myapp.repository.UserRepository;
 import com.mycompany.myapp.security.AuthoritiesConstants;
+import com.mycompany.myapp.security.SecurityDTO;
 import com.mycompany.myapp.security.SecurityUtils;
 import com.mycompany.myapp.service.dto.UserDTO;
 
+import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.security.RandomUtil;
 
+import io.undertow.util.BadRequestException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
@@ -25,6 +28,8 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static com.mycompany.myapp.security.AuthoritiesConstants.ADMIN;
 
 /**
  * Service class for managing users.
@@ -155,6 +160,7 @@ public class UserService {
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(Instant.now());
         user.setActivated(true);
+        user.setOrganizationUnitID(userDTO.getOrganizationUnitID());
         if (userDTO.getAuthorities() != null) {
             Set<Authority> authorities = userDTO.getAuthorities().stream()
                 .map(authorityRepository::findById)
@@ -163,6 +169,42 @@ public class UserService {
                 .collect(Collectors.toSet());
             user.setAuthorities(authorities);
         }
+        userRepository.save(user);
+        this.clearUserCaches(user);
+        log.debug("Created Information for User: {}", user);
+        return user;
+    }
+
+    public User createUserEmpoyee(UserDTO userDTO) {
+        User user = new User();
+        user.setLogin(userDTO.getLogin().toLowerCase());
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        if (userDTO.getEmail() != null) {
+            user.setEmail(userDTO.getEmail().toLowerCase());
+        }
+        user.setImageUrl(userDTO.getImageUrl());
+        if (userDTO.getLangKey() == null) {
+            user.setLangKey(Constants.DEFAULT_LANGUAGE); // default language
+        } else {
+            user.setLangKey(userDTO.getLangKey());
+        }
+//        String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
+        String encryptedPassword = passwordEncoder.encode("user");
+        user.setPassword(encryptedPassword);
+        user.setResetKey(RandomUtil.generateResetKey());
+        user.setResetDate(Instant.now());
+        user.setActivated(true);
+        user.setOrganizationUnitID(userDTO.getOrganizationUnitID());
+        if (user.getOrganizationUnitID() == null && SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg() != null) {
+            user.setOrganizationUnitID(SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg());
+        }
+        user.setEmployee(true);
+        Set<Authority> authorities = new HashSet<>();
+        Authority authority = new Authority();
+        authority.setName(AuthoritiesConstants.USER);
+        authorities.add(authority);
+        user.setAuthorities(authorities);
         userRepository.save(user);
         this.clearUserCaches(user);
         log.debug("Created Information for User: {}", user);
@@ -235,6 +277,44 @@ public class UserService {
             .map(UserDTO::new);
     }
 
+    public Optional<UserDTO> updateUserEmpoyee(UserDTO userDTO) {
+        return Optional.of(userRepository
+            .findById(userDTO.getId()))
+            .filter(Optional::isPresent)
+            .map(Optional::get)
+            .map(user -> {
+                this.clearUserCaches(user);
+                user.setLogin(userDTO.getLogin().toLowerCase());
+                user.setFirstName(userDTO.getFirstName());
+                user.setLastName(userDTO.getLastName());
+                if (userDTO.getEmail() != null) {
+                    user.setEmail(userDTO.getEmail().toLowerCase());
+                }
+                user.setImageUrl(userDTO.getImageUrl());
+                user.setActivated(userDTO.isActivated());
+                user.setLangKey(userDTO.getLangKey());
+                user.setDepartmentid(userDTO.getDepartmentID());
+                user.setCode(userDTO.getCode());
+                user.setDateOfBirth(userDTO.getDateOfBirth());
+                user.setVice(userDTO.getVice());
+                user.setOrganizationUnitID(userDTO.getOrganizationUnitID());
+                if (user.getOrganizationUnitID() == null && SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg() != null) {
+                    user.setOrganizationUnitID(SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg());
+                }
+                user.setPhoneNumber(userDTO.getPhoneNumber());
+                Set<Authority> authorities = new HashSet<>();
+                Authority authority = new Authority();
+                authority.setName(AuthoritiesConstants.USER);
+                authorities.add(authority);
+                user.setAuthorities(authorities);
+                user.setEmployee(true);
+                this.clearUserCaches(user);
+                log.debug("Changed Information for User: {}", user);
+                return user;
+            })
+            .map(UserDTO::new);
+    }
+
     public void deleteUser(String login) {
         userRepository.findOneByLogin(login).ifPresent(user -> {
             userRepository.delete(user);
@@ -260,7 +340,21 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public Page<UserDTO> getAllManagedUsers(Pageable pageable) {
-        return userRepository.findAllByLoginNot(pageable, Constants.ANONYMOUS_USER).map(UserDTO::new);
+        return userRepository.findAllByLoginNotCustom(pageable, Constants.ANONYMOUS_USER).map(UserDTO::new);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<UserDTO> getAllManagedUsersEmployee(Pageable pageable) throws BadRequestException {
+        Optional<SecurityDTO> securityDTO = SecurityUtils.getCurrentUserLoginAndOrg();
+        if (securityDTO.isPresent() && securityDTO.get().getOrg() != -1) {
+            Page<User> lst = userRepository.findAllEmployee(pageable, securityDTO.get().getOrg());
+            return userRepository.findAllEmployee(pageable, securityDTO.get().getOrg()).map(UserDTO::new);
+        } else {
+            if (securityDTO.isPresent() && securityDTO.get().getAuthorities().stream().anyMatch(n -> n.getAuthority().equals(ADMIN))) {
+                return userRepository.findAllByEmployeeTrue(pageable).map(UserDTO::new);
+            }
+            throw new BadRequestException("");
+        }
     }
 
     @Transactional(readOnly = true)
@@ -296,6 +390,7 @@ public class UserService {
 
     /**
      * Gets a list of all the authorities.
+     *
      * @return a list of all the authorities.
      */
     public List<String> getAuthorities() {
@@ -308,5 +403,9 @@ public class UserService {
         if (user.getEmail() != null) {
             Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE)).evict(user.getEmail());
         }
+    }
+
+    public Optional<User> findOneByLogin(String login) {
+        return userRepository.findOneByLogin(login);
     }
 }

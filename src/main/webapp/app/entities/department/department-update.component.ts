@@ -8,6 +8,8 @@ import { Observable } from 'rxjs';
 import { IDepartment, Department } from 'app/shared/model/department.model';
 import { DepartmentService } from './department.service';
 import { UtilsService } from 'app/entities/utils/utils.service';
+import { IOrganizationUnit } from 'app/shared/model/organization-unit.model';
+import { OrganizationUnitService } from 'app/entities/organization-unit/organization-unit.service';
 
 @Component({
   selector: 'jhi-department-update',
@@ -16,19 +18,23 @@ import { UtilsService } from 'app/entities/utils/utils.service';
 export class DepartmentUpdateComponent implements OnInit {
   isSaving = false;
   statuss: any[] = [];
+  organizationUnits: IOrganizationUnit[] | null = [];
+  organizationUnitID?: number;
 
   editForm = this.fb.group({
     id: [],
     name: [],
     description: [],
-    status: []
+    status: [],
+    organizationUnitID: []
   });
 
   constructor(
     protected departmentService: DepartmentService,
     protected activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
-    public utilsService: UtilsService
+    public utilsService: UtilsService,
+    private organizationUnitService: OrganizationUnitService
   ) {}
 
   ngOnInit(): void {
@@ -36,6 +42,9 @@ export class DepartmentUpdateComponent implements OnInit {
       this.updateForm(department);
     });
     this.statuss = this.utilsService.statuss;
+    this.organizationUnitService.getAll().subscribe(res => {
+      this.organizationUnits = res.body;
+    });
   }
 
   updateForm(department: IDepartment): void {
@@ -43,7 +52,8 @@ export class DepartmentUpdateComponent implements OnInit {
       id: department.id,
       name: department.name,
       description: department.description,
-      status: department.status
+      status: department.status === undefined ? 1 : department.status,
+      organizationUnitID: department.organizationUnitID
     });
   }
 
@@ -67,7 +77,8 @@ export class DepartmentUpdateComponent implements OnInit {
       id: this.editForm.get(['id'])!.value,
       name: this.editForm.get(['name'])!.value,
       description: this.editForm.get(['description'])!.value,
-      status: this.editForm.get(['status'])!.value
+      status: this.editForm.get(['status'])!.value,
+      organizationUnitID: this.editForm.get(['organizationUnitID'])!.value
     };
   }
 

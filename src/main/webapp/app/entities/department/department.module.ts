@@ -7,9 +7,10 @@ import { DepartmentDetailComponent } from './department-detail.component';
 import { DepartmentUpdateComponent } from './department-update.component';
 import { DepartmentDeleteDialogComponent } from './department-delete-dialog.component';
 import { departmentRoute } from './department.route';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 @NgModule({
-  imports: [MedicalEquipmentManagerSharedModule, RouterModule.forChild(departmentRoute)],
+  imports: [MedicalEquipmentManagerSharedModule, RouterModule.forChild(departmentRoute), NgSelectModule],
   declarations: [DepartmentComponent, DepartmentDetailComponent, DepartmentUpdateComponent, DepartmentDeleteDialogComponent],
   entryComponents: [DepartmentDeleteDialogComponent]
 })

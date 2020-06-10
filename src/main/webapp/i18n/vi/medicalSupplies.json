@@ -2,7 +2,7 @@
   "medicalEquipmentManagerApp": {
     "medicalSupplies": {
       "home": {
-        "title": "Vật tư",
+        "title": "Vật tư y tế",
         "createLabel": "Thêm mới một vật tư",
         "createOrEditLabel": "Thêm mới hoặc cập nhật vật tư",
         "notFound": "No Medical Supplies found"
@@ -14,13 +14,13 @@
         "question": "Bạn có chắc là muốn xóa Medical Supplies {{ id }}?"
       },
       "detail": {
-        "title": "Medical Supplies"
+        "title": "Vật tư y tế"
       },
-      "code": "Code",
-      "name": "Name",
-      "medicalSuppliesTypeID": "Medical Supplies Type ID",
-      "description": "Description",
-      "status": "Status"
+      "code": "Mã",
+      "name": "Tên",
+      "medicalSuppliesTypeID": "Loại vật tư",
+      "description": "Mô tả",
+      "status": "TT"
     }
   }
 }

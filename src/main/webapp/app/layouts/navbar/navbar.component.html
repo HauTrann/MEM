@@ -1,4 +1,4 @@
-<nav class="navbar navbar-dark navbar-expand-md bg-dark custom" [class.panel-body-1] = "!showSb">
+<nav [hidden]="router.url === '/login'" class="navbar navbar-dark navbar-expand-md bg-dark custom" [class.panel-body-1] = "!showSb">
     <a *ngIf="showSb" [class.showbt]="showSb" [class.hidebt]="!showSb" routerLink="/" (click)="collapseNavbar()"> <!--style="width: 290px"-->
         <span class="logo-img icon-center"></span> <!--jhiTranslate="global.title"-->
 <!--        <span class="navbar-title">Medical Equipment Manager</span>-->

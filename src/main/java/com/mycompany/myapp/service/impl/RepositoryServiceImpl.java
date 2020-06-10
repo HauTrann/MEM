@@ -1,5 +1,6 @@
 package com.mycompany.myapp.service.impl;
 
+import com.mycompany.myapp.security.SecurityUtils;
 import com.mycompany.myapp.service.RepositoryService;
 import com.mycompany.myapp.domain.Repository;
 import com.mycompany.myapp.repository.RepositoryRepository;
@@ -37,6 +38,9 @@ public class RepositoryServiceImpl implements RepositoryService {
     @Override
     public Repository save(Repository repository) {
         log.debug("Request to save Repository : {}", repository);
+        if (repository.getOrganizationUnitID() == null) {
+            repository.setOrganizationUnitID(SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg());
+        }
         return repositoryRepository.save(repository);
     }
 
@@ -50,7 +54,11 @@ public class RepositoryServiceImpl implements RepositoryService {
     @Transactional(readOnly = true)
     public Page<Repository> findAll(Pageable pageable) {
         log.debug("Request to get all Repositories");
-        return repositoryRepository.findAll(pageable);
+        if (SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg() == null) {
+            return repositoryRepository.findAll(pageable);
+        } else {
+            return repositoryRepository.findAllByOrganizationUnitIDOrderByCode(pageable, SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg());
+        }
     }
 
     /**

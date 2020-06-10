@@ -1,11 +1,11 @@
 package com.mycompany.myapp.service.impl;
 
-import com.mycompany.myapp.service.InOutRepositoryService;
 import com.mycompany.myapp.domain.InOutRepository;
 import com.mycompany.myapp.repository.InOutRepositoryRepository;
+import com.mycompany.myapp.security.SecurityUtils;
+import com.mycompany.myapp.service.InOutRepositoryService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -37,6 +37,9 @@ public class InOutRepositoryServiceImpl implements InOutRepositoryService {
     @Override
     public InOutRepository save(InOutRepository inOutRepository) {
         log.debug("Request to save InOutRepository : {}", inOutRepository);
+        if (inOutRepository.getOrganizationUnitID() == null) {
+            inOutRepository.setOrganizationUnitID(SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg());
+        }
         return inOutRepositoryRepository.save(inOutRepository);
     }
 
@@ -51,6 +54,16 @@ public class InOutRepositoryServiceImpl implements InOutRepositoryService {
     public Page<InOutRepository> findAll(Pageable pageable) {
         log.debug("Request to get all InOutRepositories");
         return inOutRepositoryRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<InOutRepository> findAllInRp(Pageable pageable) {
+        return inOutRepositoryRepository.findAllByOrganizationUnitIDAndOutOfStockIsFalseOrOutOfStockIsNull(pageable, SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg());
+    }
+
+    @Override
+    public Page<InOutRepository> findAllOutRp(Pageable pageable) {
+        return inOutRepositoryRepository.findAllByOrganizationUnitIDAndOutOfStockIsTrue(pageable, SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg());
     }
 
     /**

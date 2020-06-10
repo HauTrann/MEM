@@ -2,7 +2,7 @@
     <div class="ptitle">
         <span jhiTranslate="medicalEquipmentManagerApp.equipmentType.home.title">Equipment Types</span>
     </div>
-    <div>
+    <div *jhiHasAnyAuthority="'USER_MANAGER'">
         <a [routerLink]="['/equipment-type/new']"><i class="mdi mdi-plus"></i> <span>Thêm</span></a>
     </div>
 </div>

@@ -2,6 +2,7 @@ package com.mycompany.myapp.service;
 
 import com.mycompany.myapp.domain.Department;
 
+import io.undertow.util.BadRequestException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -27,7 +28,7 @@ public interface DepartmentService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<Department> findAll(Pageable pageable);
+    Page<Department> findAll(Pageable pageable) throws BadRequestException;
 
     List<Department> findAll();
 

@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 
 import { IRepository, Repository } from 'app/shared/model/repository.model';
 import { RepositoryService } from './repository.service';
+import { UtilsService } from 'app/entities/utils/utils.service';
 
 @Component({
   selector: 'jhi-repository-update',
@@ -23,7 +24,12 @@ export class RepositoryUpdateComponent implements OnInit {
     status: []
   });
 
-  constructor(protected repositoryService: RepositoryService, protected activatedRoute: ActivatedRoute, private fb: FormBuilder) {}
+  constructor(
+    protected repositoryService: RepositoryService,
+    protected activatedRoute: ActivatedRoute,
+    private fb: FormBuilder,
+    public utilsService: UtilsService
+  ) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ repository }) => {
@@ -37,7 +43,7 @@ export class RepositoryUpdateComponent implements OnInit {
       code: repository.code,
       name: repository.name,
       description: repository.description,
-      status: repository.status
+      status: repository.status === undefined ? 1 : repository.status
     });
   }
 
