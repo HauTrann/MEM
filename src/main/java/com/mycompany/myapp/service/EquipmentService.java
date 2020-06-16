@@ -3,6 +3,7 @@ package com.mycompany.myapp.service;
 import com.mycompany.myapp.domain.Equipment;
 
 import com.mycompany.myapp.service.dto.DeviceModelDTO;
+import com.mycompany.myapp.service.dto.EquipmentDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -28,7 +29,7 @@ public interface EquipmentService {
      * @param pageable the pagination information.
      * @return the list of entities.
      */
-    Page<Equipment> findAll(Pageable pageable);
+    Page<EquipmentDTO> findAll(Pageable pageable);
 
     /**
      * Get the "id" equipment.

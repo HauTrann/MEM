@@ -1,0 +1,16 @@
+.main-data span {
+  font-weight: 600;
+}
+
+.main-data ul.list-contents {
+  display: contents;
+}
+
+.data-link .main-data ul.list-contents li {
+  width: 100% !important;
+}
+
+li :hover {
+  color: orange;
+  text-decoration: underline;
+}

@@ -9,9 +9,11 @@ export interface IInOutRepository {
   no?: string;
   deliver?: string;
   phoneContact?: string;
+  phoneContactReceiver?: string;
   outOfStock?: boolean;
   recorded?: boolean;
   reason?: string;
+  receiver?: string;
   inOutRepositoryDetails?: InOutRepositoryDetails[];
 }
 
@@ -24,9 +26,11 @@ export class InOutRepository implements IInOutRepository {
     public no?: string,
     public deliver?: string,
     public phoneContact?: string,
+    public phoneContactReceiver?: string,
     public outOfStock?: boolean,
     public recorded?: boolean,
     public reason?: string,
+    public receiver?: string,
     public inOutRepositoryDetails?: InOutRepositoryDetails[]
   ) {
     this.outOfStock = this.outOfStock || false;

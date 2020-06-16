@@ -48,6 +48,12 @@ public class InOutRepositoryDetails implements Serializable {
     @Column(name = "amount", precision = 21, scale = 2)
     private BigDecimal amount;
 
+    @Column(name = "lot_no")
+    private String lotNo;
+
+    @Column(name = "expiry_date")
+    private String expiryDate;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -151,6 +157,22 @@ public class InOutRepositoryDetails implements Serializable {
         this.repositoryID = repositoryID;
     }
 
+    public String getLotNo() {
+        return lotNo;
+    }
+
+    public void setLotNo(String lotNo) {
+        this.lotNo = lotNo;
+    }
+
+    public String getExpiryDate() {
+        return expiryDate;
+    }
+
+    public void setExpiryDate(String expiryDate) {
+        this.expiryDate = expiryDate;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -163,6 +185,7 @@ public class InOutRepositoryDetails implements Serializable {
         }
         return id != null && id.equals(((InOutRepositoryDetails) o).id);
     }
+
 
     @Override
     public int hashCode() {

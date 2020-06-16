@@ -129,4 +129,17 @@ export class InOutRepositoryComponent implements OnInit, OnDestroy {
   protected onError(): void {
     this.ngbPaginationPage = this.page;
   }
+
+  record(): void {}
+
+  unrecord(): void {}
+
+  getStyle(record?: boolean): any {
+    return !record
+      ? {
+          input: { color: 'rgba(245,122,28,1)' },
+          color: 'rgba(245,122,28,1)'
+        }
+      : {};
+  }
 }

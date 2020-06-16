@@ -4,7 +4,7 @@
     </div>
 </div>
 <div class="row justify-content-center">
-    <div class="col-8">
+    <div class="col-10">
 <!--        <h2 id="jhi-department-heading">Rhiết bị Y Tế</h2>-->
         <div>
             <label>Ảnh thiết bị</label>
@@ -59,7 +59,18 @@
                     <input type="number" class="form-control" name="equipmentTypeID" id="field_equipmentTypeID"
                            formControlName="equipmentTypeID"/>
                 </div>-->
-
+                <label>Nhóm thiết bị</label>
+                <ng-select [items]="utilsService.groups"
+                           id="groups"
+                           name="groups"
+                           bindLabel="name"
+                           bindValue="value"
+                           placeholder="Chọn nhóm thiết bị"
+                           formControlName="groupOfEquipment"
+                           style="border-left: none"
+                           [required]="true"
+                >
+                </ng-select>
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.equipment.status" for="field_status">Status</label>
                     <select class="form-control" name="authority" formControlName="status">
@@ -73,10 +84,67 @@
                            formControlName="description"/>
                 </div>
 
-                <div class="form-group">
+                <!--<div class="form-group">
                     <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.equipment.qrcode" for="field_qrcode">Qrcode</label>
                     <input type="text" class="form-control" name="qrcode" id="field_qrcode" disabled
                            formControlName="qrcode"/>
+                </div>-->
+            </div>
+            <div><label style="font-weight: bold"> Thông số kỹ thuật</label></div>
+            <div class="row">
+                <div class="table-responsive" id="entities">
+                    <table class="table table-striped" aria-describedby="page-heading">
+                        <thead>
+                        <tr>
+                            <th scope="col" style="width: 40px" ><span >STT</span> </th>
+                            <th scope="col" ><span > Tên thông số</span> </th>
+                            <th scope="col" ><span > Giá trị</span> </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr
+                            (keydown.control.delete)="removeRow(detail)"
+                            *ngFor="let detail of thongSoKyThuats ; let i= index;">
+                            <td style="text-align: center">{{i+1}}</td>
+                            <td>
+                                <!--<ng-select [items]="deviceModels"
+                                           id="deviceModels"
+                                           name="deviceModels"
+                                           bindLabel="name"
+                                           bindValue="id"
+                                           placeholder=""
+                                           style="border-left: none"
+                                           [(ngModel)]="detail.prodID"
+                                           class="customSelect"
+                                >
+                                </ng-select>-->
+                                <input type="text" class="input-cell" name="nameTN {{i}}" [ngModelOptions]="{standalone: true}"   [(ngModel)]="detail.name" />
+                            </td>
+                            <td>
+                                <input type="text" class="input-cell" name="ValueTN {{i}}" [ngModelOptions]="{standalone: true}"  [(ngModel)]="detail.value" />
+                            </td>
+                        </tr>
+                        <tr (click)="addNewRow()">
+                            <td colspan="2">
+                                <input disabled type="text" [title]="'Thêm dòng mới ...'" value="Thêm dòng mới ..." class="input-cell" name="no"/>
+                            </td>
+                            <td>
+                                <input disabled type="text" class="input-cell" name="no"/>
+                            </td>
+                        </tr>
+                        <tr *ngFor="let l of utilsService.newArr(10 - thongSoKyThuats?.length)">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="3"> Số dòng : {{thongSoKyThuats?.length}}</td>
+                        </tr>
+                        </tfoot>
+                    </table>
+
                 </div>
             </div>
 

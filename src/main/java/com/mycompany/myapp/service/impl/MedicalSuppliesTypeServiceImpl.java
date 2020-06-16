@@ -57,6 +57,12 @@ public class MedicalSuppliesTypeServiceImpl implements MedicalSuppliesTypeServic
         return medicalSuppliesTypeRepository.findAll(pageable);
     }
 
+    @Override
+    public Page<MedicalSuppliesType> findAllByOrganizationUnitID(Pageable pageable) {
+        log.debug("Request to get all MedicalSuppliesTypes");
+        return medicalSuppliesTypeRepository.findAllByOrganizationUnitID(pageable, SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg());
+    }
+
     /**
      * Get one medicalSuppliesType by id.
      *

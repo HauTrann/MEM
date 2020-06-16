@@ -92,7 +92,7 @@ public class MedicalSuppliesResource {
     @GetMapping("/medical-supplies")
     public ResponseEntity<List<MedicalSupplies>> getAllMedicalSupplies(Pageable pageable) {
         log.debug("REST request to get a page of MedicalSupplies");
-        Page<MedicalSupplies> page = medicalSuppliesService.findAll(pageable);
+        Page<MedicalSupplies> page = medicalSuppliesService.findAllByOrganizationUnitID(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

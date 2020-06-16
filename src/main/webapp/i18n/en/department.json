@@ -18,8 +18,10 @@
       },
       "organizationUnitID": "Organization Unit ID",
       "name": "Name",
+      "code": "Code",
       "description": "Description",
-      "status": "Status"
+      "status": "Status",
+      "departmentID": "Phòng ban"
     }
   }
 }

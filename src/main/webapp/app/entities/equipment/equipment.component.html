@@ -33,7 +33,8 @@
 <!--                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>-->
                     <th scope="col"  jhiSortBy="code"><span jhiTranslate="medicalEquipmentManagerApp.equipment.code">Code</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="name"><span jhiTranslate="medicalEquipmentManagerApp.equipment.name">Name</span> <fa-icon icon="sort"></fa-icon></th>
-<!--                    <th scope="col"  jhiSortBy="equipmentTypeID"><span jhiTranslate="medicalEquipmentManagerApp.equipment.equipmentTypeID">Equipment Type ID</span> <fa-icon icon="sort"></fa-icon></th>-->
+                    <th scope="col"  jhiSortBy="groupOfEquipment"><span >Phân loại</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="equipmentTypeID"><span jhiTranslate="medicalEquipmentManagerApp.equipment.equipmentTypeID">Equipment Type ID</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="status"><span jhiTranslate="medicalEquipmentManagerApp.equipment.status">Status</span> <fa-icon icon="sort"></fa-icon></th>
 <!--                    <th scope="col"  jhiSortBy="description"><span jhiTranslate="medicalEquipmentManagerApp.equipment.description">Description</span> <fa-icon icon="sort"></fa-icon></th>-->
 <!--                    <th scope="col"  jhiSortBy="qrcode"><span jhiTranslate="medicalEquipmentManagerApp.equipment.qrcode">Qrcode</span> <fa-icon icon="sort"></fa-icon></th>-->
@@ -45,6 +46,8 @@
 <!--                    <td><a [routerLink]="['/equipment', equipment.id, 'view']">{{ equipment.id }}</a></td>-->
                     <td>{{ equipment.code }}</td>
                     <td>{{ equipment.name }}</td>
+                    <td class="text-center">{{ equipment.groupOfEquipment }}</td>
+                    <td class="text-center">{{ equipment.equipmentTypeName }}</td>
 <!--                    <td>{{ equipment.equipmentTypeID }}</td>-->
                     <td class="text-center">
                         <div class="custom-control custom-checkbox">
@@ -84,7 +87,7 @@
             </tbody>
             <tfoot>
             <tr>
-                <td colspan="4"> Số dòng : {{equipment?.length}}</td>
+                <td colspan="6"> Số dòng : {{equipment?.length}}</td>
             </tr>
             </tfoot>
         </table>

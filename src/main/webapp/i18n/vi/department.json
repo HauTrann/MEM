@@ -17,8 +17,10 @@
         "title": "Phòng ban"
       },
       "name": "Tên",
+      "code": "Mã",
       "description": "Mô tả",
-      "status": "TT"
+      "status": "TT",
+      "departmentID": "Phòng ban"
     }
   }
 }

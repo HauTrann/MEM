@@ -1,3 +1,5 @@
+import { Moment } from 'moment';
+
 export interface IInOutRepositoryDetails {
   id?: number;
   prodID?: number;
@@ -7,6 +9,8 @@ export interface IInOutRepositoryDetails {
   unitPrice?: number;
   amount?: number;
   repositoryID?: number;
+  lotNo?: string;
+  expiryDate?: Moment;
 }
 
 export class InOutRepositoryDetails implements IInOutRepositoryDetails {
@@ -18,6 +22,8 @@ export class InOutRepositoryDetails implements IInOutRepositoryDetails {
     public unit?: string,
     public unitPrice?: number,
     public amount?: number,
-    public repositoryID?: number
+    public repositoryID?: number,
+    public lotNo?: string,
+    public expiryDate?: Moment
   ) {}
 }

@@ -27,18 +27,18 @@
                     <th scope="col"  jhiSortBy="no"><span jhiTranslate="medicalEquipmentManagerApp.inOutRepository.no">No</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="deliver"><span jhiTranslate="medicalEquipmentManagerApp.inOutRepository.deliver">Deliver</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="phoneContact"><span jhiTranslate="medicalEquipmentManagerApp.inOutRepository.phoneContact">Phone Contact</span> <fa-icon icon="sort"></fa-icon></th>
-                    <th scope="col"  jhiSortBy="recorded"><span jhiTranslate="medicalEquipmentManagerApp.inOutRepository.recorded">Recorded</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let inOutRepository of inOutRepositories ;trackBy: trackId">
-                    <td>{{ inOutRepository.date | date:'mediumDate' }}</td>
-                    <td>{{ inOutRepository.postedDate | date:'mediumDate' }}</td>
+                <tr
+                    [ngStyle]= "getStyle(inOutRepository.recorded)"
+                    *ngFor="let inOutRepository of inOutRepositories ;trackBy: trackId">
+                    <td>{{ inOutRepository.date | date:'dd/MM/yyyy' }}</td>
+                    <td>{{ inOutRepository.postedDate | date:'dd/MM/yyyy' }}</td>
                     <td>{{ inOutRepository.no }}</td>
                     <td>{{ inOutRepository.deliver }}</td>
                     <td>{{ inOutRepository.phoneContact }}</td>
-                    <td>{{ inOutRepository.recorded }}</td>
                     <td *ngIf="isNhapKho" class="text-right">
                         <div class="btn-group">
                             <button type="submit"
@@ -47,7 +47,19 @@
                                 <fa-icon icon="eye"></fa-icon>
                                 <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                             </button>
+                            <button *ngIf="!inOutRepository.recorded" type="submit"
+                                    (click)="record()"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" >Ghi sổ</span>
+                            </button>
 
+                            <button *ngIf="inOutRepository.recorded" type="submit"
+                                    (click)="unrecord()"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" > Bỏ ghi sổ</span>
+                            </button>
                             <button type="submit"
                                     [routerLink]="['/in-out-repository/in', inOutRepository.id, 'edit']"
                                     class="btn btn-primary btn-sm">
@@ -71,6 +83,20 @@
                                 <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                             </button>
 
+                            <button *ngIf="!inOutRepository.recorded" type="submit"
+                                    (click)="record()"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" >Ghi sổ</span>
+                            </button>
+
+                            <button *ngIf="inOutRepository.recorded" type="submit"
+                                    (click)="unrecord()"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" > Bỏ ghi sổ</span>
+                            </button>
+
                             <button type="submit"
                                     [routerLink]="['/in-out-repository/out', inOutRepository.id, 'edit']"
                                     class="btn btn-primary btn-sm">
@@ -89,7 +115,7 @@
             </tbody>
             <tfoot>
             <tr>
-                <td colspan="7"> Số dòng : {{inOutRepositories?.length}}</td>
+                <td colspan="6"> Số dòng : {{inOutRepositories?.length}}</td>
             </tr>
             </tfoot>
         </table>

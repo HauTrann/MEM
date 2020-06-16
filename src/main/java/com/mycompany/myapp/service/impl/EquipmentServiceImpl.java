@@ -5,6 +5,7 @@ import com.mycompany.myapp.service.EquipmentService;
 import com.mycompany.myapp.domain.Equipment;
 import com.mycompany.myapp.repository.EquipmentRepository;
 import com.mycompany.myapp.service.dto.DeviceModelDTO;
+import com.mycompany.myapp.service.dto.EquipmentDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,13 +55,13 @@ public class EquipmentServiceImpl implements EquipmentService {
      */
     @Override
     @Transactional(readOnly = true)
-    public Page<Equipment> findAll(Pageable pageable) {
+    public Page<EquipmentDTO> findAll(Pageable pageable) {
         log.debug("Request to get all Equipment");
-        if (SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg() == null) {
+        /*if (SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg() == null) {
             return equipmentRepository.findAll(pageable);
-        } else {
-            return equipmentRepository.findAllByOrganizationUnitIDOrderByCode(pageable, SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg());
-        }
+        } else {*/
+        return equipmentRepository.findAllByOrganizationUnitIDCustom(pageable, SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg());
+//        }
     }
 
     /**

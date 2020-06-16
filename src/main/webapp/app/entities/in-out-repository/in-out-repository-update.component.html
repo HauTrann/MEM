@@ -5,23 +5,48 @@
     </div>
 </div>
 <div class="row justify-content-center">
-    <div class="col-8" style="padding: 0px;">
+    <div class="col-10" style="padding: 0px;">
         <div class="row">
             <div class="col-6" style="padding-left: 0px">
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.inOutRepository.deliver"
-                           for="field_deliver">Deliver</label>
-                    <input type="text" class="form-control" name="deliver" id="field_deliver"
-                           [(ngModel)]="inOutRepository.deliver"
-                           />
+                <div style="display: flex;">
+                    <div class="col-6" style="padding: 0px">
+                        <div class="form-group">
+                            <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.inOutRepository.deliver"
+                                   for="field_deliver">Deliver</label>
+                            <input type="text" class="form-control" name="deliver" id="field_deliver"
+                                   [(ngModel)]="inOutRepository.deliver"
+                            />
+                        </div>
+                    </div>
+                    <div class="col-6" style="padding-right: 0px">
+                        <div class="form-group">
+                            <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.inOutRepository.phoneContact"
+                                   for="field_phoneContact">Phone Contact</label>
+                            <input type="text" class="form-control" name="phoneContact" id="field_phoneContact"
+                                   [(ngModel)]="inOutRepository.phoneContact"
+                            />
+                        </div>
+                    </div>
                 </div>
-
-                <div class="form-group">
-                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.inOutRepository.phoneContact"
-                           for="field_phoneContact">Phone Contact</label>
-                    <input type="text" class="form-control" name="phoneContact" id="field_phoneContact"
-                           [(ngModel)]="inOutRepository.phoneContact"
-                           />
+                <div style="display: flex;">
+                    <div class="col-6" style="padding: 0px">
+                        <div class="form-group">
+                            <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.inOutRepository.receiver"
+                                   for="field_deliver">Deliver</label>
+                            <input type="text" class="form-control" name="deliver" id="field_receiver"
+                                   [(ngModel)]="inOutRepository.receiver"
+                            />
+                        </div>
+                    </div>
+                    <div class="col-6" style="padding-right: 0px">
+                        <div class="form-group">
+                            <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.inOutRepository.phoneContactReceiver"
+                                   for="field_phoneContact">Phone Contact</label>
+                            <input type="text" class="form-control" name="phoneContact" id="field_phoneContactreceiver"
+                                   [(ngModel)]="inOutRepository.phoneContactReceiver"
+                            />
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-6" style="padding: 0px">
@@ -68,6 +93,8 @@
                         <th scope="col" ><span> Đơn vị</span> </th>
                         <th scope="col" ><span > Đơn giá</span> </th>
                         <th scope="col" ><span > Thành tiền</span> </th>
+                        <th scope="col" ><span > Số lô</span> </th>
+                        <th scope="col" ><span > Hạn dùng</span> </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -78,14 +105,19 @@
                             <ng-select [items]="deviceModels"
                                        id="deviceModels"
                                        name="deviceModels"
-                                       bindLabel="name"
+                                       bindLabel="code"
                                        bindValue="id"
                                        placeholder=""
                                        style="border-left: none"
+                                       [searchFn]="searchcountry"
                                        [(ngModel)]="detail.prodID"
                                        class="customSelect"
                                        (change)="deviceChange(detail)"
                             >
+                                <ng-template  ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                                    <div [title]="item.name" [ngOptionHighlight]="search">{{item.code}}</div>
+                                    <div [title]="item.name" [ngOptionHighlight]="search">{{item.name}}</div>
+                                </ng-template>
                             </ng-select>
                         </td>
                         <td>
@@ -122,7 +154,12 @@
                         <td>
                             <input currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',', precision : 0 }"  class="input-cell" name="amount {{i}}" [(ngModel)]="detail.amount" />
                         </td>
-
+                        <td>
+                            <input type="text" class="input-cell" name="lotNo {{i}}" [(ngModel)]="detail.lotNo" />
+                        </td>
+                        <td>
+                            <input type="date" class="input-cell" name="expiryDate {{i}}" [(ngModel)]="detail.expiryDate" />
+                        </td>
                     </tr>
                     <tr (click)="addNewRow()">
                         <td>
@@ -146,9 +183,16 @@
                         <td>
                             <input disabled type="text" class="input-cell" name="no"/>
                         </td>
-
+                        <td>
+                            <input disabled type="text" class="input-cell" name="no"/>
+                        </td>
+                        <td>
+                            <input disabled type="text" class="input-cell" name="no"/>
+                        </td>
                     </tr>
                     <tr *ngFor="let l of newArr(10 - inOutRepositoryDetails?.length)">
+                        <td></td>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
@@ -160,7 +204,7 @@
                     </tbody>
                     <tfoot>
                     <tr>
-                        <td colspan="6"> Số dòng : {{inOutRepositoryDetails?.length}}</td>
+                        <td colspan="8"> Số dòng : {{inOutRepositoryDetails?.length}}</td>
                         <td>
                             <input name="total" class="input-cell" currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',', precision : 0 }" [ngModel]="sumDT('amount')"></input>
                         </td>

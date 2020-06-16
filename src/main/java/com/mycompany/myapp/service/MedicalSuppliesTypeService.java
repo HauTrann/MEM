@@ -28,6 +28,8 @@ public interface MedicalSuppliesTypeService {
      */
     Page<MedicalSuppliesType> findAll(Pageable pageable);
 
+    Page<MedicalSuppliesType> findAllByOrganizationUnitID(Pageable pageable);
+
     /**
      * Get the "id" medicalSuppliesType.
      *

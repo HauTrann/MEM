@@ -1,13 +1,14 @@
 package com.mycompany.myapp.domain;
 
 import com.mycompany.myapp.service.dto.DeviceModelDTO;
+import com.mycompany.myapp.service.dto.EquipmentDTO;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
-
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A Equipment.
@@ -33,7 +34,27 @@ import java.util.Objects;
                 }
             )
         }
-    )})
+    ),
+    @SqlResultSetMapping(
+        name = "EquipmentDTO",
+        classes = {
+            @ConstructorResult(
+                targetClass = EquipmentDTO.class,
+                columns = {
+                    @ColumnResult(name = "id", type = Long.class),
+                    @ColumnResult(name = "organizationUnitID", type = Long.class),
+                    @ColumnResult(name = "code", type = String.class),
+                    @ColumnResult(name = "name", type = String.class),
+                    @ColumnResult(name = "equipmentTypeID", type = Long.class),
+                    @ColumnResult(name = "equipmentTypeName", type = String.class),
+                    @ColumnResult(name = "status", type = Integer.class),
+                    @ColumnResult(name = "description", type = String.class),
+                    @ColumnResult(name = "groupOfEquipment", type = String.class),
+                }
+            )
+        }
+    )
+})
 
 public class Equipment implements Serializable {
 
@@ -64,6 +85,13 @@ public class Equipment implements Serializable {
 
     @Column(name = "qrcode")
     private String qrcode;
+
+    @Column(name = "group_of_equipment")
+    private String groupOfEquipment;
+
+    @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JoinColumn(name = "equipmentID")
+    private Set<TechnicalData> technicalData = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -164,6 +192,24 @@ public class Equipment implements Serializable {
     public void setQrcode(String qrcode) {
         this.qrcode = qrcode;
     }
+
+    public String getGroupOfEquipment() {
+        return groupOfEquipment;
+    }
+
+    public void setGroupOfEquipment(String groupOfEquipment) {
+        this.groupOfEquipment = groupOfEquipment;
+    }
+
+    public Set<TechnicalData> getTechnicalData() {
+        return technicalData;
+    }
+
+    public void setTechnicalData(Set<TechnicalData> technicalData) {
+        this.technicalData = technicalData;
+    }
+
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override

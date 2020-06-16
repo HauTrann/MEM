@@ -13,5 +13,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EquipmentRepository extends JpaRepository<Equipment, Long>, EquipmentRepositoryCustom {
 
-    Page<Equipment> findAllByOrganizationUnitIDOrderByCode(Pageable pageable, Long id);
+    Page<Equipment> findAllByOrganizationUnitID(Pageable pageable, Long id);
 }

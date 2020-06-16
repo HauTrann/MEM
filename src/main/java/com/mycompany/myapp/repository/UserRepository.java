@@ -51,6 +51,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "select u.*, o.code as organizationUnitCode, o.name as organizationUnitName  from jhi_user u left join organization_unit o on u.organization_unit_id = o.id where u.login <> ?1 ", nativeQuery = true)
     Page<User> findAllByLoginNotCustom(Pageable pageable, String login);
 
+    Page<User> findAllByLoginNot(Pageable pageable, String login);
+
     @Query(value = "select * from jhi_user where organization_unit_id = ?1 and employee = 1", nativeQuery = true)
     Page<User> findAllEmployee(Pageable pageable, Long org);
 

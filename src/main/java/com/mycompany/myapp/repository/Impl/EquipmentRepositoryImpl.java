@@ -1,11 +1,15 @@
 package com.mycompany.myapp.repository.Impl;
 
 import com.google.common.base.Strings;
+import com.mycompany.myapp.domain.Equipment;
 import com.mycompany.myapp.repository.EquipmentRepositoryCustom;
 import com.mycompany.myapp.service.dto.DeviceModelDTO;
+import com.mycompany.myapp.service.dto.EquipmentDTO;
 import com.mycompany.myapp.service.util.Common;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -28,25 +32,25 @@ public class EquipmentRepositoryImpl implements EquipmentRepositoryCustom {
         StringBuilder sql = new StringBuilder();
         List<DeviceModelDTO> deviceModelDTOS = new ArrayList<>();
         Map<String, Object> params = new HashMap<>();
-        sql.append("select * from (select id,\n" +
-            "       organization_unit_id organizationUnitID,\n" +
-            "       code,\n" +
-            "       name,\n" +
-            "       equipment_type_id    equipmentTypeID,\n" +
-            "       null                 medicalSuppliesTypeID,\n" +
-            "       status,\n" +
-            "       description\n" +
-            "from equipment\n" +
-            "union all\n" +
-            "select id,\n" +
-            "       organization_unit_id     organizationUnitID,\n" +
-            "       code,\n" +
-            "       name,\n" +
-            "       null                     equipmentTypeID,\n" +
-            "       medical_supplies_type_id medicalSuppliesTypeID,\n" +
-            "       status,\n" +
-            "       description\n" +
-            "from medical_supplies) a\n" +
+        sql.append("select * from (select id, " +
+            "       organization_unit_id organizationUnitID, " +
+            "       code, " +
+            "       name, " +
+            "       equipment_type_id    equipmentTypeID, " +
+            "       null                 medicalSuppliesTypeID, " +
+            "       status, " +
+            "       description " +
+            "from equipment " +
+            "union all " +
+            "select id, " +
+            "       organization_unit_id     organizationUnitID, " +
+            "       code, " +
+            "       name, " +
+            "       null                     equipmentTypeID, " +
+            "       medical_supplies_type_id medicalSuppliesTypeID, " +
+            "       status, " +
+            "       description " +
+            "from medical_supplies) a " +
             "where a.name like '%" + text + "% ' and a.organizationUnitID = :org order by a.code ");
         params.put("org", org);
 
@@ -68,25 +72,25 @@ public class EquipmentRepositoryImpl implements EquipmentRepositoryCustom {
         StringBuilder sql = new StringBuilder();
         List<DeviceModelDTO> deviceModelDTOS = new ArrayList<>();
         Map<String, Object> params = new HashMap<>();
-        sql.append("select * from (select id,\n" +
-            "       organization_unit_id organizationUnitID,\n" +
-            "       code,\n" +
-            "       name,\n" +
-            "       equipment_type_id    equipmentTypeID,\n" +
-            "       null                 medicalSuppliesTypeID,\n" +
-            "       status,\n" +
-            "       description\n" +
-            "from equipment\n" +
-            "union all\n" +
-            "select id,\n" +
-            "       organization_unit_id     organizationUnitID,\n" +
-            "       code,\n" +
-            "       name,\n" +
-            "       null                     equipmentTypeID,\n" +
-            "       medical_supplies_type_id medicalSuppliesTypeID,\n" +
-            "       status,\n" +
-            "       description\n" +
-            "from medical_supplies) a\n" +
+        sql.append("select * from (select id, " +
+            "       organization_unit_id organizationUnitID, " +
+            "       code, " +
+            "       name, " +
+            "       equipment_type_id    equipmentTypeID, " +
+            "       null                 medicalSuppliesTypeID, " +
+            "       status, " +
+            "       description " +
+            "from equipment " +
+            "union all " +
+            "select id, " +
+            "       organization_unit_id     organizationUnitID, " +
+            "       code, " +
+            "       name, " +
+            "       null                     equipmentTypeID, " +
+            "       medical_supplies_type_id medicalSuppliesTypeID, " +
+            "       status, " +
+            "       description " +
+            "from medical_supplies) a " +
             "where a.organizationUnitID = :org order by a.code ");
         params.put("org", org);
         /*Query countQuerry = entityManager.createNativeQuery("SELECT Count(1) " + sql.toString());
@@ -100,5 +104,27 @@ public class EquipmentRepositoryImpl implements EquipmentRepositoryCustom {
         Common.setParams(query, params);
         deviceModelDTOS = query.getResultList();
         return deviceModelDTOS;
+    }
+
+    @Override
+    public Page<EquipmentDTO> findAllByOrganizationUnitIDCustom(Pageable pageable, Long id) {
+        StringBuilder sql = new StringBuilder();
+        Map<String, Object> params = new HashMap<>();
+        List<EquipmentDTO> lst = new ArrayList<>();
+        sql.append("" +
+            "from equipment e  " +
+            "         left join equipment_type et on e.equipment_type_id = et.id  " +
+            "where e.organization_unit_id = :organization_unit_id ");
+        params.put("organization_unit_id", id);
+        Query countQuerry = entityManager.createNativeQuery("SELECT Count(1) " + sql.toString());
+        Common.setParams(countQuerry, params);
+        Number total = (Number) countQuerry.getSingleResult();
+        if (total.longValue() > 0) {
+            Query query = entityManager.createNativeQuery("SELECT e.id id, e.organization_unit_id organizationUnitID," +
+                " e.equipment_type_id equipmentTypeID, e.code code, e.name name, e.description description, e.status status, e.group_of_equipment groupOfEquipment, et.name as equipmentTypeName   " + sql.toString(), "EquipmentDTO");
+            Common.setParamsWithPageable(query, params, pageable, total);
+            lst = query.getResultList();
+        }
+        return new PageImpl<>(((List<EquipmentDTO>) lst), pageable, total.longValue());
     }
 }

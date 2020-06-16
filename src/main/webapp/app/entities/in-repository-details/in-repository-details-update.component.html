@@ -6,11 +6,6 @@
             <div>
                 <jhi-alert-error></jhi-alert-error>
 
-                <div class="form-group" [hidden]="!editForm.get('id')!.value">
-                    <label for="id" jhiTranslate="global.field.id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
-                </div>
-
                 <div class="form-group">
                     <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.inRepositoryDetails.prodID" for="field_prodID">Prod ID</label>
                     <input type="number" class="form-control" name="prodID" id="field_prodID"

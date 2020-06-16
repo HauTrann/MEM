@@ -54,6 +54,12 @@ public class InOutRepository implements Serializable {
     @Column(name = "reason")
     private String reason;
 
+    @Column(name = "receiver")
+    private String receiver;
+
+    @Column(name = "phonecontactreceiver")
+    private String phoneContactReceiver;
+
     @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "in_out_repository_id")
     private Set<InOutRepositoryDetails> inOutRepositoryDetails = new HashSet<>();
@@ -186,6 +192,31 @@ public class InOutRepository implements Serializable {
     public void setReason(String reason) {
         this.reason = reason;
     }
+
+    public Boolean getOutOfStock() {
+        return outOfStock;
+    }
+
+    public Boolean getRecorded() {
+        return recorded;
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
+    }
+
+    public String getPhoneContactReceiver() {
+        return phoneContactReceiver;
+    }
+
+    public void setPhoneContactReceiver(String phoneContactReceiver) {
+        this.phoneContactReceiver = phoneContactReceiver;
+    }
+
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

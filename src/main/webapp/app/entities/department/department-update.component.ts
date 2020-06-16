@@ -24,6 +24,7 @@ export class DepartmentUpdateComponent implements OnInit {
   editForm = this.fb.group({
     id: [],
     name: [],
+    code: [],
     description: [],
     status: [],
     organizationUnitID: []
@@ -51,6 +52,7 @@ export class DepartmentUpdateComponent implements OnInit {
     this.editForm.patchValue({
       id: department.id,
       name: department.name,
+      code: department.code,
       description: department.description,
       status: department.status === undefined ? 1 : department.status,
       organizationUnitID: department.organizationUnitID
@@ -76,6 +78,7 @@ export class DepartmentUpdateComponent implements OnInit {
       ...new Department(),
       id: this.editForm.get(['id'])!.value,
       name: this.editForm.get(['name'])!.value,
+      code: this.editForm.get(['code'])!.value,
       description: this.editForm.get(['description'])!.value,
       status: this.editForm.get(['status'])!.value,
       organizationUnitID: this.editForm.get(['organizationUnitID'])!.value

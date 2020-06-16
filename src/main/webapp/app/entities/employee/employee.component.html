@@ -20,6 +20,7 @@
                     <th scope="col"  jhiSortBy="code"><span jhiTranslate="userManagement.code">code</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="firstName"><span jhiTranslate="userManagement.firstName">firstName</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="email"><span jhiTranslate="userManagement.email">Email</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="departmentID"><span jhiTranslate="userManagement.departmentID">departmentID</span> <fa-icon icon="sort"></fa-icon></th>
 <!--                    <th scope="col"  jhiSortBy="langKey"> <span jhiTranslate="userManagement.langKey">Lang Key</span> <fa-icon icon="sort"></fa-icon></th>-->
 <!--                    <th scope="col" jhiSortBy="createdDate"><span jhiTranslate="userManagement.createdDate">Created Date</span> <fa-icon icon="sort"></fa-icon></th>-->
 <!--                    <th scope="col" jhiSortBy="lastModifiedBy"><span jhiTranslate="userManagement.lastModifiedBy">Last Modified By</span> <fa-icon icon="sort"></fa-icon></th>-->
@@ -34,6 +35,7 @@
                     <td>{{ user.code }}</td>
                     <td>{{ user.firstName + ' ' + user.lastName }}</td>
                     <td>{{ user.email }}</td>
+                    <td>{{ user.departmentID }}</td>
                     <!--<td>
                         <button class="btn btn-danger btn-sm" (click)="setActive(user, true)" *ngIf="!user.activated"
                                 jhiTranslate="userManagement.deactivated">Deactivated</button>
@@ -74,7 +76,7 @@
             </tbody>
             <tfoot>
             <tr>
-                <td colspan="7"> Số dòng : {{users?.length}}</td>
+                <td colspan="8"> Số dòng : {{users?.length}}</td>
             </tr>
             </tfoot>
         </table>

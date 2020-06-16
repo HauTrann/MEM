@@ -21,6 +21,8 @@
       "postedDate": "Ngày ghi sổ",
       "no": "Số chứng từ",
       "deliver": "Người giao",
+      "receiver": "Người nhận",
+      "phoneContactReceiver": "Điện thoại liên hệ",
       "phoneContact": "Điện thoại liên hệ",
       "outOfStock": "Out Of Stock",
       "recorded": "Recorded"

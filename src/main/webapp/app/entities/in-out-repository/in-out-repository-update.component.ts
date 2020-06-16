@@ -129,4 +129,9 @@ export class InOutRepositoryUpdateComponent implements OnInit {
     }
     return isNaN(total) ? 0 : total;
   }
+
+  searchcountry(term: string, item: any): boolean {
+    term = term.toLocaleLowerCase();
+    return item.code.toLocaleLowerCase().indexOf(term) > -1 || item.name.toLocaleLowerCase().includes(term);
+  }
 }

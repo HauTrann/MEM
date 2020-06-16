@@ -62,7 +62,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         log.debug("Request to get all Departments");
         Optional<SecurityDTO> securityDTO = SecurityUtils.getCurrentUserLoginAndOrg();
         if (securityDTO.isPresent() && securityDTO.get().getOrg() != -1) {
-            return departmentRepository.findAllByOrganizationUnitIDCustom(pageable, securityDTO.get().getOrg());
+            return departmentRepository.findAllByOrganizationUnitID(pageable, securityDTO.get().getOrg());
         } else {
             if (securityDTO.isPresent() && securityDTO.get().getAuthorities().stream().anyMatch(n -> n.getAuthority().equals(ADMIN))) {
                 return departmentRepository.findAllCustom(pageable);

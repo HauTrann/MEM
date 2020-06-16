@@ -2,6 +2,7 @@ package com.mycompany.myapp.repository;
 
 import com.mycompany.myapp.domain.Equipment;
 import com.mycompany.myapp.service.dto.DeviceModelDTO;
+import com.mycompany.myapp.service.dto.EquipmentDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,4 +17,5 @@ import java.util.List;
 public interface EquipmentRepositoryCustom {
     List<DeviceModelDTO> findAllbyCodeText(String text, Long org);
     List<DeviceModelDTO> findAllDevice(Long org);
+    Page<EquipmentDTO> findAllByOrganizationUnitIDCustom(Pageable pageable, Long id);
 }

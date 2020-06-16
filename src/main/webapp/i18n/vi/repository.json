@@ -16,10 +16,10 @@
       "detail": {
         "title": "Repository"
       },
-      "code": "Code",
-      "name": "Name",
-      "description": "Description",
-      "status": "Status"
+      "code": "Mã",
+      "name": "Tên",
+      "description": "Mô tả",
+      "status": "Trạng thái"
     }
   }
 }

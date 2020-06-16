@@ -3,6 +3,7 @@ package com.mycompany.myapp.web.rest;
 import com.mycompany.myapp.domain.Equipment;
 import com.mycompany.myapp.service.EquipmentService;
 import com.mycompany.myapp.service.dto.DeviceModelDTO;
+import com.mycompany.myapp.service.dto.EquipmentDTO;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -92,9 +93,9 @@ public class EquipmentResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of equipment in body.
      */
     @GetMapping("/equipment")
-    public ResponseEntity<List<Equipment>> getAllEquipment(Pageable pageable) {
+    public ResponseEntity<List<EquipmentDTO>> getAllEquipment(Pageable pageable) {
         log.debug("REST request to get a page of Equipment");
-        Page<Equipment> page = equipmentService.findAll(pageable);
+        Page<EquipmentDTO> page = equipmentService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

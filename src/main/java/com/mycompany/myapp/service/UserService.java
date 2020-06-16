@@ -143,6 +143,8 @@ public class UserService {
     public User createUser(UserDTO userDTO) {
         User user = new User();
         user.setLogin(userDTO.getLogin().toLowerCase());
+        user.setCode(userDTO.getCode());
+        user.setDepartmentID(userDTO.getDepartmentID());
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
         if (userDTO.getEmail() != null) {
@@ -178,8 +180,10 @@ public class UserService {
     public User createUserEmpoyee(UserDTO userDTO) {
         User user = new User();
         user.setLogin(userDTO.getLogin().toLowerCase());
+        user.setCode(userDTO.getCode());
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());
+        user.setDepartmentID(userDTO.getDepartmentID());
         if (userDTO.getEmail() != null) {
             user.setEmail(userDTO.getEmail().toLowerCase());
         }
@@ -252,6 +256,7 @@ public class UserService {
                 user.setLogin(userDTO.getLogin().toLowerCase());
                 user.setFirstName(userDTO.getFirstName());
                 user.setLastName(userDTO.getLastName());
+                user.setDepartmentID(userDTO.getDepartmentID());
                 if (userDTO.getEmail() != null) {
                     user.setEmail(userDTO.getEmail().toLowerCase());
                 }
@@ -285,8 +290,10 @@ public class UserService {
             .map(user -> {
                 this.clearUserCaches(user);
                 user.setLogin(userDTO.getLogin().toLowerCase());
+                user.setCode(userDTO.getCode());
                 user.setFirstName(userDTO.getFirstName());
                 user.setLastName(userDTO.getLastName());
+                user.setDepartmentID(userDTO.getDepartmentID());
                 if (userDTO.getEmail() != null) {
                     user.setEmail(userDTO.getEmail().toLowerCase());
                 }
@@ -294,7 +301,6 @@ public class UserService {
                 user.setActivated(userDTO.isActivated());
                 user.setLangKey(userDTO.getLangKey());
                 user.setDepartmentid(userDTO.getDepartmentID());
-                user.setCode(userDTO.getCode());
                 user.setDateOfBirth(userDTO.getDateOfBirth());
                 user.setVice(userDTO.getVice());
                 user.setOrganizationUnitID(userDTO.getOrganizationUnitID());
@@ -340,7 +346,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public Page<UserDTO> getAllManagedUsers(Pageable pageable) {
-        return userRepository.findAllByLoginNotCustom(pageable, Constants.ANONYMOUS_USER).map(UserDTO::new);
+        return userRepository.findAllByLoginNot(pageable, Constants.ANONYMOUS_USER).map(UserDTO::new);
     }
 
     @Transactional(readOnly = true)
