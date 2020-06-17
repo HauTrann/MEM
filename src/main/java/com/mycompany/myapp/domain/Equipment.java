@@ -1,5 +1,7 @@
 package com.mycompany.myapp.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.mycompany.myapp.service.dto.DeviceModelDTO;
 import com.mycompany.myapp.service.dto.EquipmentDTO;
 import org.hibernate.annotations.Cache;
@@ -76,6 +78,11 @@ public class Equipment implements Serializable {
 
     @Column(name = "equipment_type_id")
     private Long equipmentTypeID;
+
+    @Transient
+    @JsonDeserialize
+    @JsonSerialize
+    private String equipmentTypeName;
 
     @Column(name = "status")
     private Integer status;
@@ -209,6 +216,13 @@ public class Equipment implements Serializable {
         this.technicalData = technicalData;
     }
 
+    public String getEquipmentTypeName() {
+        return equipmentTypeName;
+    }
+
+    public void setEquipmentTypeName(String equipmentTypeName) {
+        this.equipmentTypeName = equipmentTypeName;
+    }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

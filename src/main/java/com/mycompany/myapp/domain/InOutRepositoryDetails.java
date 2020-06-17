@@ -6,6 +6,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 import java.math.BigDecimal;
 
@@ -52,7 +53,7 @@ public class InOutRepositoryDetails implements Serializable {
     private String lotNo;
 
     @Column(name = "expiry_date")
-    private String expiryDate;
+    private LocalDate expiryDate;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -165,11 +166,11 @@ public class InOutRepositoryDetails implements Serializable {
         this.lotNo = lotNo;
     }
 
-    public String getExpiryDate() {
+    public LocalDate getExpiryDate() {
         return expiryDate;
     }
 
-    public void setExpiryDate(String expiryDate) {
+    public void setExpiryDate(LocalDate expiryDate) {
         this.expiryDate = expiryDate;
     }
 

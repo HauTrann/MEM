@@ -20,7 +20,7 @@
       "name": "Tên",
       "medicalSuppliesTypeID": "Loại vật tư",
       "description": "Mô tả",
-      "status": "TT"
+      "status": "Trạng thái HĐ"
     }
   }
 }

@@ -50,6 +50,19 @@ export const equipmentRoute: Routes = [
     canActivate: [UserRouteAccessService]
   },
   {
+    path: 'using',
+    component: EquipmentComponent,
+    resolve: {
+      pagingParams: JhiResolvePagingParams
+    },
+    data: {
+      authorities: [Authority.USER],
+      defaultSort: 'id,asc',
+      pageTitle: 'MedicalEquipmentManagerApp.equipment.home.title'
+    },
+    canActivate: [UserRouteAccessService]
+  },
+  {
     path: ':id/view',
     component: EquipmentDetailComponent,
     resolve: {

@@ -10,6 +10,8 @@ import { IInOutRepository } from 'app/shared/model/in-out-repository.model';
 import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { InOutRepositoryService } from './in-out-repository.service';
 import { InOutRepositoryDeleteDialogComponent } from './in-out-repository-delete-dialog.component';
+import { RepositoryLedgerService } from 'app/entities/repository-ledger/repository-ledger.service';
+import { ParsedProperty } from '@angular/compiler';
 
 @Component({
   selector: 'jhi-in-out-repository',
@@ -31,7 +33,8 @@ export class InOutRepositoryComponent implements OnInit, OnDestroy {
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
     protected eventManager: JhiEventManager,
-    protected modalService: NgbModal
+    protected modalService: NgbModal,
+    protected repositoryLedgerService: RepositoryLedgerService
   ) {
     this.isNhapKho = window.location.href.includes('in-out-repository/in');
   }
@@ -130,9 +133,21 @@ export class InOutRepositoryComponent implements OnInit, OnDestroy {
     this.ngbPaginationPage = this.page;
   }
 
-  record(): void {}
+  record(inOutRepository: IInOutRepository): void {
+    this.repositoryLedgerService.record(inOutRepository.id).subscribe((res: HttpResponse<any>) => {
+      if (res.body.status === 1) {
+        inOutRepository.recorded = true;
+      }
+    });
+  }
 
-  unrecord(): void {}
+  unrecord(inOutRepository: IInOutRepository): void {
+    this.repositoryLedgerService.unrecord(inOutRepository.id).subscribe((res: HttpResponse<any>) => {
+      if (res.body.status === 1) {
+        inOutRepository.recorded = false;
+      }
+    });
+  }
 
   getStyle(record?: boolean): any {
     return !record

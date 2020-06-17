@@ -52,8 +52,17 @@
         <li *jhiHasAnyAuthority="'USER_MANAGER'">
             <a routerLink="in-out-repository/out"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Xuất Kho</a>
         </li>
+        <li *jhiHasAnyAuthority="['ROLE_USER']">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span><font color="#337AB7"> CHỨC NĂNG</font>
+        </li>
+        <li *jhiHasAnyAuthority="['ROLE_USER']">
+            <a routerLink="equipment/using"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Thiết bị đang sử dụng</a>
+        </li>
+        <li *jhiHasAnyAuthority="['ROLE_USER']">
+            <a routerLink="equipment"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Yêu cầu nhận thiết bị</a>
+        </li>
         <li *jhiHasAnyAuthority="['USER_MANAGER', 'ROLE_USER']">
-            <span class="glyphicon glyphicon-search" aria-hidden="true"></span><font color="#337AB7"> TRANG THIẾT BỊ Y TẾ</font>
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span><font color="#337AB7"> DANH MỤC TTBYT</font>
         </li>
         <li *jhiHasAnyAuthority="['USER_MANAGER', 'ROLE_USER']">
             <a routerLink="equipment-type"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Loại thiết bị</a>
@@ -66,6 +75,15 @@
         </li>
         <li *jhiHasAnyAuthority="['USER_MANAGER', 'ROLE_USER']">
             <a routerLink="medical-supplies"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Vật tư</a>
+        </li>
+        <li *jhiHasAnyAuthority="'USER_MANAGER'">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span><font color="#337AB7"> QUẢN LÝ MƯỢN TRẢ</font>
+        </li>
+        <li *jhiHasAnyAuthority="'USER_MANAGER'">
+            <a routerLink="report"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Yêu cầu mượn thiết bị</a>
+        </li>
+        <li *jhiHasAnyAuthority="'USER_MANAGER'">
+            <a routerLink="report"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Trả thiết bị</a>
         </li>
         <li *jhiHasAnyAuthority="'USER_MANAGER'">
             <span class="glyphicon glyphicon-search" aria-hidden="true"></span><font color="#337AB7"> BÁO CÁO</font>

@@ -33,7 +33,7 @@ export class UtilsService {
     }
   ];
 
-  public getStatus(status: number): string {
+  public getStatus(status: number | undefined): string {
     if (status === 1) {
       return 'Hoạt động';
     } else {

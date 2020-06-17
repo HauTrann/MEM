@@ -19,7 +19,7 @@
       "code": "Mã",
       "name": "Tên",
       "equipmentTypeID": "Loại thiết bị",
-      "status": "TT",
+      "status": "Trạng thái HĐ",
       "description": "Mô tả",
       "qrcode": "Qrcode"
     }

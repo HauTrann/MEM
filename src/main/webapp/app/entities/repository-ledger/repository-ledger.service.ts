@@ -75,4 +75,12 @@ export class RepositoryLedgerService {
     }
     return res;
   }
+
+  public record(id: number | undefined): Observable<any> {
+    return this.http.post<any>(this.resourceUrl + '/record', { id }, { observe: 'response' });
+  }
+
+  public unrecord(id: number | undefined): Observable<any> {
+    return this.http.post<any>(this.resourceUrl + '/unrecord', { id }, { observe: 'response' });
+  }
 }

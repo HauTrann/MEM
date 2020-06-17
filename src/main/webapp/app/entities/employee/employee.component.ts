@@ -12,6 +12,8 @@ import { Account } from 'app/core/user/account.model';
 import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.model';
 import { EmployeeDeleteDialogComponent } from './employee-delete-dialog.component';
+import { IDepartment } from 'app/shared/model/department.model';
+import { DepartmentService } from 'app/entities/department/department.service';
 
 @Component({
   selector: 'jhi-user-mgmt',
@@ -27,6 +29,7 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   predicate!: string;
   previousPage!: number;
   ascending!: boolean;
+  departments: IDepartment[] | null = [];
 
   constructor(
     private userService: UserService,
@@ -34,10 +37,14 @@ export class EmployeeComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private eventManager: JhiEventManager,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private departmentService: DepartmentService
   ) {}
 
   ngOnInit(): void {
+    this.departmentService.getAll().subscribe(res => {
+      this.departments = res.body;
+    });
     this.activatedRoute.data
       .pipe(
         flatMap(
@@ -114,5 +121,14 @@ export class EmployeeComponent implements OnInit, OnDestroy {
   private onSuccess(users: User[] | null, headers: HttpHeaders): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.users = users;
+  }
+
+  getDepartmentName(id: number): string {
+    const dpm = this.departments?.find(n => n.id === id);
+    if (dpm) {
+      return dpm.name ? dpm.name : '';
+    } else {
+      return '';
+    }
   }
 }

@@ -2,6 +2,7 @@ package com.mycompany.myapp.service;
 
 import com.mycompany.myapp.domain.RepositoryLedger;
 
+import com.mycompany.myapp.service.dto.Record;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -42,4 +43,8 @@ public interface RepositoryLedgerService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    Record record(Record record);
+
+    Record unrecord(Record record);
 }

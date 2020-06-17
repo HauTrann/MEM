@@ -25,6 +25,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
+  isDisplayUsing?: boolean;
 
   constructor(
     protected equipmentService: EquipmentService,
@@ -33,7 +34,9 @@ export class EquipmentComponent implements OnInit, OnDestroy {
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal,
     public utilsService: UtilsService
-  ) {}
+  ) {
+    this.isDisplayUsing = window.location.href.includes('equipment/using');
+  }
 
   loadPage(page?: number): void {
     const pageToLoad: number = page || this.page;
@@ -92,17 +95,30 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   protected onSuccess(data: IEquipment[] | null, headers: HttpHeaders, page: number): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
-    this.router.navigate(['/equipment'], {
-      queryParams: {
-        page: this.page,
-        size: this.itemsPerPage,
-        sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc')
-      }
-    });
+    if (this.isDisplayUsing) {
+      this.router.navigate(['/equipment/using'], {
+        queryParams: {
+          page: this.page,
+          size: this.itemsPerPage,
+          sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc')
+        }
+      });
+    } else {
+      this.router.navigate(['/equipment'], {
+        queryParams: {
+          page: this.page,
+          size: this.itemsPerPage,
+          sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc')
+        }
+      });
+    }
+
     this.equipment = data || [];
   }
 
   protected onError(): void {
     this.ngbPaginationPage = this.page;
   }
+
+  downClick(equipment: IEquipment): void {}
 }

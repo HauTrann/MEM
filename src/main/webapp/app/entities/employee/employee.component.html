@@ -35,7 +35,7 @@
                     <td>{{ user.code }}</td>
                     <td>{{ user.firstName + ' ' + user.lastName }}</td>
                     <td>{{ user.email }}</td>
-                    <td>{{ user.departmentID }}</td>
+                    <td>{{ getDepartmentName(user.departmentID) }}</td>
                     <!--<td>
                         <button class="btn btn-danger btn-sm" (click)="setActive(user, true)" *ngIf="!user.activated"
                                 jhiTranslate="userManagement.deactivated">Deactivated</button>

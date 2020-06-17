@@ -11,4 +11,7 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface RepositoryLedgerRepository extends JpaRepository<RepositoryLedger, Long> {
+
+    void deleteAllByOrganizationUnitIDAndRefID(Long org, Long refID);
+
 }

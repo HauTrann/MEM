@@ -12,6 +12,8 @@ import { Account } from 'app/core/user/account.model';
 import { UserService } from 'app/core/user/user.service';
 import { User } from 'app/core/user/user.model';
 import { UserManagementDeleteDialogComponent } from './user-management-delete-dialog.component';
+import { IOrganizationUnit } from 'app/shared/model/organization-unit.model';
+import { OrganizationUnitService } from 'app/entities/organization-unit/organization-unit.service';
 
 @Component({
   selector: 'jhi-user-mgmt',
@@ -27,6 +29,7 @@ export class UserManagementComponent implements OnInit, OnDestroy {
   predicate!: string;
   previousPage!: number;
   ascending!: boolean;
+  organizationUnits: IOrganizationUnit[] | null = [];
 
   constructor(
     private userService: UserService,
@@ -34,10 +37,14 @@ export class UserManagementComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private eventManager: JhiEventManager,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private organizationUnitService: OrganizationUnitService
   ) {}
 
   ngOnInit(): void {
+    this.organizationUnitService.getAll().subscribe(res => {
+      this.organizationUnits = res.body;
+    });
     this.activatedRoute.data
       .pipe(
         flatMap(
@@ -114,5 +121,14 @@ export class UserManagementComponent implements OnInit, OnDestroy {
   private onSuccess(users: User[] | null, headers: HttpHeaders): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.users = users;
+  }
+
+  getHospital(user: User): string {
+    const bv = this.organizationUnits?.find(n => n.id === user.organizationUnitID);
+    if (bv) {
+      return bv.name ? bv.name : '';
+    } else {
+      return '';
+    }
   }
 }

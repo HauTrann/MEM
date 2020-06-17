@@ -1,5 +1,7 @@
 package com.mycompany.myapp.service.impl;
 
+import com.mycompany.myapp.domain.EquipmentType;
+import com.mycompany.myapp.repository.EquipmentTypeRepository;
 import com.mycompany.myapp.security.SecurityUtils;
 import com.mycompany.myapp.service.EquipmentService;
 import com.mycompany.myapp.domain.Equipment;
@@ -27,9 +29,11 @@ public class EquipmentServiceImpl implements EquipmentService {
     private final Logger log = LoggerFactory.getLogger(EquipmentServiceImpl.class);
 
     private final EquipmentRepository equipmentRepository;
+    private final EquipmentTypeRepository equipmentTypeRepository;
 
-    public EquipmentServiceImpl(EquipmentRepository equipmentRepository) {
+    public EquipmentServiceImpl(EquipmentRepository equipmentRepository, EquipmentTypeRepository equipmentTypeRepository) {
         this.equipmentRepository = equipmentRepository;
+        this.equipmentTypeRepository = equipmentTypeRepository;
     }
 
     /**
@@ -74,7 +78,12 @@ public class EquipmentServiceImpl implements EquipmentService {
     @Transactional(readOnly = true)
     public Optional<Equipment> findOne(Long id) {
         log.debug("Request to get Equipment : {}", id);
-        return equipmentRepository.findById(id);
+        Optional<Equipment> equipment = equipmentRepository.findById(id);
+        if (equipment.get().getEquipmentTypeID() != null) {
+            EquipmentType equipmentType = equipmentTypeRepository.findById(equipment.get().getEquipmentTypeID()).get();
+            equipment.get().setEquipmentTypeName(equipmentType.getName());
+        }
+        return equipment;
     }
 
     /**

@@ -19,7 +19,7 @@
       "name": "Tên",
       "code": "Mã",
       "description": "Mô tả",
-      "status": "TT",
+      "status": "Trạng thái HĐ",
       "departmentID": "Phòng ban"
     }
   }

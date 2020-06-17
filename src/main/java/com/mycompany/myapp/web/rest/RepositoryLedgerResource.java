@@ -2,6 +2,7 @@ package com.mycompany.myapp.web.rest;
 
 import com.mycompany.myapp.domain.RepositoryLedger;
 import com.mycompany.myapp.service.RepositoryLedgerService;
+import com.mycompany.myapp.service.dto.Record;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -122,4 +123,17 @@ public class RepositoryLedgerResource {
         repositoryLedgerService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
+
+    @PostMapping("/repository-ledgers/record")
+    public ResponseEntity<Record> record(@RequestBody Record record) {
+        Record result = repositoryLedgerService.record(record);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @PostMapping("/repository-ledgers/unrecord")
+    public ResponseEntity<Record> unrecord(@RequestBody Record record) {
+        Record result = repositoryLedgerService.unrecord(record);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
 }

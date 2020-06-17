@@ -5,6 +5,26 @@
     </div>
 </div>
 <div class="row justify-content-center">
+    <div *ngIf="!isNhapKho" class="col-10 justify-content-lg-end" style="padding: 0px;">
+        <div class="col-9">
+
+        </div>
+        <div class="col-3" style="padding: 0px">
+            <label> Loại xuất kho</label>
+            <ng-select>
+            </ng-select>
+        </div>
+    </div>
+    <div *ngIf="isNhapKho" class="col-10 justify-content-lg-end" style="padding: 0px;">
+        <div class="col-9">
+
+        </div>
+        <div class="col-3" style="padding: 0px">
+            <label> Loại nhập kho</label>
+            <ng-select >
+            </ng-select>
+        </div>
+    </div>
     <div class="col-10" style="padding: 0px;">
         <div class="row">
             <div class="col-6" style="padding-left: 0px">
@@ -219,7 +239,7 @@
                     <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
                 </button>
 
-                <button (click)="save()" type="submit" id="save-entity"  class="btn btn-primary">
+                <button (click)="save()" [disabled]="inOutRepository.recorded" type="submit" id="save-entity"  class="btn btn-primary">
                     <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
                 </button>
             </div>

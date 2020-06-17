@@ -1,8 +1,12 @@
+<div>
+    <div class="ptitle">
+        <span jhiTranslate="medicalEquipmentManagerApp.equipment.home.title">Equipment</span>
+    </div>
+</div>
 <div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="equipment">
-            <h2><span jhiTranslate="medicalEquipmentManagerApp.equipment.detail.title">Equipment</span> {{ equipment.id }}</h2>
-
+<!--            <h2><span jhiTranslate="medicalEquipmentManagerApp.equipment.detail.title">Equipment</span> {{ equipment.id }}</h2>-->
             <hr>
 
             <jhi-alert-error></jhi-alert-error>
@@ -18,20 +22,26 @@
                 </dd>
                 <dt><span jhiTranslate="medicalEquipmentManagerApp.equipment.equipmentTypeID">Equipment Type ID</span></dt>
                 <dd>
-                    <span>{{ equipment.equipmentTypeID }}</span>
+                    <span>{{ equipment.equipmentTypeName }}</span>
                 </dd>
                 <dt><span jhiTranslate="medicalEquipmentManagerApp.equipment.status">Status</span></dt>
                 <dd>
-                    <span>{{ equipment.status }}</span>
+                    <span>{{ utilsService.getStatus(equipment.status) }}</span>
                 </dd>
                 <dt><span jhiTranslate="medicalEquipmentManagerApp.equipment.description">Description</span></dt>
                 <dd>
                     <span>{{ equipment.description }}</span>
                 </dd>
-                <dt><span jhiTranslate="medicalEquipmentManagerApp.equipment.qrcode">Qrcode</span></dt>
+                <dt><span >Thông số kỹ thuật</span></dt>
+                <ul class="big-wrap">
+                    <li *ngFor="let tsky of equipment.technicalData;">
+                        <span> {{tsky.name}} - {{tsky.value}}</span>
+                    </li>
+                </ul>
+                <!--<dt><span jhiTranslate="medicalEquipmentManagerApp.equipment.qrcode">Qrcode</span></dt>
                 <dd>
                     <span>{{ equipment.qrcode }}</span>
-                </dd>
+                </dd>-->
             </dl>
 
             <button type="submit"

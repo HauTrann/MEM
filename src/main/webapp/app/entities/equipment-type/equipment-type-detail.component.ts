@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { IEquipmentType } from 'app/shared/model/equipment-type.model';
+import { UtilsService } from 'app/entities/utils/utils.service';
 
 @Component({
   selector: 'jhi-equipment-type-detail',
@@ -10,7 +11,7 @@ import { IEquipmentType } from 'app/shared/model/equipment-type.model';
 export class EquipmentTypeDetailComponent implements OnInit {
   equipmentType: IEquipmentType | null = null;
 
-  constructor(protected activatedRoute: ActivatedRoute) {}
+  constructor(protected activatedRoute: ActivatedRoute, public utilsService: UtilsService) {}
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ equipmentType }) => (this.equipmentType = equipmentType));

@@ -25,19 +25,19 @@ public class RepositoryLedger implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @Column(name = "organization_unit_id")
+    @Column(name = "organizationunitid")
     private Long organizationUnitID;
 
-    @Column(name = "ref_id")
+    @Column(name = "refid")
     private Long refID;
 
-    @Column(name = "detail_id")
+    @Column(name = "detailid")
     private Long detailID;
 
     @Column(name = "date")
     private LocalDate date;
 
-    @Column(name = "posted_date")
+    @Column(name = "posteddate")
     private LocalDate postedDate;
 
     @Column(name = "no")
@@ -46,7 +46,7 @@ public class RepositoryLedger implements Serializable {
     @Column(name = "deliver")
     private String deliver;
 
-    @Column(name = "phone_contact")
+    @Column(name = "phonecontact")
     private String phoneContact;
 
     @Column(name = "quantity", precision = 21, scale = 2)
@@ -55,14 +55,38 @@ public class RepositoryLedger implements Serializable {
     @Column(name = "unit")
     private String unit;
 
-    @Column(name = "unit_price", precision = 21, scale = 2)
+    @Column(name = "unitprice", precision = 21, scale = 2)
     private BigDecimal unitPrice;
 
     @Column(name = "amount", precision = 21, scale = 2)
     private BigDecimal amount;
 
-    @Column(name = "out_of_stock")
+    @Column(name = "outofstock")
     private Boolean outOfStock;
+
+    @Column(name = "lotno")
+    private String lotNo;
+
+    @Column(name = "expirydate")
+    private LocalDate expiryDate;
+
+    @Column(name = "repositoryid")
+    private Long repositoryID;
+
+    @Column(name = "prodid")
+    private Long prodID;
+
+    @Column(name = "prodname")
+    private String prodName;
+
+    @Column(name = "receiver")
+    private String receiver;
+
+    @Column(name = "phonecontactreceiver")
+    private String phoneContactReceiver;
+
+    @Column(name = "reason")
+    private String reason;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -241,6 +265,75 @@ public class RepositoryLedger implements Serializable {
     public void setOutOfStock(Boolean outOfStock) {
         this.outOfStock = outOfStock;
     }
+
+    public Boolean getOutOfStock() {
+        return outOfStock;
+    }
+
+    public String getLotNo() {
+        return lotNo;
+    }
+
+    public void setLotNo(String lotNo) {
+        this.lotNo = lotNo;
+    }
+
+    public LocalDate getExpiryDate() {
+        return expiryDate;
+    }
+
+    public void setExpiryDate(LocalDate expiryDate) {
+        this.expiryDate = expiryDate;
+    }
+
+    public Long getRepositoryID() {
+        return repositoryID;
+    }
+
+    public void setRepositoryID(Long repositoryID) {
+        this.repositoryID = repositoryID;
+    }
+
+    public Long getProdID() {
+        return prodID;
+    }
+
+    public void setProdID(Long prodID) {
+        this.prodID = prodID;
+    }
+
+    public String getProdName() {
+        return prodName;
+    }
+
+    public void setProdName(String prodName) {
+        this.prodName = prodName;
+    }
+
+    public String getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(String receiver) {
+        this.receiver = receiver;
+    }
+
+    public String getPhoneContactReceiver() {
+        return phoneContactReceiver;
+    }
+
+    public void setPhoneContactReceiver(String phoneContactReceiver) {
+        this.phoneContactReceiver = phoneContactReceiver;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
