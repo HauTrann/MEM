@@ -1,0 +1,40 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "organizationUnitID",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "userID",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "requestDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "dateOfDelivery",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Integer"
+        }
+    ],
+    "changelogDate": "20200617185824",
+    "dto": "no",
+    "searchEngine": false,
+    "service": "serviceImpl",
+    "entityTableName": "request_receive_device",
+    "databaseType": "sql",
+    "readOnly": false,
+    "jpaMetamodelFiltering": false,
+    "pagination": "pagination"
+}

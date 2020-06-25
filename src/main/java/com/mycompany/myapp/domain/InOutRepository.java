@@ -60,6 +60,15 @@ public class InOutRepository implements Serializable {
     @Column(name = "phonecontactreceiver")
     private String phoneContactReceiver;
 
+    @Column(name = "userid")
+    private Long userID;
+
+    @Column(name = "departmentid")
+    private Long departmentID;
+
+    @Column(name = "type")
+    private Integer type;
+
     @OneToMany(cascade = {CascadeType.ALL}, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "in_out_repository_id")
     private Set<InOutRepositoryDetails> inOutRepositoryDetails = new HashSet<>();
@@ -217,6 +226,33 @@ public class InOutRepository implements Serializable {
         this.phoneContactReceiver = phoneContactReceiver;
     }
 
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Long getUserID() {
+        return userID;
+    }
+
+    public void setUserID(Long userID) {
+        this.userID = userID;
+    }
+
+    public Long getDepartmentID() {
+        return departmentID;
+    }
+
+    public void setDepartmentID(Long departmentID) {
+        this.departmentID = departmentID;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

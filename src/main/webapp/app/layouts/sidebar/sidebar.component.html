@@ -40,6 +40,21 @@
                 <span>Nhân viên</span>
             </a>
         </li>
+        <li *jhiHasAnyAuthority="['USER_MANAGER', 'ROLE_USER']">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span><font color="#337AB7"> DANH MỤC TTBYT</font>
+        </li>
+        <li *jhiHasAnyAuthority="['USER_MANAGER', 'ROLE_USER']">
+            <a routerLink="equipment-type"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Loại thiết bị</a>
+        </li>
+        <li *jhiHasAnyAuthority="['USER_MANAGER', 'ROLE_USER']">
+            <a routerLink="equipment"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Thiết bị</a>
+        </li>
+        <li *jhiHasAnyAuthority="['USER_MANAGER', 'ROLE_USER']">
+            <a routerLink="medical-supplies-type"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Loại vật tư</a>
+        </li>
+        <li *jhiHasAnyAuthority="['USER_MANAGER', 'ROLE_USER']">
+            <a routerLink="medical-supplies"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Vật tư</a>
+        </li>
         <li *jhiHasAnyAuthority="'USER_MANAGER'">
             <span class="glyphicon glyphicon-search" aria-hidden="true"></span><font color="#337AB7"> KHO</font>
         </li>
@@ -59,31 +74,29 @@
             <a routerLink="equipment/using"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Thiết bị đang sử dụng</a>
         </li>
         <li *jhiHasAnyAuthority="['ROLE_USER']">
-            <a routerLink="equipment"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Yêu cầu nhận thiết bị</a>
+            <a routerLink="request-receive-device"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Đăng kí nhận thiết bị</a>
         </li>
-        <li *jhiHasAnyAuthority="['USER_MANAGER', 'ROLE_USER']">
-            <span class="glyphicon glyphicon-search" aria-hidden="true"></span><font color="#337AB7"> DANH MỤC TTBYT</font>
+        <li *jhiHasAnyAuthority="['ROLE_USER']">
+            <a routerLink="request-receive-device/pay"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Đăng kí trả thiết bị</a>
         </li>
-        <li *jhiHasAnyAuthority="['USER_MANAGER', 'ROLE_USER']">
-            <a routerLink="equipment-type"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Loại thiết bị</a>
-        </li>
-        <li *jhiHasAnyAuthority="['USER_MANAGER', 'ROLE_USER']">
-            <a routerLink="equipment"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span> Thiết bị</a>
-        </li>
-        <li *jhiHasAnyAuthority="['USER_MANAGER', 'ROLE_USER']">
-            <a routerLink="medical-supplies-type"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Loại vật tư</a>
-        </li>
-        <li *jhiHasAnyAuthority="['USER_MANAGER', 'ROLE_USER']">
-            <a routerLink="medical-supplies"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Vật tư</a>
-        </li>
+
         <li *jhiHasAnyAuthority="'USER_MANAGER'">
             <span class="glyphicon glyphicon-search" aria-hidden="true"></span><font color="#337AB7"> QUẢN LÝ MƯỢN TRẢ</font>
         </li>
         <li *jhiHasAnyAuthority="'USER_MANAGER'">
-            <a routerLink="report"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Yêu cầu mượn thiết bị</a>
+            <a routerLink="request-receive-device/manager"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Yêu cầu nhận thiết bị</a>
         </li>
         <li *jhiHasAnyAuthority="'USER_MANAGER'">
-            <a routerLink="report"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Trả thiết bị</a>
+            <a routerLink="request-receive-device/pay/manager"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Yêu cầu trả thiết bị</a>
+        </li>
+        <li *jhiHasAnyAuthority="'USER_MANAGER'">
+            <span class="glyphicon glyphicon-search" aria-hidden="true"></span><font color="#337AB7"> QUẢN LÝ SỬA CHỮA</font>
+        </li>
+        <li *jhiHasAnyAuthority="'USER_MANAGER'">
+            <a routerLink="report"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Báo hỏng</a>
+        </li>
+        <li *jhiHasAnyAuthority="'USER_MANAGER'">
+            <a routerLink="report"><span class="glyphicon glyphicon-stats" aria-hidden="true"></span> Yêu cầu sửa chữa</a>
         </li>
         <li *jhiHasAnyAuthority="'USER_MANAGER'">
             <span class="glyphicon glyphicon-search" aria-hidden="true"></span><font color="#337AB7"> BÁO CÁO</font>

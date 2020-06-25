@@ -17,4 +17,6 @@ public interface InOutRepositoryRepository extends JpaRepository<InOutRepository
     Page<InOutRepository> findAllByOrganizationUnitIDAndOutOfStockIsTrue(Pageable pageable, Long org);
     Page<InOutRepository> findAllByOrganizationUnitIDAndOutOfStockIsFalseOrOutOfStockIsNull(Pageable pageable, Long org);
 
+    Integer countAllByOutOfStockAndOrganizationUnitID(Boolean ofs, Long org);
+
 }

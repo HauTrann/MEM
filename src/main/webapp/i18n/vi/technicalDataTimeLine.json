@@ -1,0 +1,27 @@
+{
+  "medicalEquipmentManagerApp": {
+    "technicalDataTimeLine": {
+      "home": {
+        "title": "Technical Data Time Lines",
+        "createLabel": "Thêm mới một Technical Data Time Line",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Technical Data Time Line",
+        "notFound": "No Technical Data Time Lines found"
+      },
+      "created": "Một Technical Data Time Line mới được tạo với định danh {{ param }}",
+      "updated": "Một Technical Data Time Line cập nhật với định danh {{ param }}",
+      "deleted": "Một Technical Data Time Line đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Technical Data Time Line {{ id }}?"
+      },
+      "detail": {
+        "title": "Technical Data Time Line"
+      },
+      "name": "Name",
+      "value": "Value",
+      "equipmentID": "Equipment ID",
+      "time": "Time",
+      "serial": "Serial",
+      "userID": "User ID"
+    }
+  }
+}

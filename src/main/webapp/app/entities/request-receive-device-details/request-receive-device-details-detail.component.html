@@ -1,0 +1,70 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="requestReceiveDeviceDetails">
+            <h2><span jhiTranslate="medicalEquipmentManagerApp.requestReceiveDeviceDetails.detail.title">Request Receive Device Details</span> {{ requestReceiveDeviceDetails.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.requestReceiveDeviceDetails.requestReceiveDeviceID">Request Receive Device ID</span></dt>
+                <dd>
+                    <span>{{ requestReceiveDeviceDetails.requestReceiveDeviceID }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.requestReceiveDeviceDetails.serial">Serial</span></dt>
+                <dd>
+                    <span>{{ requestReceiveDeviceDetails.serial }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.requestReceiveDeviceDetails.prodID">Prod ID</span></dt>
+                <dd>
+                    <span>{{ requestReceiveDeviceDetails.prodID }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.requestReceiveDeviceDetails.prodName">Prod Name</span></dt>
+                <dd>
+                    <span>{{ requestReceiveDeviceDetails.prodName }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.requestReceiveDeviceDetails.quantity">Quantity</span></dt>
+                <dd>
+                    <span>{{ requestReceiveDeviceDetails.quantity }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.requestReceiveDeviceDetails.unit">Unit</span></dt>
+                <dd>
+                    <span>{{ requestReceiveDeviceDetails.unit }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.requestReceiveDeviceDetails.unitPrice">Unit Price</span></dt>
+                <dd>
+                    <span>{{ requestReceiveDeviceDetails.unitPrice }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.requestReceiveDeviceDetails.amount">Amount</span></dt>
+                <dd>
+                    <span>{{ requestReceiveDeviceDetails.amount }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.requestReceiveDeviceDetails.repositoryID">Repository ID</span></dt>
+                <dd>
+                    <span>{{ requestReceiveDeviceDetails.repositoryID }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.requestReceiveDeviceDetails.lotNo">Lot No</span></dt>
+                <dd>
+                    <span>{{ requestReceiveDeviceDetails.lotNo }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.requestReceiveDeviceDetails.expiryDate">Expiry Date</span></dt>
+                <dd>
+                    <span>{{ requestReceiveDeviceDetails.expiryDate }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/request-receive-device-details', requestReceiveDeviceDetails.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

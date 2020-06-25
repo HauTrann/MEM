@@ -100,6 +100,18 @@ public class InOutRepositoryResource {
     /**
      * {@code GET  /in-out-repositories} : get all the inOutRepositories.
      *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of inOutRepositories in body.
+     */
+    @GetMapping("/in-out-repositories/getno")
+    public ResponseEntity<Integer> getNo(@RequestParam Integer typeNo) {
+        log.debug("REST request to get a page of InOutRepositories");
+        Integer count = inOutRepositoryService.count(typeNo);
+        return new ResponseEntity<>(count, HttpStatus.OK);
+    }
+
+    /**
+     * {@code GET  /in-out-repositories} : get all the inOutRepositories.
+     *
      * @param pageable the pagination information.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of inOutRepositories in body.
      */

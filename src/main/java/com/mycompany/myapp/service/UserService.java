@@ -353,7 +353,6 @@ public class UserService {
     public Page<UserDTO> getAllManagedUsersEmployee(Pageable pageable) throws BadRequestException {
         Optional<SecurityDTO> securityDTO = SecurityUtils.getCurrentUserLoginAndOrg();
         if (securityDTO.isPresent() && securityDTO.get().getOrg() != -1) {
-            Page<User> lst = userRepository.findAllEmployee(pageable, securityDTO.get().getOrg());
             return userRepository.findAllEmployee(pageable, securityDTO.get().getOrg()).map(UserDTO::new);
         } else {
             if (securityDTO.isPresent() && securityDTO.get().getAuthorities().stream().anyMatch(n -> n.getAuthority().equals(ADMIN))) {

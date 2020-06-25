@@ -5,24 +5,20 @@
     </div>
 </div>
 <div class="row justify-content-center">
-    <div *ngIf="!isNhapKho" class="col-10 justify-content-lg-end" style="padding: 0px;">
-        <div class="col-9">
-
-        </div>
+    <div  class="col-10 justify-content-lg-end" style="padding: 0px;">
         <div class="col-3" style="padding: 0px">
-            <label> Loại xuất kho</label>
-            <ng-select>
-            </ng-select>
-        </div>
-    </div>
-    <div *ngIf="isNhapKho" class="col-10 justify-content-lg-end" style="padding: 0px;">
-        <div class="col-9">
-
-        </div>
-        <div class="col-3" style="padding: 0px">
-            <label> Loại nhập kho</label>
-            <ng-select >
-            </ng-select>
+            <label> {{isNhapKho?'Loại nhập kho':'Loại xuất kho'}}</label>
+            <ng-select [items]="isNhapKho?utilsService.typeNhapKho:utilsService.typeXuatKho"
+                       id="typeNK1"
+                       name="typeNK1"
+                       bindLabel="name"
+                       bindValue="status"
+                       placeholder=""
+                       style="border-left: none"
+                       [disabled]="isFromRecive || isFromPay"
+                       [(ngModel)]="inOutRepository.type"
+                       (change)="typeChange()"
+            ></ng-select>
         </div>
     </div>
     <div class="col-10" style="padding: 0px;">
@@ -33,9 +29,20 @@
                         <div class="form-group">
                             <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.inOutRepository.deliver"
                                    for="field_deliver">Deliver</label>
-                            <input type="text" class="form-control" name="deliver" id="field_deliver"
+                            <input *ngIf="inOutRepository.type !== 1 || !isNhapKho" type="text" class="form-control" name="deliver" id="field_deliver"
                                    [(ngModel)]="inOutRepository.deliver"
                             />
+                            <ng-select *ngIf="inOutRepository.type === 1 && isNhapKho" [items]="inOutRepository.type === 1? users: users"
+                                       id="typeXXX"
+                                       name="typeXXX"
+                                       bindLabel="firstName"
+                                       bindValue="id"
+                                       placeholder=""
+                                       style="border-left: none"
+                                       [disabled]="isFromRecive || isFromPay"
+                                       [(ngModel)]="inOutRepository.userID"
+                                       (change)="typeChange()"
+                            ></ng-select>
                         </div>
                     </div>
                     <div class="col-6" style="padding-right: 0px">
@@ -52,17 +59,28 @@
                     <div class="col-6" style="padding: 0px">
                         <div class="form-group">
                             <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.inOutRepository.receiver"
-                                   for="field_deliver">Deliver</label>
-                            <input type="text" class="form-control" name="deliver" id="field_receiver"
+                                   for="field_receiver">Deliver</label>
+                            <input *ngIf="inOutRepository.type !== 1 || isNhapKho" type="text" class="form-control" name="deliver" id="field_receiver"
                                    [(ngModel)]="inOutRepository.receiver"
                             />
+                            <ng-select *ngIf="inOutRepository.type === 1 && !isNhapKho" [items]="inOutRepository.type === 1? users: users"
+                                       id="typeNV"
+                                       name="typeNV"
+                                       bindLabel="firstName"
+                                       bindValue="id"
+                                       placeholder=""
+                                       style="border-left: none"
+                                       [disabled]="isFromRecive || isFromPay"
+                                       [(ngModel)]="inOutRepository.userID"
+                                       (change)="typeChange()"
+                            ></ng-select>
                         </div>
                     </div>
                     <div class="col-6" style="padding-right: 0px">
                         <div class="form-group">
                             <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.inOutRepository.phoneContactReceiver"
-                                   for="field_phoneContact">Phone Contact</label>
-                            <input type="text" class="form-control" name="phoneContact" id="field_phoneContactreceiver"
+                                   for="field_phoneContactreceiver">Phone Contact</label>
+                            <input type="text" class="form-control" name="field_phoneContactreceiver" id="field_phoneContactreceiver"
                                    [(ngModel)]="inOutRepository.phoneContactReceiver"
                             />
                         </div>
@@ -108,6 +126,7 @@
                     <tr>
                         <th scope="col" ><span >Mã thiết bị VT</span> </th>
                         <th scope="col" ><span > Tên thiết bị VT</span> </th>
+                        <th scope="col" ><span > Serial(*) </span> </th>
                         <th scope="col" ><span > Kho</span> </th>
                         <th scope="col" ><span > Số lượng</span> </th>
                         <th scope="col" ><span> Đơn vị</span> </th>
@@ -115,6 +134,7 @@
                         <th scope="col" ><span > Thành tiền</span> </th>
                         <th scope="col" ><span > Số lô</span> </th>
                         <th scope="col" ><span > Hạn dùng</span> </th>
+                        <th scope="col" style="min-width: 100px" ><span > Thông số kỹ thuật</span> </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -123,8 +143,8 @@
                         *ngFor="let detail of inOutRepositoryDetails ; let i= index;">
                         <td>
                             <ng-select [items]="deviceModels"
-                                       id="deviceModels"
-                                       name="deviceModels"
+                                       id="deviceModels{{i}}"
+                                       name="deviceModels{{i}}"
                                        bindLabel="code"
                                        bindValue="id"
                                        placeholder=""
@@ -141,12 +161,15 @@
                             </ng-select>
                         </td>
                         <td>
-                            <input type="text" class="input-cell" name="unit {{i}}" [(ngModel)]="detail.prodName" />
+                            <input type="text" class="input-cell" name="prodName {{i}}" [(ngModel)]="detail.prodName" />
+                        </td>
+                        <td>
+                            <input type="text" class="input-cell" name="serial {{i}}" [(ngModel)]="detail.serial" />
                         </td>
                         <td>
                             <ng-select [items]="repositorys"
-                                       id="repositorys"
-                                       name="repositorys"
+                                       id="repositorys{{i}}"
+                                       name="repositorys{{i}}"
                                        bindLabel="name"
                                        bindValue="id"
                                        placeholder="Chọn kho"
@@ -180,10 +203,22 @@
                         <td>
                             <input type="date" class="input-cell" name="expiryDate {{i}}" [(ngModel)]="detail.expiryDate" />
                         </td>
+                        <td>
+                            <a style="text-align: center" (click)="addThongSoKyThuat(detail)">
+                                <i class="mdi mdi-plus-box"></i>
+                            </a>
+                            <label *ngFor="let item of detail?.technicalDataModel;let j =index"> {{j + '-' + (item.name?item.name:'') + ': ' +( item.value?item.value:'')}}</label>
+                        </td>
                     </tr>
                     <tr (click)="addNewRow()">
                         <td>
                             <input disabled type="text" [title]="'Thêm dòng mới ...'" value="Thêm dòng mới ..." class="input-cell" name="no"/>
+                        </td>
+                        <td>
+                            <input disabled type="text" class="input-cell" name="no"/>
+                        </td>
+                        <td>
+                            <input disabled type="text" class="input-cell" name="no"/>
                         </td>
                         <td>
                             <input disabled type="text" class="input-cell" name="no"/>
@@ -220,14 +255,17 @@
                         <td></td>
                         <td></td>
                         <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                     </tbody>
                     <tfoot>
                     <tr>
-                        <td colspan="8"> Số dòng : {{inOutRepositoryDetails?.length}}</td>
+                        <td colspan="7"> Số dòng : {{inOutRepositoryDetails?.length}}</td>
                         <td>
                             <input name="total" class="input-cell" currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',', precision : 0 }" [ngModel]="sumDT('amount')"></input>
                         </td>
+                        <td colspan="3"></td>
                     </tr>
                     </tfoot>
                 </table>
@@ -245,3 +283,77 @@
             </div>
     </div>
 </div>
+<ng-template #content>
+    <form name="deleteForm">
+        <div class="modal-header">
+            <h4 class="modal-title" >Nhập thông số kỹ thuật cho thiết bị {{rowSelect?.prodName}}</h4>
+        </div>
+        <div class="modal-body">
+            <div><label style="font-weight: bold"> Thông số kỹ thuật</label></div>
+            <div class="row">
+                <div class="table-responsive" >
+                    <table class="table table-striped" aria-describedby="page-heading">
+                        <thead>
+                        <tr>
+                            <th scope="col" style="width: 40px" ><span >STT</span> </th>
+                            <th scope="col" ><span > Tên thông số</span> </th>
+                            <th scope="col" ><span > Giá trị</span> </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr
+                            (keydown.control.delete)="removeRowTechnical(detail)"
+                            *ngFor="let detail of rowSelect?.technicalDataModel ; let i= index;">
+                            <td style="text-align: center">{{i+1}}</td>
+                            <td>
+                                <!--<ng-select [items]="deviceModels"
+                                           id="deviceModels"
+                                           name="deviceModels"
+                                           bindLabel="name"
+                                           bindValue="id"
+                                           placeholder=""
+                                           style="border-left: none"
+                                           [(ngModel)]="detail.prodID"
+                                           class="customSelect"
+                                >
+                                </ng-select>-->
+                                <input type="text" class="input-cell" name="nameTN {{i}}" [ngModelOptions]="{standalone: true}"   [(ngModel)]="detail.name" />
+                            </td>
+                            <td>
+                                <input type="text" class="input-cell" name="ValueTN {{i}}" [ngModelOptions]="{standalone: true}"  [(ngModel)]="detail.value" />
+                            </td>
+                        </tr>
+                        <tr (click)="addNewRowTechnical()">
+                            <td colspan="2">
+                                <input disabled type="text" [title]="'Thêm dòng mới ...'" value="Thêm dòng mới ..." class="input-cell" name="no"/>
+                            </td>
+                            <td>
+                                <input disabled type="text" class="input-cell" name="no"/>
+                            </td>
+                        </tr>
+                        <tr *ngFor="let l of utilsService.newArr(10 - rowSelect?.technicalDataModel?.length)">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="3"> Số dòng : {{rowSelect?.technicalDataModel?.length}}</td>
+                        </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button (click)="closeContent()" id="jhi-confirm-delete-inOutRepository" type="submit" class="btn btn-success">
+                <fa-icon icon="times"></fa-icon>&nbsp;<span>Đồng ý</span>
+            </button>
+            <button (click)="closeContent()" type="button" class="btn btn-secondary" data-dismiss="modal" >
+                <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+            </button>
+        </div>
+    </form>
+</ng-template>

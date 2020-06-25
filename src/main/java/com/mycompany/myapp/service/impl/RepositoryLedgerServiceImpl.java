@@ -17,9 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Service Implementation for managing {@link RepositoryLedger}.
@@ -112,7 +110,14 @@ public class RepositoryLedgerServiceImpl implements RepositoryLedgerService {
             repositoryLedger.setPhoneContactReceiver(inOutRepository.getPhoneContactReceiver());
             repositoryLedger.setReason(inOutRepository.getReason());
             repositoryLedger.setOrganizationUnitID(idhospital);
-
+            repositoryLedger.setDepartmentID(inOutRepository.getDepartmentID());
+            repositoryLedger.setType(inOutRepository.getType());
+            repositoryLedger.setOutOfStock(inOutRepository.getOutOfStock());
+            if (inOutRepository.isOutOfStock()) {
+                repositoryLedger.setOutquantity(item.getQuantity());
+            } else {
+                repositoryLedger.setInquantity(item.getQuantity());
+            }
             repositoryLedgers.add(repositoryLedger);
         }
         inOutRepository.setRecorded(true);
@@ -131,6 +136,15 @@ public class RepositoryLedgerServiceImpl implements RepositoryLedgerService {
         inOutRepositoryRepository.save(inOutRepository);
         record1.setStatus(Constants.ResponeStatus.Success);
         return record1;
+    }
+
+    @Override
+    public byte[] getReport(Long id, int typeID) {
+
+        Map<String, Object> parameter = new HashMap<>();
+
+
+        return new byte[0];
     }
 
 }

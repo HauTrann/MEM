@@ -14,6 +14,9 @@ export interface IInOutRepository {
   recorded?: boolean;
   reason?: string;
   receiver?: string;
+  type?: number;
+  userID?: number;
+  departmentID?: number;
   inOutRepositoryDetails?: InOutRepositoryDetails[];
 }
 
@@ -31,6 +34,9 @@ export class InOutRepository implements IInOutRepository {
     public recorded?: boolean,
     public reason?: string,
     public receiver?: string,
+    public type?: number,
+    public userID?: number,
+    public departmentID?: number,
     public inOutRepositoryDetails?: InOutRepositoryDetails[]
   ) {
     this.outOfStock = this.outOfStock || false;

@@ -5,9 +5,10 @@ import { AlertComponent } from './alert/alert.component';
 import { AlertErrorComponent } from './alert/alert-error.component';
 import { LoginModalComponent } from './login/login.component';
 import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
-  imports: [MedicalEquipmentManagerSharedLibsModule],
+  imports: [MedicalEquipmentManagerSharedLibsModule, ToastrModule.forRoot()],
   declarations: [FindLanguageFromKeyPipe, AlertComponent, AlertErrorComponent, LoginModalComponent, HasAnyAuthorityDirective],
   entryComponents: [LoginModalComponent],
   exports: [

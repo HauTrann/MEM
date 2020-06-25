@@ -1,5 +1,7 @@
 package com.mycompany.myapp.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -7,6 +9,7 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 import java.math.BigDecimal;
 
@@ -54,6 +57,14 @@ public class InOutRepositoryDetails implements Serializable {
 
     @Column(name = "expiry_date")
     private LocalDate expiryDate;
+
+    @Column(name = "serial")
+    private String serial;
+
+    @Transient
+    @JsonDeserialize
+    @JsonSerialize
+    private List<TechnicalData> technicalDataModel;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -172,6 +183,22 @@ public class InOutRepositoryDetails implements Serializable {
 
     public void setExpiryDate(LocalDate expiryDate) {
         this.expiryDate = expiryDate;
+    }
+
+    public List<TechnicalData> getTechnicalDataModel() {
+        return technicalDataModel;
+    }
+
+    public void setTechnicalDataModel(List<TechnicalData> technicalDataModel) {
+        this.technicalDataModel = technicalDataModel;
+    }
+
+    public String getSerial() {
+        return serial;
+    }
+
+    public void setSerial(String serial) {
+        this.serial = serial;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove

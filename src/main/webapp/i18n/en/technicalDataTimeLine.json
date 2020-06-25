@@ -1,0 +1,27 @@
+{
+  "medicalEquipmentManagerApp": {
+    "technicalDataTimeLine": {
+      "home": {
+        "title": "Technical Data Time Lines",
+        "createLabel": "Create a new Technical Data Time Line",
+        "createOrEditLabel": "Create or edit a Technical Data Time Line",
+        "notFound": "No Technical Data Time Lines found"
+      },
+      "created": "A new Technical Data Time Line is created with identifier {{ param }}",
+      "updated": "A Technical Data Time Line is updated with identifier {{ param }}",
+      "deleted": "A Technical Data Time Line is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Technical Data Time Line {{ id }}?"
+      },
+      "detail": {
+        "title": "Technical Data Time Line"
+      },
+      "name": "Name",
+      "value": "Value",
+      "equipmentID": "Equipment ID",
+      "time": "Time",
+      "serial": "Serial",
+      "userID": "User ID"
+    }
+  }
+}

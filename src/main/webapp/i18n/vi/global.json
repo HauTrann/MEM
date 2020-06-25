@@ -18,6 +18,9 @@
         "repositoryLedger": "Repository Ledger",
         "inRepository": "In Repository",
         "inRepositoryDetails": "In Repository Details",
+        "requestReceiveDevice": "Request Receive Device",
+        "requestReceiveDeviceDetails": "Request Receive Device Details",
+        "technicalDataTimeLine": "Technical Data Time Line",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

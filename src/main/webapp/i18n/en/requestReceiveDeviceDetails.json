@@ -1,0 +1,32 @@
+{
+  "medicalEquipmentManagerApp": {
+    "requestReceiveDeviceDetails": {
+      "home": {
+        "title": "Request Receive Device Details",
+        "createLabel": "Create a new Request Receive Device Details",
+        "createOrEditLabel": "Create or edit a Request Receive Device Details",
+        "notFound": "No Request Receive Device Details found"
+      },
+      "created": "A new Request Receive Device Details is created with identifier {{ param }}",
+      "updated": "A Request Receive Device Details is updated with identifier {{ param }}",
+      "deleted": "A Request Receive Device Details is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Request Receive Device Details {{ id }}?"
+      },
+      "detail": {
+        "title": "Request Receive Device Details"
+      },
+      "requestReceiveDeviceID": "Request Receive Device ID",
+      "serial": "Serial",
+      "prodID": "Prod ID",
+      "prodName": "Prod Name",
+      "quantity": "Quantity",
+      "unit": "Unit",
+      "unitPrice": "Unit Price",
+      "amount": "Amount",
+      "repositoryID": "Repository ID",
+      "lotNo": "Lot No",
+      "expiryDate": "Expiry Date"
+    }
+  }
+}

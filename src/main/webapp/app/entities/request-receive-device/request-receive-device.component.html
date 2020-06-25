@@ -1,0 +1,170 @@
+<div>
+    <div *ngIf="!isPay && !isFromManager" class="ptitle">
+        <span jhiTranslate="medicalEquipmentManagerApp.requestReceiveDevice.home.title">Request Receive Devices</span>
+    </div>
+    <div *ngIf="isPay && !isFromManager" class="ptitle">
+        <span>Đăng kí trả thiết bị</span>
+    </div>
+    <div *ngIf="!isPay && isFromManager" class="ptitle">
+        <span> Yêu cầu nhận thiết bị</span>
+    </div>
+    <div *ngIf="isPay && isFromManager" class="ptitle">
+        <span> Yêu cầu trả thiết bị</span>
+    </div>
+    <div *ngIf="!isPay && !isFromManager">
+        <a [routerLink]="['/request-receive-device/new']"><i class="mdi mdi-plus"></i> <span>Thêm</span></a>
+    </div>
+    <div *ngIf="isPay && !isFromManager">
+        <a [routerLink]="['/request-receive-device/pay/new']"><i class="mdi mdi-plus"></i> <span>Thêm</span></a>
+    </div>
+</div>
+<div>
+    <!-- <h2 id="page-heading">
+         <span jhiTranslate="medicalEquipmentManagerApp.requestReceiveDevice.home.title">Request Receive Devices</span>
+
+         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-request-receive-device" [routerLink]="['/request-receive-device/new']">
+             <fa-icon icon="plus"></fa-icon>
+             <span  jhiTranslate="medicalEquipmentManagerApp.requestReceiveDevice.home.createLabel">
+             Create a new Request Receive Device
+             </span>
+         </button>
+     </h2>-->
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="requestReceiveDevices?.length === 0">
+        <span jhiTranslate="medicalEquipmentManagerApp.requestReceiveDevice.home.notFound">No requestReceiveDevices found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="requestReceiveDevices?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+            <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+                <th scope="col" jhiSortBy="requestDate"><span
+                    jhiTranslate="medicalEquipmentManagerApp.requestReceiveDevice.requestDate">Request Date</span>
+                    <fa-icon icon="sort"></fa-icon>
+                </th>
+                <th scope="col" jhiSortBy="dateOfDelivery"><span
+                    jhiTranslate="medicalEquipmentManagerApp.requestReceiveDevice.dateOfDelivery">Date Of Delivery</span>
+                    <fa-icon icon="sort"></fa-icon>
+                </th>
+                <th *ngIf="isFromManager" scope="col" jhiSortBy="userName"><span
+                    jhiTranslate="medicalEquipmentManagerApp.requestReceiveDevice.userName">user Name</span>
+                    <fa-icon icon="sort"></fa-icon>
+                </th>
+                <th *ngIf="isFromManager" scope="col" jhiSortBy="departmentName"><span
+                    jhiTranslate="medicalEquipmentManagerApp.requestReceiveDevice.departmentName">departmentName</span>
+                    <fa-icon icon="sort"></fa-icon>
+                </th>
+                <th scope="col" jhiSortBy="description"><span
+                    jhiTranslate="medicalEquipmentManagerApp.requestReceiveDevice.description">Description</span>
+                    <fa-icon icon="sort"></fa-icon>
+                </th>
+                <th scope="col" jhiSortBy="status"><span
+                    jhiTranslate="medicalEquipmentManagerApp.requestReceiveDevice.status">Status</span>
+                    <fa-icon icon="sort"></fa-icon>
+                </th>
+                <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let requestReceiveDevice of requestReceiveDevices ;trackBy: trackId">
+                <td>{{ requestReceiveDevice.requestDate | date:'dd/MM/yyyy hh:mm' }}</td>
+                <td>{{ requestReceiveDevice.dateOfDelivery | date:'dd/MM/yyyy hh:mm' }}</td>
+                <td *ngIf="isFromManager">{{ requestReceiveDevice.userName }}</td>
+                <td *ngIf="isFromManager">{{ requestReceiveDevice.departmentName }}</td>
+                <td>{{ requestReceiveDevice.description }}</td>
+                <td>{{ utilsService.getStatussRequest(requestReceiveDevice.status) }}</td>
+                <td *ngIf="!isPay" class="text-right">
+                    <div class="btn-group">
+                        <button type="submit"
+                                [routerLink]="[isFromManager?'/request-receive-device/manager':'/request-receive-device', requestReceiveDevice.id, 'view']"
+                                class="btn btn-info btn-sm">
+                            <fa-icon icon="eye"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+
+                        <button type="submit"
+                                [disabled]="requestReceiveDevice.status === 3"
+                                *jhiHasAnyAuthority="['USER_MANAGER']"
+                                [routerLink]="['/in-out-repository/out/new/from-receive', requestReceiveDevice.id]"
+                                class="btn btn-primary btn-sm">
+                            <span class="d-none d-md-inline"><i class="mdi mdi-hand"></i> Xử lý yêu cầu</span>
+                        </button>
+
+                        <button type="submit"
+                                *jhiHasAnyAuthority="['ROLE_USER']"
+                                [routerLink]="['/request-receive-device', requestReceiveDevice.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon icon="pencil-alt"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+
+                        <button
+                            [disabled]="requestReceiveDevice.status === 3"
+                            type="submit" (click)="delete(requestReceiveDevice)"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon icon="times"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+                <td *ngIf="isPay" class="text-right">
+                    <div class="btn-group">
+                        <button type="submit"
+                                [routerLink]="[isFromManager?'/request-receive-device/pay/manager':'/request-receive-device/pay', requestReceiveDevice.id, 'view']"
+                                class="btn btn-info btn-sm">
+                            <fa-icon icon="eye"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        </button>
+
+                        <button type="submit"
+                                [disabled]="requestReceiveDevice.status === 3"
+                                *jhiHasAnyAuthority="['USER_MANAGER']"
+                                [routerLink]="['/in-out-repository/in/new/from-pay', requestReceiveDevice.id]"
+                                class="btn btn-primary btn-sm">
+                            <span class="d-none d-md-inline"><i class="mdi mdi-hand"></i> Xử lý yêu cầu</span>
+                        </button>
+
+                        <button type="submit"
+                                *jhiHasAnyAuthority="['ROLE_USER']"
+                                [routerLink]="['/request-receive-device/pay', requestReceiveDevice.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon icon="pencil-alt"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        </button>
+
+                        <button
+                            [disabled]="requestReceiveDevice.status === 3"
+                            type="submit" (click)="delete(requestReceiveDevice)"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon icon="times"></fa-icon>
+                            <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td *ngIf="isFromManager" colspan="7"> Số dòng : {{requestReceiveDevices?.length}}</td>
+                <td *ngIf="!isFromManager" colspan="5"> Số dòng : {{requestReceiveDevices?.length}}</td>
+            </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <div *ngIf="requestReceiveDevices?.length > 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage"
+                            [maxSize]="5" [rotate]="true" [boundaryLinks]="true"
+                            (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

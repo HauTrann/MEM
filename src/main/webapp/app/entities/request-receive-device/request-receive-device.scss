@@ -1,0 +1,16 @@
+.ng-select.customSelect ::ng-deep .ng-select-container {
+  border: none !important;
+  height: 100% !important;
+  background-color: transparent !important;
+  /* height: 27px; */
+  /* max-height: 27px; */
+  min-height: auto !important;
+}
+
+.ng-select.customSelect ::ng-deep .ng-select-container .ng-input {
+  top: 0px;
+}
+
+.ng-select.customSelect ::ng-deep .ng-dropdown-panel.ng-select-bottom {
+  width: 200px;
+}

@@ -49,8 +49,11 @@ public class RepositoryLedger implements Serializable {
     @Column(name = "phonecontact")
     private String phoneContact;
 
-    @Column(name = "quantity", precision = 21, scale = 2)
-    private BigDecimal quantity;
+    @Column(name = "inquantity", precision = 21, scale = 2)
+    private BigDecimal inquantity;
+
+    @Column(name = "outquantity", precision = 21, scale = 2)
+    private BigDecimal outquantity;
 
     @Column(name = "unit")
     private String unit;
@@ -87,6 +90,18 @@ public class RepositoryLedger implements Serializable {
 
     @Column(name = "reason")
     private String reason;
+
+    @Column(name = "userid")
+    private Long userID;
+
+    @Column(name = "departmentid")
+    private Long departmentID;
+
+    @Column(name = "serial ")
+    private String serial;
+
+    @Column(name = "type")
+    private Integer type;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -201,17 +216,20 @@ public class RepositoryLedger implements Serializable {
         this.phoneContact = phoneContact;
     }
 
-    public BigDecimal getQuantity() {
-        return quantity;
+    public BigDecimal getInquantity() {
+        return inquantity;
     }
 
-    public RepositoryLedger quantity(BigDecimal quantity) {
-        this.quantity = quantity;
-        return this;
+    public void setInquantity(BigDecimal inquantity) {
+        this.inquantity = inquantity;
     }
 
-    public void setQuantity(BigDecimal quantity) {
-        this.quantity = quantity;
+    public BigDecimal getOutquantity() {
+        return outquantity;
+    }
+
+    public void setOutquantity(BigDecimal outquantity) {
+        this.outquantity = outquantity;
     }
 
     public String getUnit() {
@@ -334,6 +352,38 @@ public class RepositoryLedger implements Serializable {
         this.reason = reason;
     }
 
+    public Long getUserID() {
+        return userID;
+    }
+
+    public void setUserID(Long userID) {
+        this.userID = userID;
+    }
+
+    public Long getDepartmentID() {
+        return departmentID;
+    }
+
+    public void setDepartmentID(Long departmentID) {
+        this.departmentID = departmentID;
+    }
+
+    public String getSerial() {
+        return serial;
+    }
+
+    public void setSerial(String serial) {
+        this.serial = serial;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -364,7 +414,6 @@ public class RepositoryLedger implements Serializable {
             ", no='" + getNo() + "'" +
             ", deliver='" + getDeliver() + "'" +
             ", phoneContact='" + getPhoneContact() + "'" +
-            ", quantity=" + getQuantity() +
             ", unit='" + getUnit() + "'" +
             ", unitPrice=" + getUnitPrice() +
             ", amount=" + getAmount() +

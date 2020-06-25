@@ -1,0 +1,60 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "requestReceiveDeviceID",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "serial",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "prodID",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "prodName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "quantity",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "unit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "unitPrice",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "amount",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "repositoryID",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "lotNo",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "expiryDate",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "changelogDate": "20200617195017",
+    "dto": "no",
+    "searchEngine": false,
+    "service": "serviceImpl",
+    "entityTableName": "request_receive_device_details",
+    "databaseType": "sql",
+    "readOnly": false,
+    "jpaMetamodelFiltering": false,
+    "pagination": "pagination"
+}

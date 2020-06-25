@@ -12,6 +12,8 @@ import { InOutRepositoryService } from './in-out-repository.service';
 import { InOutRepositoryDeleteDialogComponent } from './in-out-repository-delete-dialog.component';
 import { RepositoryLedgerService } from 'app/entities/repository-ledger/repository-ledger.service';
 import { ParsedProperty } from '@angular/compiler';
+import { UtilsService } from 'app/entities/utils/utils.service';
+import { AccountService } from 'app/core/auth/account.service';
 
 @Component({
   selector: 'jhi-in-out-repository',
@@ -27,6 +29,7 @@ export class InOutRepositoryComponent implements OnInit, OnDestroy {
   ascending!: boolean;
   ngbPaginationPage = 1;
   isNhapKho?: boolean;
+  types?: any[];
 
   constructor(
     protected inOutRepositoryService: InOutRepositoryService,
@@ -34,9 +37,15 @@ export class InOutRepositoryComponent implements OnInit, OnDestroy {
     protected router: Router,
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal,
+    protected utilsService: UtilsService,
     protected repositoryLedgerService: RepositoryLedgerService
   ) {
     this.isNhapKho = window.location.href.includes('in-out-repository/in');
+    if (this.isNhapKho) {
+      this.types = utilsService.typeNhapKho;
+    } else {
+      this.types = utilsService.typeXuatKho;
+    }
   }
 
   loadPage(page?: number): void {
@@ -156,5 +165,14 @@ export class InOutRepositoryComponent implements OnInit, OnDestroy {
           color: 'rgba(245,122,28,1)'
         }
       : {};
+  }
+
+  getType(inOutRepository: IInOutRepository): string {
+    const t = this.types?.find(n => n.status === inOutRepository.type);
+    if (t) {
+      return t['name'];
+    } else {
+      return '';
+    }
   }
 }

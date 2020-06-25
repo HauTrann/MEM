@@ -1,4 +1,5 @@
 import { Moment } from 'moment';
+import { TechnicalDataModel } from 'app/entities/equipment/technical-data.model';
 
 export interface IInOutRepositoryDetails {
   id?: number;
@@ -10,7 +11,10 @@ export interface IInOutRepositoryDetails {
   amount?: number;
   repositoryID?: number;
   lotNo?: string;
+  serial?: string;
   expiryDate?: Moment;
+  devi?: Moment;
+  technicalDataModel?: TechnicalDataModel[];
 }
 
 export class InOutRepositoryDetails implements IInOutRepositoryDetails {
@@ -24,6 +28,8 @@ export class InOutRepositoryDetails implements IInOutRepositoryDetails {
     public amount?: number,
     public repositoryID?: number,
     public lotNo?: string,
-    public expiryDate?: Moment
+    public serial?: string,
+    public expiryDate?: Moment,
+    public technicalDataModel?: TechnicalDataModel[]
   ) {}
 }

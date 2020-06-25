@@ -7,5 +7,6 @@ export class DeviceModel {
   medicalSuppliesTypeID?: number;
   status?: number;
   description?: string;
+  isMedicalSupplies?: Boolean;
   qrcode?: string;
 }

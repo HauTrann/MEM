@@ -1,0 +1,29 @@
+{
+  "medicalEquipmentManagerApp": {
+    "requestReceiveDevice": {
+      "home": {
+        "title": "Request Receive Devices",
+        "createLabel": "Create a new Request Receive Device",
+        "createOrEditLabel": "Create or edit a Request Receive Device",
+        "notFound": "No Request Receive Devices found"
+      },
+      "created": "A new Request Receive Device is created with identifier {{ param }}",
+      "updated": "A Request Receive Device is updated with identifier {{ param }}",
+      "deleted": "A Request Receive Device is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Request Receive Device {{ id }}?"
+      },
+      "detail": {
+        "title": "Request Receive Device"
+      },
+      "organizationUnitID": "Organization Unit ID",
+      "userID": "User ID",
+      "requestDate": "Request Date",
+      "dateOfDelivery": "Date Of Delivery",
+      "description": "Description",
+      "userName": "User Name",
+      "departmentName": "departmentName",
+      "status": "Status"
+    }
+  }
+}

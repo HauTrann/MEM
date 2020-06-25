@@ -38,6 +38,8 @@ public interface InOutRepositoryService {
      */
     Optional<InOutRepository> findOne(Long id);
 
+    Integer count(Integer typeNo);
+
     /**
      * Delete the "id" inOutRepository.
      *

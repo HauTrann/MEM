@@ -25,6 +25,7 @@
                     <th scope="col"  jhiSortBy="date"><span jhiTranslate="medicalEquipmentManagerApp.inOutRepository.date">Date</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="postedDate"><span jhiTranslate="medicalEquipmentManagerApp.inOutRepository.postedDate">Posted Date</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="no"><span jhiTranslate="medicalEquipmentManagerApp.inOutRepository.no">No</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="no"><span> Loại chứng từ</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="deliver"><span jhiTranslate="medicalEquipmentManagerApp.inOutRepository.deliver">Deliver</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="phoneContact"><span jhiTranslate="medicalEquipmentManagerApp.inOutRepository.phoneContact">Phone Contact</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
@@ -37,6 +38,7 @@
                     <td>{{ inOutRepository.date | date:'dd/MM/yyyy' }}</td>
                     <td>{{ inOutRepository.postedDate | date:'dd/MM/yyyy' }}</td>
                     <td>{{ inOutRepository.no }}</td>
+                    <td>{{getType(inOutRepository)}}</td>
                     <td>{{ inOutRepository.deliver }}</td>
                     <td>{{ inOutRepository.phoneContact }}</td>
                     <td *ngIf="isNhapKho" class="text-right">
@@ -111,7 +113,7 @@
             </tbody>
             <tfoot>
             <tr>
-                <td colspan="6"> Số dòng : {{inOutRepositories?.length}}</td>
+                <td colspan="7"> Số dòng : {{inOutRepositories?.length}}</td>
             </tr>
             </tfoot>
         </table>

@@ -107,6 +107,11 @@
             <artifactId>jhipster-framework</artifactId>
         </dependency>
         <dependency>
+            <groupId>net.sf.jasperreports</groupId>
+            <artifactId>jasperreports</artifactId>
+            <version>6.9.0</version> <!--edit by namnh -->
+        </dependency>
+        <dependency>
             <groupId>javax.annotation</groupId>
             <artifactId>javax.annotation-api</artifactId>
         </dependency>
@@ -880,6 +885,11 @@
                     <groupId>net.sf.jasperreports</groupId>
                     <artifactId>jasperreports-fonts</artifactId>
                     <version>6.9.0</version>
+                </dependency>
+                <dependency>
+                    <groupId>local.jasperFontOverrides</groupId>
+                    <artifactId>local.jasperFontOverrides</artifactId>
+                    <version>1.0</version>
                 </dependency>
             </dependencies>
             <build>

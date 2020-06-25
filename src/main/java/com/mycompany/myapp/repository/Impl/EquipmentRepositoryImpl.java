@@ -79,7 +79,8 @@ public class EquipmentRepositoryImpl implements EquipmentRepositoryCustom {
             "       equipment_type_id    equipmentTypeID, " +
             "       null                 medicalSuppliesTypeID, " +
             "       status, " +
-            "       description " +
+            "       description, " +
+            "       0 isMedicalSupplies " +
             "from equipment " +
             "union all " +
             "select id, " +
@@ -89,7 +90,8 @@ public class EquipmentRepositoryImpl implements EquipmentRepositoryCustom {
             "       null                     equipmentTypeID, " +
             "       medical_supplies_type_id medicalSuppliesTypeID, " +
             "       status, " +
-            "       description " +
+            "       description, " +
+            "       1 isMedicalSupplies " +
             "from medical_supplies) a " +
             "where a.organizationUnitID = :org order by a.code ");
         params.put("org", org);

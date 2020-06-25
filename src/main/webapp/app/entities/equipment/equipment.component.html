@@ -70,12 +70,14 @@
                             </button>
                             <button type="submit"
                                     *jhiHasAnyAuthority="'ROLE_USER'"
+                                    [hidden]="!isDisplayUsing"
                                     [routerLink]="['/equipment', equipment.id, 'view']"
                                     class="btn btn-primary btn-sm">
                                 <span class="d-none d-md-inline"> <i class="mdi mdi-update"></i> Cập nhật thông số hiện tại</span>
                             </button>
                             <button type="submit"
                                     *jhiHasAnyAuthority="'ROLE_USER'"
+                                    [hidden]="!isDisplayUsing"
                                     [routerLink]="['/equipment', equipment.id, 'view']"
                                     class="btn btn-danger btn-sm">
                                 <span class="d-none d-md-inline"><i class="mdi mdi-message "> </i> Báo hỏng</span>

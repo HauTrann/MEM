@@ -1,3 +1,4 @@
+<ngx-loading-bar></ngx-loading-bar>
 <nav [hidden]="router.url === '/login'" class="navbar navbar-dark navbar-expand-md bg-dark custom" [class.panel-body-1] = "!showSb">
     <a *ngIf="showSb" [class.showbt]="showSb" [class.hidebt]="!showSb" routerLink="/" (click)="collapseNavbar()"> <!--style="width: 290px"-->
         <span class="logo-img icon-center"></span> <!--jhiTranslate="global.title"-->
@@ -30,55 +31,55 @@
                 </a>
             </li>
             <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-            <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">
-                    <span>
-                        <fa-icon icon="th-list"></fa-icon>
-                        <span jhiTranslate="global.menu.entities.main">
-                            Entities
-                        </span>
-                    </span>
-                </a>
-                <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">
-                    <li>
-                        <a class="dropdown-item" routerLink="department" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span jhiTranslate="global.menu.entities.department">Department</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="department-employee" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span jhiTranslate="global.menu.entities.departmentEmployee">Department Employee</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="equipment-type" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span jhiTranslate="global.menu.entities.equipmentType">Equipment Type</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="equipment" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span jhiTranslate="global.menu.entities.equipment">Equipment</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="medical-supplies-type" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span jhiTranslate="global.menu.entities.medicalSuppliesType">Medical Supplies Type</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="medical-supplies" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
-                            <span jhiTranslate="global.menu.entities.medicalSupplies">Medical Supplies</span>
-                        </a>
-                    </li>
-                    <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
-                </ul>
-            </li>
+<!--            <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">-->
+<!--                <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">-->
+<!--                    <span>-->
+<!--                        <fa-icon icon="th-list"></fa-icon>-->
+<!--                        <span jhiTranslate="global.menu.entities.main">-->
+<!--                            Entities-->
+<!--                        </span>-->
+<!--                    </span>-->
+<!--                </a>-->
+<!--                <ul class="dropdown-menu" ngbDropdownMenu aria-labelledby="entity-menu">-->
+<!--                    <li>-->
+<!--                        <a class="dropdown-item" routerLink="department" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">-->
+<!--                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>-->
+<!--                            <span jhiTranslate="global.menu.entities.department">Department</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a class="dropdown-item" routerLink="department-employee" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">-->
+<!--                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>-->
+<!--                            <span jhiTranslate="global.menu.entities.departmentEmployee">Department Employee</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a class="dropdown-item" routerLink="equipment-type" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">-->
+<!--                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>-->
+<!--                            <span jhiTranslate="global.menu.entities.equipmentType">Equipment Type</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a class="dropdown-item" routerLink="equipment" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">-->
+<!--                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>-->
+<!--                            <span jhiTranslate="global.menu.entities.equipment">Equipment</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a class="dropdown-item" routerLink="medical-supplies-type" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">-->
+<!--                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>-->
+<!--                            <span jhiTranslate="global.menu.entities.medicalSuppliesType">Medical Supplies Type</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                    <li>-->
+<!--                        <a class="dropdown-item" routerLink="medical-supplies" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">-->
+<!--                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>-->
+<!--                            <span jhiTranslate="global.menu.entities.medicalSupplies">Medical Supplies</span>-->
+<!--                        </a>-->
+<!--                    </li>-->
+<!--                    &lt;!&ndash; jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here &ndash;&gt;-->
+<!--                </ul>-->
+<!--            </li>-->
             <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" display="dynamic" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu">
                     <span>
@@ -294,6 +295,24 @@
                         <a class="dropdown-item" routerLink="in-repository-details" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                             <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
                             <span jhiTranslate="global.menu.entities.inRepositoryDetails">In Repository Details</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="request-receive-device" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.requestReceiveDevice">Request Receive Device</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="request-receive-device-details" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.requestReceiveDeviceDetails">Request Receive Device Details</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="technical-data-time-line" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.technicalDataTimeLine">Technical Data Time Line</span>
                         </a>
                     </li>
                     &lt;!&ndash; jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here &ndash;&gt;

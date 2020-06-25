@@ -1,0 +1,96 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <h2 id="jhi-request-receive-device-details-heading" jhiTranslate="medicalEquipmentManagerApp.requestReceiveDeviceDetails.home.createOrEditLabel">Create or edit a Request Receive Device Details</h2>
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.requestReceiveDeviceDetails.requestReceiveDeviceID" for="field_requestReceiveDeviceID">Request Receive Device ID</label>
+                    <input type="number" class="form-control" name="requestReceiveDeviceID" id="field_requestReceiveDeviceID"
+                           formControlName="requestReceiveDeviceID"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.requestReceiveDeviceDetails.serial" for="field_serial">Serial</label>
+                    <input type="text" class="form-control" name="serial" id="field_serial"
+                           formControlName="serial"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.requestReceiveDeviceDetails.prodID" for="field_prodID">Prod ID</label>
+                    <input type="number" class="form-control" name="prodID" id="field_prodID"
+                           formControlName="prodID"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.requestReceiveDeviceDetails.prodName" for="field_prodName">Prod Name</label>
+                    <input type="text" class="form-control" name="prodName" id="field_prodName"
+                           formControlName="prodName"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.requestReceiveDeviceDetails.quantity" for="field_quantity">Quantity</label>
+                    <input type="number" class="form-control" name="quantity" id="field_quantity"
+                           formControlName="quantity"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.requestReceiveDeviceDetails.unit" for="field_unit">Unit</label>
+                    <input type="text" class="form-control" name="unit" id="field_unit"
+                           formControlName="unit"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.requestReceiveDeviceDetails.unitPrice" for="field_unitPrice">Unit Price</label>
+                    <input type="number" class="form-control" name="unitPrice" id="field_unitPrice"
+                           formControlName="unitPrice"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.requestReceiveDeviceDetails.amount" for="field_amount">Amount</label>
+                    <input type="number" class="form-control" name="amount" id="field_amount"
+                           formControlName="amount"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.requestReceiveDeviceDetails.repositoryID" for="field_repositoryID">Repository ID</label>
+                    <input type="number" class="form-control" name="repositoryID" id="field_repositoryID"
+                           formControlName="repositoryID"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.requestReceiveDeviceDetails.lotNo" for="field_lotNo">Lot No</label>
+                    <input type="text" class="form-control" name="lotNo" id="field_lotNo"
+                           formControlName="lotNo"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.requestReceiveDeviceDetails.expiryDate" for="field_expiryDate">Expiry Date</label>
+                    <div class="input-group">
+                        <input id="field_expiryDate" type="text" class="form-control" name="expiryDate" ngbDatepicker #expiryDateDp="ngbDatepicker" formControlName="expiryDate"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="expiryDateDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

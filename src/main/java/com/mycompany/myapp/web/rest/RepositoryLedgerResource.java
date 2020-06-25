@@ -8,21 +8,22 @@ import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.PaginationUtil;
 import io.github.jhipster.web.util.ResponseUtil;
+import net.sf.jasperreports.engine.JRException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /**
  * REST controller for managing {@link com.mycompany.myapp.domain.RepositoryLedger}.
@@ -134,6 +135,32 @@ public class RepositoryLedgerResource {
     public ResponseEntity<Record> unrecord(@RequestBody Record record) {
         Record result = repositoryLedgerService.unrecord(record);
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    /**
+     * @return trả ra mảng byte của báo cáo.
+     * @Author hieugie
+     * <p>
+     * Hàm tạo biểu mẫu
+     * Edit Hautv
+     */
+    @GetMapping("/report/pdf")
+    public ResponseEntity<byte[]> getReportPdf(@RequestParam(required = false) Long id,
+                                               @RequestParam(required = false) int typeID,
+                                               @RequestParam(required = false) int typeReport) throws JRException, InvocationTargetException, IllegalAccessException {
+        String name = "Name";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.parseMediaType("application/pdf"));
+        try {
+            byte[] bytes = repositoryLedgerService.getReport(id, typeID);
+            headers.setContentDispositionFormData(name, name);
+            headers.setCacheControl(CacheControl.noCache());
+            headers.setPragma("no-cache");
+            return new ResponseEntity<>(bytes, headers, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
 }

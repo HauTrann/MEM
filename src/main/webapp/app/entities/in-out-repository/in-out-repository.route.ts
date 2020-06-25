@@ -133,5 +133,29 @@ export const inOutRepositoryRoute: Routes = [
       pageTitle: 'medicalEquipmentManagerApp.inOutRepository.home.title'
     },
     canActivate: [UserRouteAccessService]
+  },
+  {
+    path: 'in/new/from-pay/:payID',
+    component: InOutRepositoryUpdateComponent,
+    resolve: {
+      inOutRepository: InOutRepositoryResolve
+    },
+    data: {
+      authorities: [Authority.ADMIN, Authority.USER_MANAGER],
+      pageTitle: 'medicalEquipmentManagerApp.inOutRepository.home.title'
+    },
+    canActivate: [UserRouteAccessService]
+  },
+  {
+    path: 'out/new/from-receive/:receiveID',
+    component: InOutRepositoryUpdateComponent,
+    resolve: {
+      inOutRepository: InOutRepositoryResolve
+    },
+    data: {
+      authorities: [Authority.ADMIN, Authority.USER_MANAGER],
+      pageTitle: 'medicalEquipmentManagerApp.inOutRepository.home.title'
+    },
+    canActivate: [UserRouteAccessService]
   }
 ];

@@ -33,6 +33,7 @@ import java.util.Set;
                     @ColumnResult(name = "medicalSuppliesTypeID", type = Long.class),
                     @ColumnResult(name = "status", type = Integer.class),
                     @ColumnResult(name = "description", type = String.class),
+                    @ColumnResult(name = "isMedicalSupplies", type = Boolean.class),
                 }
             )
         }

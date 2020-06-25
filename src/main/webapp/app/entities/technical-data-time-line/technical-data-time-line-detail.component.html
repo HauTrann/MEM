@@ -1,0 +1,50 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="technicalDataTimeLine">
+            <h2><span jhiTranslate="medicalEquipmentManagerApp.technicalDataTimeLine.detail.title">Technical Data Time Line</span> {{ technicalDataTimeLine.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.technicalDataTimeLine.name">Name</span></dt>
+                <dd>
+                    <span>{{ technicalDataTimeLine.name }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.technicalDataTimeLine.value">Value</span></dt>
+                <dd>
+                    <span>{{ technicalDataTimeLine.value }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.technicalDataTimeLine.equipmentID">Equipment ID</span></dt>
+                <dd>
+                    <span>{{ technicalDataTimeLine.equipmentID }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.technicalDataTimeLine.time">Time</span></dt>
+                <dd>
+                    <span>{{ technicalDataTimeLine.time }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.technicalDataTimeLine.serial">Serial</span></dt>
+                <dd>
+                    <span>{{ technicalDataTimeLine.serial }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.technicalDataTimeLine.userID">User ID</span></dt>
+                <dd>
+                    <span>{{ technicalDataTimeLine.userID }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/technical-data-time-line', technicalDataTimeLine.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

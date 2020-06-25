@@ -52,6 +52,9 @@ public class CacheConfiguration {
             createCache(cm, com.mycompany.myapp.domain.OrganizationUnit.class.getName());
             createCache(cm, com.mycompany.myapp.domain.Repository.class.getName());
             createCache(cm, com.mycompany.myapp.domain.RepositoryLedger.class.getName());
+            createCache(cm, com.mycompany.myapp.domain.RequestReceiveDevice.class.getName());
+            createCache(cm, com.mycompany.myapp.domain.RequestReceiveDeviceDetails.class.getName());
+            createCache(cm, com.mycompany.myapp.domain.TechnicalDataTimeLine.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

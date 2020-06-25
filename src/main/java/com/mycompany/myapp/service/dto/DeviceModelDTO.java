@@ -14,10 +14,11 @@ public class DeviceModelDTO {
     private Long medicalSuppliesTypeID;
 
     private Integer status;
+    private Boolean isMedicalSupplies;
 
     private String description;
 
-    public DeviceModelDTO(Long id, Long organizationUnitID, String code, String name, Long equipmentTypeID, Long medicalSuppliesTypeID, Integer status, String description) {
+    public DeviceModelDTO(Long id, Long organizationUnitID, String code, String name, Long equipmentTypeID, Long medicalSuppliesTypeID, Integer status, String description, Boolean isMedicalSupplies) {
         this.id = id;
         this.organizationUnitID = organizationUnitID;
         this.code = code;
@@ -26,6 +27,7 @@ public class DeviceModelDTO {
         this.medicalSuppliesTypeID = medicalSuppliesTypeID;
         this.status = status;
         this.description = description;
+        this.isMedicalSupplies = isMedicalSupplies;
     }
 
     public Long getId() {
@@ -90,5 +92,13 @@ public class DeviceModelDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Boolean getIsMedicalSupplies() {
+        return isMedicalSupplies;
+    }
+
+    public void setIsMedicalSupplies(Boolean medicalSupplies) {
+        isMedicalSupplies = medicalSupplies;
     }
 }

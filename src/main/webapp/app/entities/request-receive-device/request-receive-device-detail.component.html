@@ -1,0 +1,113 @@
+<div>
+    <div *ngIf="!isPay && !isFromManager" class="ptitle">
+        <span jhiTranslate="medicalEquipmentManagerApp.requestReceiveDevice.home.title">Request Receive Devices</span>
+    </div>
+    <div *ngIf="isPay && !isFromManager" class="ptitle">
+        <span>Đăng kí trả thiết bị</span>
+    </div>
+    <div *ngIf="!isPay && isFromManager" class="ptitle">
+        <span> Yêu cầu nhận thiết bị</span>
+    </div>
+    <div *ngIf="isPay && isFromManager" class="ptitle">
+        <span> Yêu cầu trả thiết bị</span>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="requestReceiveDevice">
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <!--<dt><span jhiTranslate="medicalEquipmentManagerApp.requestReceiveDevice.organizationUnitID">Organization Unit ID</span></dt>
+                <dd>
+                    <span>{{ requestReceiveDevice.organizationUnitID }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.requestReceiveDevice.userID">User ID</span></dt>
+                <dd>
+                    <span>{{ requestReceiveDevice.userID }}</span>
+                </dd>-->
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.requestReceiveDevice.requestDate">Request Date</span></dt>
+                <dd>
+                    <span>{{ requestReceiveDevice.requestDate|date:'dd/MM/yyyy' }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.requestReceiveDevice.dateOfDelivery">Date Of Delivery</span></dt>
+                <dd>
+                    <span>{{ requestReceiveDevice.dateOfDelivery|date:'dd/MM/yyyy' }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.requestReceiveDevice.description">Description</span></dt>
+                <dd>
+                    <span>{{ requestReceiveDevice.description }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.requestReceiveDevice.status">Status</span></dt>
+                <dd>
+                    <span>{{ utilsService.getStatussRequest(requestReceiveDevice.status) }}</span>
+                </dd>
+                <div class="row">
+                    <div class="table-responsive" id="entities">
+                        <table class="table table-striped" aria-describedby="page-heading">
+                            <thead>
+                            <tr>
+                                <th scope="col" ><span >Mã thiết bị VT</span> </th>
+                                <th scope="col" ><span > Tên thiết bị VT</span> </th>
+                                <th scope="col" ><span > Số lượng</span> </th>
+                                <th scope="col" ><span> Đơn vị</span> </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr
+                                *ngFor="let detail of requestReceiveDevice.requestReceiveDeviceDetails ; let i= index;">
+                                <td>
+                                    <ng-select [items]="deviceModels"
+                                               id="deviceModels{{i}}"
+                                               name="deviceModels{{i}}"
+                                               bindLabel="code"
+                                               bindValue="id"
+                                               placeholder=""
+                                               style="border-left: none"
+                                               [(ngModel)]="detail.prodID"
+                                               class="customSelect"
+                                    >
+                                        <ng-template  ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
+                                            <div [title]="item.name" [ngOptionHighlight]="search">{{item.code}}</div>
+                                            <div [title]="item.name" [ngOptionHighlight]="search">{{item.name}}</div>
+                                        </ng-template>
+                                    </ng-select>
+                                </td>
+                                <td>
+                                    <input type="text" class="input-cell" name="prodName {{i}}" [(ngModel)]="detail.prodName" />
+                                </td>
+                                <td>
+                                    <input currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',', precision : 0 }"
+                                           class="input-cell" name="quantity {{i}}" [(ngModel)]="detail.quantity"
+                                    />
+                                </td>
+                                <td>
+                                    <input type="text" class="input-cell" name="unit {{i}}" [(ngModel)]="detail.unit" />
+                                </td>
+                            </tr>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td colspan="4"> Số dòng : {{requestReceiveDevice.requestReceiveDeviceDetails?.length}}</td>
+                            </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                </div>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/request-receive-device', requestReceiveDevice.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

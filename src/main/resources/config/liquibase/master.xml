@@ -24,6 +24,9 @@
     <include file="config/liquibase/changelog/20200525171743_added_entity_OrganizationUnit.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200526202007_added_entity_Repository.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200526202723_added_entity_RepositoryLedger.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200617185824_added_entity_RequestReceiveDevice.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200617195017_added_entity_RequestReceiveDeviceDetails.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20200622162422_added_entity_TechnicalDataTimeLine.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>
