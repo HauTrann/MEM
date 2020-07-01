@@ -112,6 +112,9 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "organization_unit_id")
     private Long organizationUnitID;
 
+    @Column(name = "technical")
+    private Boolean technical;
+
     @Transient
     @JsonDeserialize
     @JsonSerialize
@@ -323,6 +326,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setOrganizationUnitName(String organizationUnitName) {
         this.organizationUnitName = organizationUnitName;
+    }
+
+    public Boolean getTechnical() {
+        return technical;
+    }
+
+    public void setTechnical(Boolean technical) {
+        this.technical = technical;
     }
 
     @Override

@@ -7,6 +7,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.time.LocalDate;
@@ -31,10 +32,10 @@ public class InOutRepository implements Serializable {
     private Long organizationUnitID;
 
     @Column(name = "date")
-    private LocalDate date;
+    private LocalDateTime date;
 
     @Column(name = "posteddate")
-    private LocalDate postedDate;
+    private LocalDateTime postedDate;
 
     @Column(name = "no")
     private String no;
@@ -95,29 +96,29 @@ public class InOutRepository implements Serializable {
         this.organizationUnitID = organizationUnitID;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public InOutRepository date(LocalDate date) {
+    public InOutRepository date(LocalDateTime date) {
         this.date = date;
         return this;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
-    public LocalDate getPostedDate() {
+    public LocalDateTime getPostedDate() {
         return postedDate;
     }
 
-    public InOutRepository postedDate(LocalDate postedDate) {
+    public InOutRepository postedDate(LocalDateTime postedDate) {
         this.postedDate = postedDate;
         return this;
     }
 
-    public void setPostedDate(LocalDate postedDate) {
+    public void setPostedDate(LocalDateTime postedDate) {
         this.postedDate = postedDate;
     }
 

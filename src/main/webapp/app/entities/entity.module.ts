@@ -76,6 +76,25 @@ import { RouterModule } from '@angular/router';
           import('./technical-data-time-line/technical-data-time-line.module').then(
             m => m.MedicalEquipmentManagerTechnicalDataTimeLineModule
           )
+      },
+      {
+        path: 'report-broken-equipment',
+        loadChildren: () =>
+          import('./report-broken-equipment/report-broken-equipment.module').then(m => m.MedicalEquipmentManagerReportBrokenEquipmentModule)
+      },
+      {
+        path: 'proposed-repair-and-maintain',
+        loadChildren: () =>
+          import('./proposed-repair-and-maintain/proposed-repair-and-maintain.module').then(
+            m => m.MedicalEquipmentManagerProposedRepairAndMaintainModule
+          )
+      },
+      {
+        path: 'proposed-repair-and-maintain-details',
+        loadChildren: () =>
+          import('./proposed-repair-and-maintain-details/proposed-repair-and-maintain-details.module').then(
+            m => m.MedicalEquipmentManagerProposedRepairAndMaintainDetailsModule
+          )
       }
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ])

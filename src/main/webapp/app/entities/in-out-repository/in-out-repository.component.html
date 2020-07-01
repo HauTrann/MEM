@@ -9,7 +9,6 @@
     </div>
 </div>
 <div>
-<div>
     <jhi-alert-error></jhi-alert-error>
 
     <!--    <jhi-alert></jhi-alert>-->
@@ -129,3 +128,25 @@
         </div>
     </div>
 </div>
+<ng-template #content>
+    <form name="deleteForm">
+        <div class="modal-header">
+            <h4 class="modal-title" >Báo hỏng thiết bị</h4>
+        </div>
+        <div class="modal-body">
+            <div><label style="font-weight: bold"> Thông số kỹ thuật</label></div>
+            <div class="row">
+                <div class="table-responsive" >
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="jhi-confirm-delete-inOutRepository" type="submit" class="btn btn-success">
+                <fa-icon icon="times"></fa-icon>&nbsp;<span>Đồng ý</span>
+            </button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" >
+                <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+            </button>
+        </div>
+    </form>
+</ng-template>

@@ -33,7 +33,8 @@ export class EmployeeUpdateComponent implements OnInit {
     dateOfBirth: [],
     phoneNumber: [],
     code: [],
-    vice: []
+    vice: [],
+    technical: []
   });
 
   constructor(
@@ -93,7 +94,8 @@ export class EmployeeUpdateComponent implements OnInit {
       dateOfBirth: user.dateOfBirth,
       phoneNumber: user.phoneNumber,
       code: user.code,
-      vice: user.vice
+      vice: user.vice,
+      technical: user.technical
     });
   }
 
@@ -110,6 +112,7 @@ export class EmployeeUpdateComponent implements OnInit {
     user.phoneNumber = this.editForm.get(['phoneNumber'])!.value;
     user.code = this.editForm.get(['code'])!.value;
     user.vice = this.editForm.get(['vice'])!.value;
+    user.technical = this.editForm.get(['technical'])!.value;
   }
 
   private onSaveSuccess(): void {

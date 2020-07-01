@@ -1,0 +1,83 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="medicalEquipmentManagerApp.proposedRepairAndMaintainDetails.home.title">Proposed Repair And Maintain Details</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-proposed-repair-and-maintain-details" [routerLink]="['/proposed-repair-and-maintain-details/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="medicalEquipmentManagerApp.proposedRepairAndMaintainDetails.home.createLabel">
+            Create a new Proposed Repair And Maintain Details
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="proposedRepairAndMaintainDetails?.length === 0">
+        <span jhiTranslate="medicalEquipmentManagerApp.proposedRepairAndMaintainDetails.home.notFound">No proposedRepairAndMaintainDetails found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="proposedRepairAndMaintainDetails?.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="proposedRepairAndMaintainID"><span jhiTranslate="medicalEquipmentManagerApp.proposedRepairAndMaintainDetails.proposedRepairAndMaintainID">Proposed Repair And Maintain ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="serial"><span jhiTranslate="medicalEquipmentManagerApp.proposedRepairAndMaintainDetails.serial">Serial</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="prodID"><span jhiTranslate="medicalEquipmentManagerApp.proposedRepairAndMaintainDetails.prodID">Prod ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="prodName"><span jhiTranslate="medicalEquipmentManagerApp.proposedRepairAndMaintainDetails.prodName">Prod Name</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="quantity"><span jhiTranslate="medicalEquipmentManagerApp.proposedRepairAndMaintainDetails.quantity">Quantity</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="unit"><span jhiTranslate="medicalEquipmentManagerApp.proposedRepairAndMaintainDetails.unit">Unit</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="repositoryID"><span jhiTranslate="medicalEquipmentManagerApp.proposedRepairAndMaintainDetails.repositoryID">Repository ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let proposedRepairAndMaintainDetails of proposedRepairAndMaintainDetails ;trackBy: trackId">
+                    <td><a [routerLink]="['/proposed-repair-and-maintain-details', proposedRepairAndMaintainDetails.id, 'view']">{{ proposedRepairAndMaintainDetails.id }}</a></td>
+                    <td>{{ proposedRepairAndMaintainDetails.proposedRepairAndMaintainID }}</td>
+                    <td>{{ proposedRepairAndMaintainDetails.serial }}</td>
+                    <td>{{ proposedRepairAndMaintainDetails.prodID }}</td>
+                    <td>{{ proposedRepairAndMaintainDetails.prodName }}</td>
+                    <td>{{ proposedRepairAndMaintainDetails.quantity }}</td>
+                    <td>{{ proposedRepairAndMaintainDetails.unit }}</td>
+                    <td>{{ proposedRepairAndMaintainDetails.repositoryID }}</td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/proposed-repair-and-maintain-details', proposedRepairAndMaintainDetails.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/proposed-repair-and-maintain-details', proposedRepairAndMaintainDetails.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(proposedRepairAndMaintainDetails)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="proposedRepairAndMaintainDetails?.length > 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

@@ -6,6 +6,7 @@ import com.mycompany.myapp.service.dto.Record;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -50,4 +51,6 @@ public interface RepositoryLedgerService {
     Record unrecord(Record record);
 
     byte[] getReport(Long id, int typeID);
+
+    BigDecimal getCurrentInReository(String serial);
 }

@@ -18,6 +18,7 @@ import { UtilsService } from 'app/entities/utils/utils.service';
 })
 export class EquipmentComponent implements OnInit, OnDestroy {
   equipment?: IEquipment[];
+  equipmentDT?: IEquipment[];
   eventSubscriber?: Subscription;
   totalItems = 0;
   itemsPerPage = ITEMS_PER_PAGE;
@@ -26,6 +27,7 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   ascending!: boolean;
   ngbPaginationPage = 1;
   isDisplayUsing?: boolean;
+  rowSelected?: IEquipment;
 
   constructor(
     protected equipmentService: EquipmentService,
@@ -35,22 +37,36 @@ export class EquipmentComponent implements OnInit, OnDestroy {
     protected modalService: NgbModal,
     public utilsService: UtilsService
   ) {
+    this.equipmentDT = [];
     this.isDisplayUsing = window.location.href.includes('equipment/using');
   }
 
   loadPage(page?: number): void {
     const pageToLoad: number = page || this.page;
 
-    this.equipmentService
-      .query({
-        page: pageToLoad - 1,
-        size: this.itemsPerPage,
-        sort: this.sort()
-      })
-      .subscribe(
-        (res: HttpResponse<IEquipment[]>) => this.onSuccess(res.body, res.headers, pageToLoad),
-        () => this.onError()
-      );
+    if (this.isDisplayUsing) {
+      this.equipmentService
+        .queryUsing({
+          page: pageToLoad - 1,
+          size: this.itemsPerPage,
+          sort: this.sort()
+        })
+        .subscribe(
+          (res: HttpResponse<IEquipment[]>) => this.onSuccess(res.body, res.headers, pageToLoad),
+          () => this.onError()
+        );
+    } else {
+      this.equipmentService
+        .query({
+          page: pageToLoad - 1,
+          size: this.itemsPerPage,
+          sort: this.sort()
+        })
+        .subscribe(
+          (res: HttpResponse<IEquipment[]>) => this.onSuccess(res.body, res.headers, pageToLoad),
+          () => this.onError()
+        );
+    }
   }
 
   ngOnInit(): void {
@@ -121,4 +137,13 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   }
 
   downClick(equipment: IEquipment): void {}
+
+  selectRow(equipment: IEquipment): void {
+    this.rowSelected = equipment;
+    if (!this.isDisplayUsing) {
+      this.equipmentService.queryDetail({ id: equipment.id }).subscribe(res => {
+        this.equipmentDT = res.body ? res.body : undefined;
+      });
+    }
+  }
 }

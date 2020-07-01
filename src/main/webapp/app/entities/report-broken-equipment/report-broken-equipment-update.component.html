@@ -1,0 +1,83 @@
+<div>
+    <div class="ptitle">
+        <span>BÁO HỎNG</span>
+    </div>
+</div>
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+<!--            <h2 id="jhi-report-broken-equipment-heading" jhiTranslate="medicalEquipmentManagerApp.reportBrokenEquipment.home.createOrEditLabel">Create or edit a Report Broken Equipment</h2>-->
+
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+
+                <div class="form-group" [hidden]="!editForm.get('id')!.value">
+                    <label for="id" jhiTranslate="global.field.id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id" formControlName="id" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.reportBrokenEquipment.prodID" for="field_prodID">Prod ID</label>
+                    <input type="number" class="form-control" name="prodID" id="field_prodID"
+                           formControlName="prodID"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.reportBrokenEquipment.serial" for="field_serial">Serial</label>
+                    <input type="text" class="form-control" name="serial" id="field_serial"
+                           formControlName="serial"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.reportBrokenEquipment.description" for="field_description">Description</label>
+                    <input type="text" class="form-control" name="description" id="field_description"
+                           formControlName="description"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.reportBrokenEquipment.status" for="field_status">Status</label>
+                    <input type="number" class="form-control" name="status" id="field_status"
+                           formControlName="status"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.reportBrokenEquipment.userID" for="field_userID">User ID</label>
+                    <input type="number" class="form-control" name="userID" id="field_userID"
+                           formControlName="userID"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.reportBrokenEquipment.time" for="field_time">Time</label>
+                    <div class="input-group">
+                        <input id="field_time" type="text" class="form-control" name="time" ngbDatepicker #timeDp="ngbDatepicker" formControlName="time"/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="timeDp.toggle()"><fa-icon icon="calendar-alt"></fa-icon></button>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.reportBrokenEquipment.organizationUnitID" for="field_organizationUnitID">Organization Unit ID</label>
+                    <input type="number" class="form-control" name="organizationUnitID" id="field_organizationUnitID"
+                           formControlName="organizationUnitID"/>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.reportBrokenEquipment.prodName" for="field_prodName">Prod Name</label>
+                    <input type="text" class="form-control" name="prodName" id="field_prodName"
+                           formControlName="prodName"/>
+                </div>
+            </div>
+
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                </button>
+
+                <button type="submit" id="save-entity" [disabled]="editForm.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

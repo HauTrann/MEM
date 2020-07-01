@@ -1,0 +1,28 @@
+{
+  "medicalEquipmentManagerApp": {
+    "proposedRepairAndMaintain": {
+      "home": {
+        "title": "Proposed Repair And Maintains",
+        "createLabel": "Create a new Proposed Repair And Maintain",
+        "createOrEditLabel": "Create or edit a Proposed Repair And Maintain",
+        "notFound": "No Proposed Repair And Maintains found"
+      },
+      "created": "A new Proposed Repair And Maintain is created with identifier {{ param }}",
+      "updated": "A Proposed Repair And Maintain is updated with identifier {{ param }}",
+      "deleted": "A Proposed Repair And Maintain is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Proposed Repair And Maintain {{ id }}?"
+      },
+      "detail": {
+        "title": "Proposed Repair And Maintain"
+      },
+      "organizationUnitID": "Organization Unit ID",
+      "userID": "User ID",
+      "description": "Description",
+      "proposedDate": "Proposed Date",
+      "validationDate": "Validation Date",
+      "finishDate": "Finish Date",
+      "status": "Status"
+    }
+  }
+}

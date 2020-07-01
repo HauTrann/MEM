@@ -50,6 +50,19 @@ export const medicalSuppliesRoute: Routes = [
     canActivate: [UserRouteAccessService]
   },
   {
+    path: 'using',
+    component: MedicalSuppliesComponent,
+    resolve: {
+      pagingParams: JhiResolvePagingParams
+    },
+    data: {
+      authorities: [Authority.USER, Authority.USER_MANAGER, Authority.ADMIN],
+      defaultSort: 'id,asc',
+      pageTitle: 'MedicalEquipmentManagerApp.medicalSupplies.home.title'
+    },
+    canActivate: [UserRouteAccessService]
+  },
+  {
     path: ':id/view',
     component: MedicalSuppliesDetailComponent,
     resolve: {

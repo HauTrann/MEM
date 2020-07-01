@@ -1,0 +1,58 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="reportBrokenEquipment">
+            <h2><span jhiTranslate="medicalEquipmentManagerApp.reportBrokenEquipment.detail.title">Report Broken Equipment</span> {{ reportBrokenEquipment.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.reportBrokenEquipment.prodID">Prod ID</span></dt>
+                <dd>
+                    <span>{{ reportBrokenEquipment.prodID }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.reportBrokenEquipment.serial">Serial</span></dt>
+                <dd>
+                    <span>{{ reportBrokenEquipment.serial }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.reportBrokenEquipment.description">Description</span></dt>
+                <dd>
+                    <span>{{ reportBrokenEquipment.description }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.reportBrokenEquipment.status">Status</span></dt>
+                <dd>
+                    <span>{{ reportBrokenEquipment.status }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.reportBrokenEquipment.userID">User ID</span></dt>
+                <dd>
+                    <span>{{ reportBrokenEquipment.userID }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.reportBrokenEquipment.time">Time</span></dt>
+                <dd>
+                    <span>{{ reportBrokenEquipment.time }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.reportBrokenEquipment.organizationUnitID">Organization Unit ID</span></dt>
+                <dd>
+                    <span>{{ reportBrokenEquipment.organizationUnitID }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.reportBrokenEquipment.prodName">Prod Name</span></dt>
+                <dd>
+                    <span>{{ reportBrokenEquipment.prodName }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/report-broken-equipment', reportBrokenEquipment.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

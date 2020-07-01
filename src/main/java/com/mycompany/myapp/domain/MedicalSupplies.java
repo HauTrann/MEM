@@ -1,11 +1,15 @@
 package com.mycompany.myapp.domain;
 
+import com.mycompany.myapp.service.dto.DeviceModelDTO;
+import com.mycompany.myapp.service.dto.EquipmentDTO;
+import com.mycompany.myapp.service.dto.MedicalSuppliesDTO;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
@@ -14,6 +18,32 @@ import java.util.Objects;
 @Entity
 @Table(name = "medical_supplies")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@SqlResultSetMappings({
+    @SqlResultSetMapping(
+        name = "MedicalSuppliesDTO",
+        classes = {
+            @ConstructorResult(
+                targetClass = MedicalSuppliesDTO.class,
+                columns = {
+                    @ColumnResult(name = "id", type = Long.class),
+                    @ColumnResult(name = "organizationUnitID", type = Long.class),
+                    @ColumnResult(name = "code", type = String.class),
+                    @ColumnResult(name = "name", type = String.class),
+                    @ColumnResult(name = "medicalSuppliesTypeID", type = Long.class),
+                    @ColumnResult(name = "medicalSuppliesTypeName", type = String.class),
+                    @ColumnResult(name = "description", type = String.class),
+                    @ColumnResult(name = "status", type = Integer.class),
+                    @ColumnResult(name = "totalIW", type = BigDecimal.class),
+                    @ColumnResult(name = "totalOW", type = BigDecimal.class),
+                    @ColumnResult(name = "repositoryID", type = Long.class),
+                    @ColumnResult(name = "repositoryName", type = String.class),
+                    @ColumnResult(name = "userID", type = Long.class),
+                }
+            )
+        }
+    )
+})
+
 public class MedicalSupplies implements Serializable {
 
     private static final long serialVersionUID = 1L;

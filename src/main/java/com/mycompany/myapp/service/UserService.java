@@ -199,6 +199,7 @@ public class UserService {
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(Instant.now());
         user.setActivated(true);
+        user.setTechnical(userDTO.getTechnical());
         user.setOrganizationUnitID(userDTO.getOrganizationUnitID());
         if (user.getOrganizationUnitID() == null && SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg() != null) {
             user.setOrganizationUnitID(SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg());
@@ -206,7 +207,11 @@ public class UserService {
         user.setEmployee(true);
         Set<Authority> authorities = new HashSet<>();
         Authority authority = new Authority();
-        authority.setName(AuthoritiesConstants.USER);
+        if (Boolean.TRUE.equals(userDTO.getTechnical())) {
+            authority.setName(AuthoritiesConstants.USER_TECHNICAL);
+        } else {
+            authority.setName(AuthoritiesConstants.USER);
+        }
         authorities.add(authority);
         user.setAuthorities(authorities);
         userRepository.save(user);
@@ -303,6 +308,7 @@ public class UserService {
                 user.setDepartmentid(userDTO.getDepartmentID());
                 user.setDateOfBirth(userDTO.getDateOfBirth());
                 user.setVice(userDTO.getVice());
+                user.setTechnical(userDTO.getTechnical());
                 user.setOrganizationUnitID(userDTO.getOrganizationUnitID());
                 if (user.getOrganizationUnitID() == null && SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg() != null) {
                     user.setOrganizationUnitID(SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg());
@@ -310,7 +316,11 @@ public class UserService {
                 user.setPhoneNumber(userDTO.getPhoneNumber());
                 Set<Authority> authorities = new HashSet<>();
                 Authority authority = new Authority();
-                authority.setName(AuthoritiesConstants.USER);
+                if (Boolean.TRUE.equals(userDTO.getTechnical())) {
+                    authority.setName(AuthoritiesConstants.USER_TECHNICAL);
+                } else {
+                    authority.setName(AuthoritiesConstants.USER);
+                }
                 authorities.add(authority);
                 user.setAuthorities(authorities);
                 user.setEmployee(true);

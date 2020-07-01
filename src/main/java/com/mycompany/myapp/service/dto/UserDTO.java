@@ -44,6 +44,7 @@ public class UserDTO {
     private String vice;
     private Long org;
     private Boolean employee;
+    private Boolean technical;
 
     private boolean activated = false;
 
@@ -96,6 +97,7 @@ public class UserDTO {
         this.phoneNumber = user.getPhoneNumber();
         this.code = user.getCode();
         this.vice = user.getVice();
+        this.technical = user.getTechnical();
         this.employee = user.getEmployee();
         this.org = user.getOrganizationUnitID() != null ? user.getOrganizationUnitID() : -1;
         this.activated = user.getActivated();
@@ -279,6 +281,14 @@ public class UserDTO {
 
     public void setOrganizationUnitID(Long organizationUnitID) {
         this.organizationUnitID = organizationUnitID;
+    }
+
+    public Boolean getTechnical() {
+        return technical;
+    }
+
+    public void setTechnical(Boolean technical) {
+        this.technical = technical;
     }
 
     @Override

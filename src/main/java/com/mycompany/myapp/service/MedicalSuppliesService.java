@@ -2,6 +2,7 @@ package com.mycompany.myapp.service;
 
 import com.mycompany.myapp.domain.MedicalSupplies;
 
+import com.mycompany.myapp.service.dto.MedicalSuppliesDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -29,6 +30,8 @@ public interface MedicalSuppliesService {
     Page<MedicalSupplies> findAll(Pageable pageable);
 
     Page<MedicalSupplies> findAllByOrganizationUnitID(Pageable pageable);
+
+    Page<MedicalSuppliesDTO> findAllByOrganizationUnitIDUsing(Pageable pageable);
 
     /**
      * Get the "id" medicalSupplies.

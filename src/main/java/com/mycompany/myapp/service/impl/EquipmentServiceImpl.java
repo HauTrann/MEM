@@ -1,7 +1,9 @@
 package com.mycompany.myapp.service.impl;
 
 import com.mycompany.myapp.domain.EquipmentType;
+import com.mycompany.myapp.domain.User;
 import com.mycompany.myapp.repository.EquipmentTypeRepository;
+import com.mycompany.myapp.repository.UserRepository;
 import com.mycompany.myapp.security.SecurityUtils;
 import com.mycompany.myapp.service.EquipmentService;
 import com.mycompany.myapp.domain.Equipment;
@@ -30,10 +32,12 @@ public class EquipmentServiceImpl implements EquipmentService {
 
     private final EquipmentRepository equipmentRepository;
     private final EquipmentTypeRepository equipmentTypeRepository;
+    private final UserRepository userRepository;
 
-    public EquipmentServiceImpl(EquipmentRepository equipmentRepository, EquipmentTypeRepository equipmentTypeRepository) {
+    public EquipmentServiceImpl(EquipmentRepository equipmentRepository, EquipmentTypeRepository equipmentTypeRepository, UserRepository userRepository) {
         this.equipmentRepository = equipmentRepository;
         this.equipmentTypeRepository = equipmentTypeRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -66,6 +70,13 @@ public class EquipmentServiceImpl implements EquipmentService {
         } else {*/
         return equipmentRepository.findAllByOrganizationUnitIDCustom(pageable, SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg());
 //        }
+    }
+
+    @Override
+    public Page<EquipmentDTO> getAllEquipmentUsing(Pageable pageable) {
+        Optional<String> username = SecurityUtils.getCurrentUserLogin();
+        Optional<User> user = userRepository.findOneByLogin(username.get());
+        return equipmentRepository.getAllEquipmentUsing(pageable, SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg(), user.get().getId());
     }
 
     /**
@@ -105,5 +116,10 @@ public class EquipmentServiceImpl implements EquipmentService {
     @Override
     public List<DeviceModelDTO> findAllDevice() {
         return equipmentRepository.findAllDevice(SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg());
+    }
+
+    @Override
+    public List<EquipmentDTO> getAllEquipmentDT(Long id) {
+        return equipmentRepository.getAllEquipmentDT(id);
     }
 }

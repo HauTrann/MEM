@@ -1,0 +1,29 @@
+{
+  "medicalEquipmentManagerApp": {
+    "reportBrokenEquipment": {
+      "home": {
+        "title": "Report Broken Equipments",
+        "createLabel": "Thêm mới một Report Broken Equipment",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Report Broken Equipment",
+        "notFound": "No Report Broken Equipments found"
+      },
+      "created": "Một Report Broken Equipment mới được tạo với định danh {{ param }}",
+      "updated": "Một Report Broken Equipment cập nhật với định danh {{ param }}",
+      "deleted": "Một Report Broken Equipment đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Report Broken Equipment {{ id }}?"
+      },
+      "detail": {
+        "title": "Report Broken Equipment"
+      },
+      "prodID": "Prod ID",
+      "serial": "Serial",
+      "description": "Description",
+      "status": "Status",
+      "userID": "User ID",
+      "time": "Time",
+      "organizationUnitID": "Organization Unit ID",
+      "prodName": "Prod Name"
+    }
+  }
+}

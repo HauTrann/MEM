@@ -1,0 +1,44 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "proposedRepairAndMaintainID",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "serial",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "prodID",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "prodName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "quantity",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "unit",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "repositoryID",
+            "fieldType": "Long"
+        }
+    ],
+    "changelogDate": "20200630163741",
+    "dto": "no",
+    "searchEngine": false,
+    "service": "serviceImpl",
+    "entityTableName": "proposed_repair_and_maintain_details",
+    "databaseType": "sql",
+    "readOnly": false,
+    "jpaMetamodelFiltering": false,
+    "pagination": "pagination"
+}

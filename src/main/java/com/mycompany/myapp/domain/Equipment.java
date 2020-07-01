@@ -9,6 +9,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -53,6 +54,25 @@ import java.util.Set;
                     @ColumnResult(name = "status", type = Integer.class),
                     @ColumnResult(name = "description", type = String.class),
                     @ColumnResult(name = "groupOfEquipment", type = String.class),
+                    @ColumnResult(name = "serial", type = String.class),
+                }
+            )
+        }
+    ),
+    @SqlResultSetMapping(
+        name = "EquipmentDTODetail",
+        classes = {
+            @ConstructorResult(
+                targetClass = EquipmentDTO.class,
+                columns = {
+                    @ColumnResult(name = "id", type = Long.class),
+                    @ColumnResult(name = "code", type = String.class),
+                    @ColumnResult(name = "name", type = String.class),
+                    @ColumnResult(name = "equipmentTypeName", type = String.class),
+                    @ColumnResult(name = "serial", type = String.class),
+                    @ColumnResult(name = "repositoryCode", type = String.class),
+                    @ColumnResult(name = "repositoryName", type = String.class),
+                    @ColumnResult(name = "tonKho", type = BigDecimal.class),
                 }
             )
         }

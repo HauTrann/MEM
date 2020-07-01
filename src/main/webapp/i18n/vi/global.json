@@ -21,6 +21,9 @@
         "requestReceiveDevice": "Request Receive Device",
         "requestReceiveDeviceDetails": "Request Receive Device Details",
         "technicalDataTimeLine": "Technical Data Time Line",
+        "reportBrokenEquipment": "Report Broken Equipment",
+        "proposedRepairAndMaintain": "Proposed Repair And Maintain",
+        "proposedRepairAndMaintainDetails": "Proposed Repair And Maintain Details",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

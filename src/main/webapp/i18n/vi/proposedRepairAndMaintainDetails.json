@@ -1,0 +1,28 @@
+{
+  "medicalEquipmentManagerApp": {
+    "proposedRepairAndMaintainDetails": {
+      "home": {
+        "title": "Proposed Repair And Maintain Details",
+        "createLabel": "Thêm mới một Proposed Repair And Maintain Details",
+        "createOrEditLabel": "Thêm mới hoặc cập nhật Proposed Repair And Maintain Details",
+        "notFound": "No Proposed Repair And Maintain Details found"
+      },
+      "created": "Một Proposed Repair And Maintain Details mới được tạo với định danh {{ param }}",
+      "updated": "Một Proposed Repair And Maintain Details cập nhật với định danh {{ param }}",
+      "deleted": "Một Proposed Repair And Maintain Details đã xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc là muốn xóa Proposed Repair And Maintain Details {{ id }}?"
+      },
+      "detail": {
+        "title": "Proposed Repair And Maintain Details"
+      },
+      "proposedRepairAndMaintainID": "Proposed Repair And Maintain ID",
+      "serial": "Serial",
+      "prodID": "Prod ID",
+      "prodName": "Prod Name",
+      "quantity": "Quantity",
+      "unit": "Unit",
+      "repositoryID": "Repository ID"
+    }
+  }
+}

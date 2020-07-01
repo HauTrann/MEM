@@ -2,6 +2,7 @@ package com.mycompany.myapp.web.rest;
 
 import com.mycompany.myapp.domain.MedicalSupplies;
 import com.mycompany.myapp.service.MedicalSuppliesService;
+import com.mycompany.myapp.service.dto.MedicalSuppliesDTO;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -93,6 +94,20 @@ public class MedicalSuppliesResource {
     public ResponseEntity<List<MedicalSupplies>> getAllMedicalSupplies(Pageable pageable) {
         log.debug("REST request to get a page of MedicalSupplies");
         Page<MedicalSupplies> page = medicalSuppliesService.findAllByOrganizationUnitID(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
+     * {@code GET  /medical-supplies} : get all the medicalSupplies.
+     *
+     * @param pageable the pagination information.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of medicalSupplies in body.
+     */
+    @GetMapping("/medical-supplies/using")
+    public ResponseEntity<List<MedicalSuppliesDTO>> getAllMedicalSuppliesUsing(Pageable pageable) {
+        log.debug("REST request to get a page of MedicalSupplies");
+        Page<MedicalSuppliesDTO> page = medicalSuppliesService.findAllByOrganizationUnitIDUsing(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

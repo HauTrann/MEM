@@ -31,6 +31,8 @@ public interface EquipmentService {
      */
     Page<EquipmentDTO> findAll(Pageable pageable);
 
+    Page<EquipmentDTO> getAllEquipmentUsing(Pageable pageable);
+
     /**
      * Get the "id" equipment.
      *
@@ -48,4 +50,5 @@ public interface EquipmentService {
 
     List<DeviceModelDTO> findAllbyCodeText(String text);
     List<DeviceModelDTO> findAllDevice();
+    List<EquipmentDTO> getAllEquipmentDT(Long id);
 }

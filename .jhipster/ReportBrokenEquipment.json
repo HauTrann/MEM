@@ -1,0 +1,48 @@
+{
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "prodID",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "serial",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "userID",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "time",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "organizationUnitID",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "prodName",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20200625200554",
+    "dto": "no",
+    "searchEngine": false,
+    "service": "serviceImpl",
+    "entityTableName": "report_broken_equipment",
+    "databaseType": "sql",
+    "readOnly": false,
+    "jpaMetamodelFiltering": false,
+    "pagination": "pagination"
+}

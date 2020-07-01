@@ -1,0 +1,28 @@
+{
+  "medicalEquipmentManagerApp": {
+    "proposedRepairAndMaintainDetails": {
+      "home": {
+        "title": "Proposed Repair And Maintain Details",
+        "createLabel": "Create a new Proposed Repair And Maintain Details",
+        "createOrEditLabel": "Create or edit a Proposed Repair And Maintain Details",
+        "notFound": "No Proposed Repair And Maintain Details found"
+      },
+      "created": "A new Proposed Repair And Maintain Details is created with identifier {{ param }}",
+      "updated": "A Proposed Repair And Maintain Details is updated with identifier {{ param }}",
+      "deleted": "A Proposed Repair And Maintain Details is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Proposed Repair And Maintain Details {{ id }}?"
+      },
+      "detail": {
+        "title": "Proposed Repair And Maintain Details"
+      },
+      "proposedRepairAndMaintainID": "Proposed Repair And Maintain ID",
+      "serial": "Serial",
+      "prodID": "Prod ID",
+      "prodName": "Prod Name",
+      "quantity": "Quantity",
+      "unit": "Unit",
+      "repositoryID": "Repository ID"
+    }
+  }
+}

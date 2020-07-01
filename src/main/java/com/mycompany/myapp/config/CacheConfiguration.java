@@ -55,6 +55,9 @@ public class CacheConfiguration {
             createCache(cm, com.mycompany.myapp.domain.RequestReceiveDevice.class.getName());
             createCache(cm, com.mycompany.myapp.domain.RequestReceiveDeviceDetails.class.getName());
             createCache(cm, com.mycompany.myapp.domain.TechnicalDataTimeLine.class.getName());
+            createCache(cm, com.mycompany.myapp.domain.ReportBrokenEquipment.class.getName());
+            createCache(cm, com.mycompany.myapp.domain.ProposedRepairAndMaintain.class.getName());
+            createCache(cm, com.mycompany.myapp.domain.ProposedRepairAndMaintainDetails.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

@@ -1,0 +1,54 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="proposedRepairAndMaintain">
+            <h2><span jhiTranslate="medicalEquipmentManagerApp.proposedRepairAndMaintain.detail.title">Proposed Repair And Maintain</span> {{ proposedRepairAndMaintain.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.proposedRepairAndMaintain.organizationUnitID">Organization Unit ID</span></dt>
+                <dd>
+                    <span>{{ proposedRepairAndMaintain.organizationUnitID }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.proposedRepairAndMaintain.userID">User ID</span></dt>
+                <dd>
+                    <span>{{ proposedRepairAndMaintain.userID }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.proposedRepairAndMaintain.description">Description</span></dt>
+                <dd>
+                    <span>{{ proposedRepairAndMaintain.description }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.proposedRepairAndMaintain.proposedDate">Proposed Date</span></dt>
+                <dd>
+                    <span>{{ proposedRepairAndMaintain.proposedDate }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.proposedRepairAndMaintain.validationDate">Validation Date</span></dt>
+                <dd>
+                    <span>{{ proposedRepairAndMaintain.validationDate }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.proposedRepairAndMaintain.finishDate">Finish Date</span></dt>
+                <dd>
+                    <span>{{ proposedRepairAndMaintain.finishDate }}</span>
+                </dd>
+                <dt><span jhiTranslate="medicalEquipmentManagerApp.proposedRepairAndMaintain.status">Status</span></dt>
+                <dd>
+                    <span>{{ proposedRepairAndMaintain.status }}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/proposed-repair-and-maintain', proposedRepairAndMaintain.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -24,6 +24,7 @@ export class MedicalSuppliesComponent implements OnInit, OnDestroy {
   predicate!: string;
   ascending!: boolean;
   ngbPaginationPage = 1;
+  isDisplayUsing?: boolean;
 
   constructor(
     protected medicalSuppliesService: MedicalSuppliesService,
@@ -31,21 +32,35 @@ export class MedicalSuppliesComponent implements OnInit, OnDestroy {
     protected router: Router,
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal
-  ) {}
+  ) {
+    this.isDisplayUsing = window.location.href.includes('medical-supplies/using');
+  }
 
   loadPage(page?: number): void {
     const pageToLoad: number = page || this.page;
-
-    this.medicalSuppliesService
-      .query({
-        page: pageToLoad - 1,
-        size: this.itemsPerPage,
-        sort: this.sort()
-      })
-      .subscribe(
-        (res: HttpResponse<IMedicalSupplies[]>) => this.onSuccess(res.body, res.headers, pageToLoad),
-        () => this.onError()
-      );
+    if (this.isDisplayUsing) {
+      this.medicalSuppliesService
+        .queryUsing({
+          page: pageToLoad - 1,
+          size: this.itemsPerPage,
+          sort: this.sort()
+        })
+        .subscribe(
+          (res: HttpResponse<IMedicalSupplies[]>) => this.onSuccess(res.body, res.headers, pageToLoad),
+          () => this.onError()
+        );
+    } else {
+      this.medicalSuppliesService
+        .query({
+          page: pageToLoad - 1,
+          size: this.itemsPerPage,
+          sort: this.sort()
+        })
+        .subscribe(
+          (res: HttpResponse<IMedicalSupplies[]>) => this.onSuccess(res.body, res.headers, pageToLoad),
+          () => this.onError()
+        );
+    }
   }
 
   ngOnInit(): void {
@@ -90,13 +105,24 @@ export class MedicalSuppliesComponent implements OnInit, OnDestroy {
   protected onSuccess(data: IMedicalSupplies[] | null, headers: HttpHeaders, page: number): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
     this.page = page;
-    this.router.navigate(['/medical-supplies'], {
-      queryParams: {
-        page: this.page,
-        size: this.itemsPerPage,
-        sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc')
-      }
-    });
+    if (this.isDisplayUsing) {
+      this.router.navigate(['/medical-supplies/using'], {
+        queryParams: {
+          page: this.page,
+          size: this.itemsPerPage,
+          sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc')
+        }
+      });
+    } else {
+      this.router.navigate(['/medical-supplies'], {
+        queryParams: {
+          page: this.page,
+          size: this.itemsPerPage,
+          sort: this.predicate + ',' + (this.ascending ? 'asc' : 'desc')
+        }
+      });
+    }
+
     this.medicalSupplies = data || [];
   }
 

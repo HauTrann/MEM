@@ -12,6 +12,6 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface MedicalSuppliesRepository extends JpaRepository<MedicalSupplies, Long> {
+public interface MedicalSuppliesRepository extends JpaRepository<MedicalSupplies, Long>, MedicalSuppliesRepositoryCustom {
     Page<MedicalSupplies> findAllByOrganizationUnitID(Pageable pageable, Long org);
 }

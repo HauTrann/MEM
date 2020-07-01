@@ -101,6 +101,20 @@ public class EquipmentResource {
     }
 
     /**
+     * {@code GET  /equipment} : get all the equipment.
+     *
+     * @param pageable the pagination information.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of equipment in body.
+     */
+    @GetMapping("/equipment/using")
+    public ResponseEntity<List<EquipmentDTO>> getAllEquipmentUsing(Pageable pageable) {
+        log.debug("REST request to get a page of Equipment");
+        Page<EquipmentDTO> page = equipmentService.getAllEquipmentUsing(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().headers(headers).body(page.getContent());
+    }
+
+    /**
      * {@code GET  /equipment/:id} : get the "id" equipment.
      *
      * @param id the id of the equipment to retrieve.
@@ -111,6 +125,19 @@ public class EquipmentResource {
         log.debug("REST request to get Equipment : {}", id);
         Optional<Equipment> equipment = equipmentService.findOne(id);
         return ResponseUtil.wrapOrNotFound(equipment);
+    }
+
+    /**
+     * {@code GET  /equipment/:id} : get the "id" equipment.
+     *
+     * @param id the id of the equipment to retrieve.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the equipment, or with status {@code 404 (Not Found)}.
+     */
+    @GetMapping("/equipment/detail")
+    public ResponseEntity<List<EquipmentDTO>> getAllEquipmentDT(@RequestParam Long id) {
+        log.debug("REST request to get Equipment : {}", id);
+        List<EquipmentDTO> equipment = equipmentService.getAllEquipmentDT(id);
+        return new ResponseEntity<>(equipment, HttpStatus.OK);
     }
 
     /**

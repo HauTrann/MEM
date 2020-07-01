@@ -41,6 +41,16 @@ export class EquipmentService {
     return this.http.get<IEquipment[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
+  queryUsing(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<IEquipment[]>(this.resourceUrl + '/using', { params: options, observe: 'response' });
+  }
+
+  queryDetail(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
+    return this.http.get<IEquipment[]>(this.resourceUrl + '/detail', { params: options, observe: 'response' });
+  }
+
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }

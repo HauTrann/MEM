@@ -315,6 +315,24 @@
                             <span jhiTranslate="global.menu.entities.technicalDataTimeLine">Technical Data Time Line</span>
                         </a>
                     </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="report-broken-equipment" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.reportBrokenEquipment">Report Broken Equipment</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="proposed-repair-and-maintain" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.proposedRepairAndMaintain">Proposed Repair And Maintain</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" routerLink="proposed-repair-and-maintain-details" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon icon="asterisk" fixedWidth="true"></fa-icon>
+                            <span jhiTranslate="global.menu.entities.proposedRepairAndMaintainDetails">Proposed Repair And Maintain Details</span>
+                        </a>
+                    </li>
                     &lt;!&ndash; jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here &ndash;&gt;
                 </ul>
             </li>

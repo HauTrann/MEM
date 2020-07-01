@@ -123,10 +123,78 @@ public class EquipmentRepositoryImpl implements EquipmentRepositoryCustom {
         Number total = (Number) countQuerry.getSingleResult();
         if (total.longValue() > 0) {
             Query query = entityManager.createNativeQuery("SELECT e.id id, e.organization_unit_id organizationUnitID," +
-                " e.equipment_type_id equipmentTypeID, e.code code, e.name name, e.description description, e.status status, e.group_of_equipment groupOfEquipment, et.name as equipmentTypeName   " + sql.toString(), "EquipmentDTO");
+                " e.equipment_type_id equipmentTypeID, e.code code, e.name name, e.description description, e.status status, e.group_of_equipment groupOfEquipment, et.name as equipmentTypeName , NULL serial  " + sql.toString(), "EquipmentDTO");
             Common.setParamsWithPageable(query, params, pageable, total);
             lst = query.getResultList();
         }
         return new PageImpl<>(((List<EquipmentDTO>) lst), pageable, total.longValue());
+    }
+
+    @Override
+    public Page<EquipmentDTO> getAllEquipmentUsing(Pageable pageable, Long org, Long userID) {
+        StringBuilder sql = new StringBuilder();
+        Map<String, Object> params = new HashMap<>();
+        List<EquipmentDTO> lst = new ArrayList<>();
+        sql.append("from (select r.prodID                                                       as id,\n" +
+            "             r.organizationUnitID,\n" +
+            "             e.code,\n" +
+            "             e.name,\n" +
+            "             r.serial,\n" +
+            "             e.group_of_equipment as groupOfEquipment,\n" +
+            "             et.id                                                          as equipmentTypeID,\n" +
+            "             et.name                                                        as equipmentTypeName,\n" +
+            "             null                                                              status,\n" +
+            "             e.description,\n" +
+            "             (SUM(ISNULL(r.inquantity, 0)) - SUM(ISNULL(r.outquantity, 0))) as stt\n" +
+            "      from repository_ledger r\n" +
+            "               inner join equipment e on e.id = r.prodID\n" +
+            "               left join equipment_type et on et.id = e.equipment_type_id\n" +
+            "      where userID = :userID\n" +
+            "      group by r.prodID, e.code, e.name, et.name, r.serial, e.group_of_equipment, r.organizationUnitID, e.description,\n" +
+            "               et.id) a" +
+            " where a.stt <>0 ");
+        params.put("userID", userID);
+        Query countQuerry = entityManager.createNativeQuery("SELECT Count(1) " + sql.toString());
+        Common.setParams(countQuerry, params);
+        Number total = (Number) countQuerry.getSingleResult();
+        if (total.longValue() > 0) {
+            Query query = entityManager.createNativeQuery("SELECT * " + sql.toString(), "EquipmentDTO");
+            Common.setParamsWithPageable(query, params, pageable, total);
+            lst = query.getResultList();
+        }
+        return new PageImpl<>(((List<EquipmentDTO>) lst), pageable, total.longValue());
+    }
+
+    @Override
+    public List<EquipmentDTO> getAllEquipmentDT(Long id) {
+        StringBuilder sql = new StringBuilder();
+        Map<String, Object> params = new HashMap<>();
+        List<EquipmentDTO> lst = new ArrayList<>();
+        sql.append("from (select\n" +
+            "             e.id,\n" +
+            "             e.code                                            ,\n" +
+            "             e.name                                            ,\n" +
+            "             r.serial,\n" +
+            "             rp.code                                           as repositoryCode,\n" +
+            "             rp.name                                           as repositoryName,\n" +
+            "             et.name                                           as equipmentTypeName,\n" +
+            "             sum(r.inquantity) - SUM(ISNULL(r.outquantity, 0)) as tonKho\n" +
+            "      from repository_ledger r\n" +
+            "               inner join equipment e on e.id = r.prodID\n" +
+            "               left join equipment_type et on et.id = e.equipment_type_id\n" +
+            "               left join repository rp on rp.id = r.repositoryID\n" +
+            "      group by e.code, e.name, e.id, rp.code, rp.name, r.serial, et.name, e.id\n" +
+            "     ) a\n" +
+            "where id = :id ");
+        params.put("id", id);
+        Query countQuerry = entityManager.createNativeQuery("SELECT Count(1) " + sql.toString());
+        Common.setParams(countQuerry, params);
+        Number total = (Number) countQuerry.getSingleResult();
+        if (total.longValue() > 0) {
+            Query query = entityManager.createNativeQuery("SELECT * " + sql.toString(), "EquipmentDTODetail");
+            Common.setParams(query, params);
+            lst = query.getResultList();
+        }
+        return lst;
     }
 }

@@ -6,6 +6,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -35,10 +36,10 @@ public class RepositoryLedger implements Serializable {
     private Long detailID;
 
     @Column(name = "date")
-    private LocalDate date;
+    private LocalDateTime date;
 
     @Column(name = "posteddate")
-    private LocalDate postedDate;
+    private LocalDateTime postedDate;
 
     @Column(name = "no")
     private String no;
@@ -151,29 +152,29 @@ public class RepositoryLedger implements Serializable {
         this.detailID = detailID;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public RepositoryLedger date(LocalDate date) {
+    public RepositoryLedger date(LocalDateTime date) {
         this.date = date;
         return this;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
-    public LocalDate getPostedDate() {
+    public LocalDateTime getPostedDate() {
         return postedDate;
     }
 
-    public RepositoryLedger postedDate(LocalDate postedDate) {
+    public RepositoryLedger postedDate(LocalDateTime postedDate) {
         this.postedDate = postedDate;
         return this;
     }
 
-    public void setPostedDate(LocalDate postedDate) {
+    public void setPostedDate(LocalDateTime postedDate) {
         this.postedDate = postedDate;
     }
 

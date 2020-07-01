@@ -6,6 +6,10 @@ export interface IMedicalSupplies {
   medicalSuppliesTypeID?: number;
   description?: string;
   status?: number;
+  medicalSuppliesTypeName?: string;
+  repositoryName?: string;
+  totalIW?: number;
+  totalOW?: number;
 }
 
 export class MedicalSupplies implements IMedicalSupplies {
@@ -16,6 +20,10 @@ export class MedicalSupplies implements IMedicalSupplies {
     public name?: string,
     public medicalSuppliesTypeID?: number,
     public description?: string,
-    public status?: number
+    public status?: number,
+    public medicalSuppliesTypeName?: string,
+    public repositoryName?: string,
+    public totalIW?: number,
+    public totalOW?: number
   ) {}
 }

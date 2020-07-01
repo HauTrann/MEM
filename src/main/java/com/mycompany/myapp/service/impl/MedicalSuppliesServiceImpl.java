@@ -1,9 +1,12 @@
 package com.mycompany.myapp.service.impl;
 
+import com.mycompany.myapp.domain.User;
+import com.mycompany.myapp.repository.UserRepository;
 import com.mycompany.myapp.security.SecurityUtils;
 import com.mycompany.myapp.service.MedicalSuppliesService;
 import com.mycompany.myapp.domain.MedicalSupplies;
 import com.mycompany.myapp.repository.MedicalSuppliesRepository;
+import com.mycompany.myapp.service.dto.MedicalSuppliesDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,9 +27,11 @@ public class MedicalSuppliesServiceImpl implements MedicalSuppliesService {
     private final Logger log = LoggerFactory.getLogger(MedicalSuppliesServiceImpl.class);
 
     private final MedicalSuppliesRepository medicalSuppliesRepository;
+    private final UserRepository userRepository;
 
-    public MedicalSuppliesServiceImpl(MedicalSuppliesRepository medicalSuppliesRepository) {
+    public MedicalSuppliesServiceImpl(MedicalSuppliesRepository medicalSuppliesRepository, UserRepository userRepository) {
         this.medicalSuppliesRepository = medicalSuppliesRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -61,6 +66,13 @@ public class MedicalSuppliesServiceImpl implements MedicalSuppliesService {
     public Page<MedicalSupplies> findAllByOrganizationUnitID(Pageable pageable) {
         log.debug("Request to get all MedicalSupplies");
         return medicalSuppliesRepository.findAllByOrganizationUnitID(pageable, SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg());
+    }
+
+    @Override
+    public Page<MedicalSuppliesDTO> findAllByOrganizationUnitIDUsing(Pageable pageable) {
+        Optional<String> username = SecurityUtils.getCurrentUserLogin();
+        Optional<User> user = userRepository.findOneByLogin(username.get());
+        return medicalSuppliesRepository.findAllByOrganizationUnitIDUsing(pageable, SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg(), user.get().getId());
     }
 
     /**

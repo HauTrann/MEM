@@ -23,6 +23,7 @@ export interface IUser {
   organizationUnitID?: number;
   organizationUnitCode?: string;
   organizationUnitName?: string;
+  technical?: boolean;
 }
 
 export class User implements IUser {
@@ -48,6 +49,7 @@ export class User implements IUser {
     public fileBase64?: string,
     public organizationUnitID?: number,
     public organizationUnitCode?: string,
-    public organizationUnitName?: string
+    public organizationUnitName?: string,
+    public technical?: boolean
   ) {}
 }

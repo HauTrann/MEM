@@ -1,0 +1,29 @@
+{
+  "medicalEquipmentManagerApp": {
+    "reportBrokenEquipment": {
+      "home": {
+        "title": "Report Broken Equipments",
+        "createLabel": "Create a new Report Broken Equipment",
+        "createOrEditLabel": "Create or edit a Report Broken Equipment",
+        "notFound": "No Report Broken Equipments found"
+      },
+      "created": "A new Report Broken Equipment is created with identifier {{ param }}",
+      "updated": "A Report Broken Equipment is updated with identifier {{ param }}",
+      "deleted": "A Report Broken Equipment is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Report Broken Equipment {{ id }}?"
+      },
+      "detail": {
+        "title": "Report Broken Equipment"
+      },
+      "prodID": "Prod ID",
+      "serial": "Serial",
+      "description": "Description",
+      "status": "Status",
+      "userID": "User ID",
+      "time": "Time",
+      "organizationUnitID": "Organization Unit ID",
+      "prodName": "Prod Name"
+    }
+  }
+}

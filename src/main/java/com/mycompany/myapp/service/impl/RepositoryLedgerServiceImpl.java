@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -111,6 +112,7 @@ public class RepositoryLedgerServiceImpl implements RepositoryLedgerService {
             repositoryLedger.setReason(inOutRepository.getReason());
             repositoryLedger.setOrganizationUnitID(idhospital);
             repositoryLedger.setDepartmentID(inOutRepository.getDepartmentID());
+            repositoryLedger.setUserID(inOutRepository.getUserID());
             repositoryLedger.setType(inOutRepository.getType());
             repositoryLedger.setOutOfStock(inOutRepository.getOutOfStock());
             if (inOutRepository.isOutOfStock()) {
@@ -145,6 +147,12 @@ public class RepositoryLedgerServiceImpl implements RepositoryLedgerService {
 
 
         return new byte[0];
+    }
+
+    @Override
+    public BigDecimal getCurrentInReository(String serial) {
+
+        return null;
     }
 
 }

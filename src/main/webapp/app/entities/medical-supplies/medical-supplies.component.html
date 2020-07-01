@@ -34,6 +34,8 @@
                     <th scope="col"  jhiSortBy="name"><span jhiTranslate="medicalEquipmentManagerApp.medicalSupplies.name">Name</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="medicalSuppliesTypeID"><span jhiTranslate="medicalEquipmentManagerApp.medicalSupplies.medicalSuppliesTypeID">Medical Supplies Type ID</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"  jhiSortBy="description"><span jhiTranslate="medicalEquipmentManagerApp.medicalSupplies.description">Description</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col" *ngIf="isDisplayUsing" ><span >Số lượng</span> </th>
+                    <th scope="col" *ngIf="isDisplayUsing" ><span >Từ kho</span> </th>
                     <th scope="col"  jhiSortBy="status"><span jhiTranslate="medicalEquipmentManagerApp.medicalSupplies.status">Status</span> <fa-icon icon="sort"></fa-icon></th>
                     <th scope="col"></th>
                 </tr>
@@ -42,8 +44,10 @@
                 <tr *ngFor="let medicalSupplies of medicalSupplies ;trackBy: trackId; let i =index;">
                     <td>{{ medicalSupplies.code }}</td>
                     <td>{{ medicalSupplies.name }}</td>
-                    <td>{{ medicalSupplies.medicalSuppliesTypeID }}</td>
+                    <td>{{ medicalSupplies.medicalSuppliesTypeName }}</td>
                     <td>{{ medicalSupplies.description }}</td>
+                    <td>{{ medicalSupplies.totalOW }}</td>
+                    <td>{{ medicalSupplies.repositoryName }}</td>
                     <td class="text-center">
                         <div class="custom-control custom-checkbox">
                             <input [disabled]="true" type="checkbox" class="custom-control-input" name="{{'status' + i}}"
@@ -78,7 +82,8 @@
             </tbody>
             <tfoot>
             <tr>
-                <td colspan="6"> Số dòng : {{medicalSupplies?.length}}</td>
+                <td *ngIf="!isDisplayUsing" colspan="6"> Số dòng : {{medicalSupplies?.length}}</td>
+                <td *ngIf="isDisplayUsing" colspan="8"> Số dòng : {{medicalSupplies?.length}}</td>
             </tr>
             </tfoot>
         </table>

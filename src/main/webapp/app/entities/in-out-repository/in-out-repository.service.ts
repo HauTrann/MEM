@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 
-import { DATE_FORMAT } from 'app/shared/constants/input.constants';
+import { DATE_FORMAT, DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IInOutRepository } from 'app/shared/model/in-out-repository.model';
@@ -70,9 +70,9 @@ export class InOutRepositoryService {
 
   protected convertDateFromClient(inOutRepository: IInOutRepository): IInOutRepository {
     const copy: IInOutRepository = Object.assign({}, inOutRepository, {
-      date: inOutRepository.date && inOutRepository.date.isValid() ? inOutRepository.date.format(DATE_FORMAT) : undefined,
+      date: inOutRepository.date && inOutRepository.date.isValid() ? inOutRepository.date.format(DATE_TIME_FORMAT) : undefined,
       postedDate:
-        inOutRepository.postedDate && inOutRepository.postedDate.isValid() ? inOutRepository.postedDate.format(DATE_FORMAT) : undefined
+        inOutRepository.postedDate && inOutRepository.postedDate.isValid() ? inOutRepository.postedDate.format(DATE_TIME_FORMAT) : undefined
     });
     return copy;
   }

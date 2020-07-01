@@ -16,6 +16,12 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface EquipmentRepositoryCustom {
     List<DeviceModelDTO> findAllbyCodeText(String text, Long org);
+
     List<DeviceModelDTO> findAllDevice(Long org);
+
     Page<EquipmentDTO> findAllByOrganizationUnitIDCustom(Pageable pageable, Long id);
+
+    Page<EquipmentDTO> getAllEquipmentUsing(Pageable pageable, Long org, Long userID);
+
+    List<EquipmentDTO> getAllEquipmentDT(Long id);
 }

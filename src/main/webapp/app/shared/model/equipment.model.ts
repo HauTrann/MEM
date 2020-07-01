@@ -9,8 +9,10 @@ export interface IEquipment {
   status?: number;
   description?: string;
   qrcode?: string;
+  serial?: string;
   groupOfEquipment?: string;
   equipmentTypeName?: string;
+  tonKho?: number;
   technicalData?: TechnicalDataModel[];
 }
 
@@ -24,6 +26,8 @@ export class Equipment implements IEquipment {
     public status?: number,
     public description?: string,
     public qrcode?: string,
+    public serial?: string,
+    public tonKho?: number,
     public groupOfEquipment?: string,
     public equipmentTypeName?: string,
     public technicalData?: TechnicalDataModel[]
