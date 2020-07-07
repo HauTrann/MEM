@@ -18,6 +18,8 @@ public class DeviceModelDTO {
 
     private String description;
 
+    private String serial;
+
     public DeviceModelDTO(Long id, Long organizationUnitID, String code, String name, Long equipmentTypeID, Long medicalSuppliesTypeID, Integer status, String description, Boolean isMedicalSupplies) {
         this.id = id;
         this.organizationUnitID = organizationUnitID;
@@ -28,6 +30,19 @@ public class DeviceModelDTO {
         this.status = status;
         this.description = description;
         this.isMedicalSupplies = isMedicalSupplies;
+    }
+
+    public DeviceModelDTO(Long id, Long organizationUnitID, String code, String name, Long equipmentTypeID, Long medicalSuppliesTypeID, Integer status, String description, Boolean isMedicalSupplies, String serial) {
+        this.id = id;
+        this.organizationUnitID = organizationUnitID;
+        this.code = code;
+        this.name = name;
+        this.equipmentTypeID = equipmentTypeID;
+        this.medicalSuppliesTypeID = medicalSuppliesTypeID;
+        this.status = status;
+        this.description = description;
+        this.isMedicalSupplies = isMedicalSupplies;
+        this.serial = serial;
     }
 
     public Long getId() {
@@ -100,5 +115,13 @@ public class DeviceModelDTO {
 
     public void setIsMedicalSupplies(Boolean medicalSupplies) {
         isMedicalSupplies = medicalSupplies;
+    }
+
+    public String getSerial() {
+        return serial;
+    }
+
+    public void setSerial(String serial) {
+        this.serial = serial;
     }
 }

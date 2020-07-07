@@ -109,6 +109,53 @@ public class EquipmentRepositoryImpl implements EquipmentRepositoryCustom {
     }
 
     @Override
+    public List<DeviceModelDTO> findAllDeviceDTO(Long org) {
+        StringBuilder sql = new StringBuilder();
+        List<DeviceModelDTO> deviceModelDTOS = new ArrayList<>();
+        Map<String, Object> params = new HashMap<>();
+        sql.append("SELECT * from (select DISTINCT r.prodID             id,\n" +
+            "                r.organizationUnitID,\n" +
+            "                eq.code,\n" +
+            "                eq.name,\n" +
+            "                eq.equipment_type_id equipmentTypeID,\n" +
+            "                NULL                 medicalSuppliesTypeID,\n" +
+            "                eq.status,\n" +
+            "                eq.description,\n" +
+            "                0                    isMedicalSupplies,\n" +
+            "                r.serial             serial\n" +
+            "from repository_ledger r\n" +
+            "         inner join equipment eq on eq.id = r.prodID\n" +
+            "where r.outOfStock = 0\n" +
+            "union all\n" +
+            "select DISTINCT r.prodID                    id,\n" +
+            "                r.organizationUnitID,\n" +
+            "                mc.code,\n" +
+            "                mc.name,\n" +
+            "                NULL                        equipmentTypeID,\n" +
+            "                mc.medical_supplies_type_id medicalSuppliesTypeID,\n" +
+            "                mc.status,\n" +
+            "                mc.description,\n" +
+            "                1                           isMedicalSupplies,\n" +
+            "                r.serial                    serial\n" +
+            "from repository_ledger r\n" +
+            "         inner join medical_supplies mc on mc.id = r.prodID\n" +
+            "where r.outOfStock = 0) a " +
+            "where a.organizationUnitID = :org order by a.code");
+        params.put("org", org);
+        /*Query countQuerry = entityManager.createNativeQuery("SELECT Count(1) " + sql.toString());
+        Common.setParams(countQuerry, params);
+        Number total = (Number) countQuerry.getSingleResult();
+        if (total.longValue() > 0) {
+            Query query = entityManager.createNativeQuery("SELECT * " + sql.toString(), AccountList.class);
+            accountLists = query.getResultList();
+        }*/
+        Query query = entityManager.createNativeQuery(sql.toString(), "DeviceModelDTO1");
+        Common.setParams(query, params);
+        deviceModelDTOS = query.getResultList();
+        return deviceModelDTOS;
+    }
+
+    @Override
     public Page<EquipmentDTO> findAllByOrganizationUnitIDCustom(Pageable pageable, Long id) {
         StringBuilder sql = new StringBuilder();
         Map<String, Object> params = new HashMap<>();

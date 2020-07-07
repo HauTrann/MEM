@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
 import { TechnicalDataModel } from 'app/entities/equipment/technical-data.model';
+import { createRequestOption } from 'app/shared/util/request-util';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { SERVER_API_URL } from 'app/app.constants';
+import { TranslateService } from '@ngx-translate/core';
+import { DatePipe } from '@angular/common';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({ providedIn: 'root' })
 export class UtilsService {
@@ -90,6 +96,8 @@ export class UtilsService {
     }
   ];
 
+  constructor(private http: HttpClient, private translate: TranslateService, private datepipe: DatePipe, private toastr: ToastrService) {}
+
   public pad(num: string, size: number): string {
     let s = (num ? num : '') + '';
     while (s.length < size) {
@@ -166,5 +174,52 @@ export class UtilsService {
       default:
         return '';
     }
+  }
+
+  // endregion
+  /*
+   * Author Hautv
+   * Get flie báo cáo
+   * */
+  public getCustomerReportPDF(req?: any, isDownload?: boolean): void {
+    const options = createRequestOption(req);
+    let headers = new HttpHeaders();
+    headers = headers.set('Accept', 'application/pdf');
+    const respone = this.http.get(SERVER_API_URL + 'api/report-pdf', {
+      params: options,
+      observe: 'response',
+      headers,
+      responseType: 'blob'
+    });
+    respone.subscribe(response => {
+      // this.showReport(response);
+      const file = new Blob([response.body ? response.body : ''], { type: 'application/pdf' });
+      const fileURL = window.URL.createObjectURL(file);
+      if (isDownload) {
+        const link = document.createElement('a');
+        document.body.appendChild(link);
+        link.download = fileURL;
+        link.setAttribute('style', 'display: none');
+        const name = 'ten_bao_cao.pdf';
+        link.setAttribute('download', name);
+        link.href = fileURL;
+        link.click();
+      } else {
+        const contentDispositionHeader = response.headers.get('Content-Disposition');
+        const result = contentDispositionHeader
+          ? contentDispositionHeader
+          : ''
+              .split(';')[1]
+              .trim()
+              .split('=')[1];
+        const newWin = window.open(fileURL, '_blank');
+        // add a load listener to the window so that the title gets changed on page load
+
+        newWin?.addEventListener('load', () => {
+          newWin.document.title = result.replace(/"/g, '');
+          // this.router.navigate(['/report/buy']);
+        });
+      }
+    });
   }
 }

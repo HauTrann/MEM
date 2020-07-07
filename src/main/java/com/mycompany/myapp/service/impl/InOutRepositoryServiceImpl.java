@@ -1,5 +1,6 @@
 package com.mycompany.myapp.service.impl;
 
+import com.google.common.base.Strings;
 import com.mycompany.myapp.domain.InOutRepository;
 import com.mycompany.myapp.domain.InOutRepositoryDetails;
 import com.mycompany.myapp.domain.TechnicalData;
@@ -10,6 +11,7 @@ import com.mycompany.myapp.security.SecurityUtils;
 import com.mycompany.myapp.service.InOutRepositoryService;
 import com.mycompany.myapp.service.RepositoryLedgerService;
 import com.mycompany.myapp.service.dto.Record;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -55,15 +57,14 @@ public class InOutRepositoryServiceImpl implements InOutRepositoryService {
             inOutRepository.setOrganizationUnitID(SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg());
         }
         InOutRepository inOutRepository1 = inOutRepositoryRepository.save(inOutRepository);
-        for (InOutRepositoryDetails item : inOutRepository1.getInOutRepositoryDetails()) {
+        for (InOutRepositoryDetails item : inOutRepository.getInOutRepositoryDetails()) {
             if (item.getTechnicalDataModel() != null) {
                 List<TechnicalDataTimeLine> technicalDataTimeLines = new ArrayList<>();
-                for (TechnicalData technicalData : item.getTechnicalDataModel()) {
+                for (TechnicalDataTimeLine technicalData : item.getTechnicalDataModel()) {
                     TechnicalDataTimeLine technicalDataTimeLine = new TechnicalDataTimeLine();
                     BeanUtils.copyProperties(technicalData, technicalDataTimeLine);
                     technicalDataTimeLine.setEquipmentID(item.getProdID());
                     technicalDataTimeLine.setSerial(item.getSerial());
-                    technicalDataTimeLine.setTime(LocalDateTime.now());
                     if (inOutRepository1.getUserID() != null) {
                         technicalDataTimeLine.setUserID(inOutRepository1.getUserID());
                     }
@@ -79,7 +80,8 @@ public class InOutRepositoryServiceImpl implements InOutRepositoryService {
 
         Record record = new Record();
         record.setId(inOutRepository1.getId());
-        repositoryLedgerService.record(record);
+        record = repositoryLedgerService.record(record);
+
         return inOutRepository1;
     }
 
@@ -116,7 +118,16 @@ public class InOutRepositoryServiceImpl implements InOutRepositoryService {
     @Transactional(readOnly = true)
     public Optional<InOutRepository> findOne(Long id) {
         log.debug("Request to get InOutRepository : {}", id);
-        return inOutRepositoryRepository.findById(id);
+        Optional<InOutRepository> inOutRepository = inOutRepositoryRepository.findById(id);
+        for (InOutRepositoryDetails inOutRepositoryDetails : inOutRepository.get().getInOutRepositoryDetails()) {
+            if (Strings.isNullOrEmpty(inOutRepositoryDetails.getSerial())) {
+
+            } else {
+                List<TechnicalDataTimeLine> technicalDataTimeLines = technicalDataTimeLineRepository.getNow(inOutRepositoryDetails.getSerial());
+                inOutRepositoryDetails.setTechnicalDataModel(technicalDataTimeLines);
+            }
+        }
+        return inOutRepository;
     }
 
     @Override

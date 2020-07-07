@@ -20,6 +20,10 @@ import { UserService } from 'app/core/user/user.service';
 import { RepositoryLedgerService } from 'app/entities/repository-ledger/repository-ledger.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { IDepartment } from 'app/shared/model/department.model';
+import { DepartmentService } from 'app/entities/department/department.service';
+import { AccountService } from 'app/core/auth/account.service';
+import { ITechnicalDataTimeLine } from 'app/shared/model/technical-data-time-line.model';
 
 @Component({
   selector: 'jhi-in-out-repository-update',
@@ -43,6 +47,10 @@ export class InOutRepositoryUpdateComponent implements OnInit {
   users: User[] | null = null;
   modalRef?: NgbModalRef;
   rowSelect?: IInOutRepositoryDetails;
+  departments: IDepartment[] | null = [];
+  dateNow = moment(new Date());
+  idprod?: number;
+  serial?: string;
 
   constructor(
     protected inOutRepositoryService: InOutRepositoryService,
@@ -55,15 +63,27 @@ export class InOutRepositoryUpdateComponent implements OnInit {
     protected requestReceiveDeviceService: RequestReceiveDeviceService,
     private modalService: NgbModal,
     private fb: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private departmentService: DepartmentService,
+    private accountService: AccountService
   ) {
     this.isNhapKho = window.location.href.includes('in-out-repository/in');
     repositoryService.query().subscribe(res => {
       this.repositorys = res.body;
     });
 
-    equipmentService.findAllDevice().subscribe(res => {
-      this.deviceModels = res.body;
+    if (this.isNhapKho) {
+      equipmentService.findAllDevice().subscribe(res => {
+        this.deviceModels = res.body;
+      });
+    } else {
+      equipmentService.findAll().subscribe(res => {
+        this.deviceModels = res.body;
+      });
+    }
+
+    this.departmentService.getAll().subscribe(res => {
+      this.departments = res.body;
     });
     this.isFromRecive = window.location.href.includes('/from-receive');
     this.isFromPay = window.location.href.includes('/from-pay');
@@ -76,6 +96,12 @@ export class InOutRepositoryUpdateComponent implements OnInit {
         this.inOutRepositoryDetails = this.inOutRepository.inOutRepositoryDetails ? this.inOutRepository.inOutRepositoryDetails : [];
       } else {
         this.inOutRepository = inOutRepository.inOutRepository;
+        this.accountService.identity().subscribe(account => {
+          if (!account) {
+            // this.inOutRepository.deliver
+          }
+        });
+
         this.inOutRepository.date = moment(moment.now());
         this.inOutRepository.postedDate = moment(moment.now());
         this.inOutRepositoryService.count({ typeNo: this.isNhapKho ? 0 : 1 }).subscribe(res => {
@@ -120,6 +146,7 @@ export class InOutRepositoryUpdateComponent implements OnInit {
             for (let i = 0; i < qtt; i++) {
               this.inOutRepositoryDetails.push({});
               this.inOutRepositoryDetails[i].prodID = n.prodID;
+              this.inOutRepositoryDetails[i].serial = n.serial;
               this.inOutRepositoryDetails[i].quantity = 1;
               this.inOutRepositoryDetails[i].prodName = n.prodName;
               this.inOutRepositoryDetails[i].unit = n.unit;
@@ -128,6 +155,7 @@ export class InOutRepositoryUpdateComponent implements OnInit {
             this.inOutRepositoryDetails.push({});
             this.inOutRepositoryDetails[this.inOutRepositoryDetails.length - 1].prodID = n.prodID;
             this.inOutRepositoryDetails[this.inOutRepositoryDetails.length - 1].quantity = n.quantity;
+            this.inOutRepositoryDetails[this.inOutRepositoryDetails.length - 1].serial = n.serial;
             this.inOutRepositoryDetails[this.inOutRepositoryDetails.length - 1].prodName = n.prodName;
             this.inOutRepositoryDetails[this.inOutRepositoryDetails.length - 1].unit = n.unit;
           }
@@ -159,8 +187,39 @@ export class InOutRepositoryUpdateComponent implements OnInit {
 
   checkErr(): boolean {
     const check = this.deviceModels?.filter(n => !n.isMedicalSupplies);
+    if (this.inOutRepositoryDetails.some(n => !n.prodID)) {
+      this.toastr.warning('Bạn chưa chọn thiết bị');
+      return false;
+    }
     if (this.inOutRepositoryDetails.some(n => !n.serial && check?.some(m => m.id === n.prodID))) {
       this.toastr.warning('Bạn chưa nhập số serial cho thiết bị y tế');
+      return false;
+    }
+    if (this.isNhapKho) {
+      if (!this.inOutRepository.type && this.inOutRepository.type !== 0) {
+        this.toastr.warning('Bạn chưa chọn loại nhập kho');
+        return false;
+      }
+      const lstDV = this.deviceModels?.filter(n => !n.isMedicalSupplies);
+      const dv = this.inOutRepositoryDetails.filter(n => lstDV?.some(m => n.prodID === m.id));
+      if (dv.some(n => !n.technicalDataModel || n.technicalDataModel.length === 0)) {
+        this.toastr.warning('Bạn chưa nhập thông số kỹ thuật thiết bị hiện tại');
+        return false;
+      }
+    } else {
+      if (!this.inOutRepository.type && this.inOutRepository.type !== 0) {
+        this.toastr.warning('Bạn chưa chọn loại xuất kho');
+        return false;
+      }
+      const lstDV = this.deviceModels?.filter(n => !n.isMedicalSupplies);
+      const dv = this.inOutRepositoryDetails.filter(n => lstDV?.some(m => n.prodID === m.id));
+      if (dv.some(n => !n.technicalDataModel || n.technicalDataModel.length === 0)) {
+        this.toastr.warning('Bạn chưa nhập thông số kỹ thuật thiết bị hiện tại');
+        return false;
+      }
+    }
+    if (!this.inOutRepositoryDetails.length) {
+      this.toastr.warning('Bạn chưa nhập thông thông tin chi tiết');
       return false;
     }
     return true;
@@ -168,21 +227,29 @@ export class InOutRepositoryUpdateComponent implements OnInit {
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IInOutRepository>>): void {
     result.subscribe(
-      () => this.onSaveSuccess(),
+      res => this.onSaveSuccess(res.body),
       () => this.onSaveError()
     );
   }
 
-  protected onSaveSuccess(): void {
+  protected onSaveSuccess(resRS: IInOutRepository | null): void {
     /*this.inOutRepository = result;
     this.record(this.inOutRepository);*/
     if (this.isFromPay || this.isFromRecive) {
-      this.requestReceiveDeviceService.find(this.idRef).subscribe(res => {
-        const ud = res.body ? res.body : {};
-        ud.status = 3;
-        ud.dateOfDelivery = moment(moment.now());
-        this.requestReceiveDeviceService.update(ud).subscribe(resU => {});
-      });
+      if (resRS?.recorded) {
+        this.requestReceiveDeviceService.find(this.idRef).subscribe(res => {
+          const ud = res.body ? res.body : {};
+          ud.status = 3;
+          ud.dateOfDelivery = moment(moment.now());
+          this.requestReceiveDeviceService.update(ud).subscribe(resU => {});
+        });
+      } else {
+        this.toastr.error('Xử lý không thành công, không thể xuất quá tồn kho');
+      }
+    } else {
+      if (!resRS?.recorded) {
+        this.toastr.error('Ghi sổ không thành công, không thể xuất quá tồn kho');
+      }
     }
     this.isSaving = false;
     this.previousState();
@@ -208,7 +275,11 @@ export class InOutRepositoryUpdateComponent implements OnInit {
     if (!this.rowSelect?.technicalDataModel) {
       this.rowSelect ? (this.rowSelect.technicalDataModel = []) : '';
     }
-    this.rowSelect?.technicalDataModel?.push({});
+    this.rowSelect?.technicalDataModel?.push({
+      time: this.dateNow,
+      equipmentID: this.idprod,
+      serial: this.serial
+    });
   }
 
   removeRow(detail: any): void {
@@ -228,7 +299,9 @@ export class InOutRepositoryUpdateComponent implements OnInit {
   }
 
   deviceChange(detail: InOutRepositoryDetails): void {
-    detail.prodName = this.deviceModels?.find(n => n.id === detail.prodID)?.name;
+    const prd = this.deviceModels?.find(n => n.id === detail.prodID);
+    detail.prodName = prd?.name;
+    detail.serial = prd?.serial;
     this.equipmentService.find(detail.prodID ? detail.prodID : -1).subscribe(res => {
       detail.technicalDataModel = res.body?.technicalData;
       if (detail.technicalDataModel) {
@@ -267,12 +340,32 @@ export class InOutRepositoryUpdateComponent implements OnInit {
       this.modalRef.close();
     }
     this.rowSelect = detail;
-    this.modalRef = this.modalService.open(this.modalComponent, { backdrop: 'static' });
+    if (!detail.serial) {
+      this.toastr.warning('Bạn chưa nhập serial thiết bị');
+      return;
+    }
+    if (detail.prodID) {
+      this.idprod = detail.prodID;
+      this.serial = detail.serial;
+      this.modalRef = this.modalService.open(this.modalComponent, { backdrop: 'static' });
+    }
   }
 
   closeContent(): void {
     if (this.modalRef) {
       this.modalRef.close();
+    }
+    if (this.rowSelect) {
+      this.rowSelect.technicalDataModel?.forEach(n => (n.time = this.dateNow));
+    }
+  }
+
+  getIsVT(id: number): any {
+    const pr = this.deviceModels?.find(n => n.id === id);
+    if (pr) {
+      return pr.isMedicalSupplies ? pr.isMedicalSupplies : false;
+    } else {
+      return false;
     }
   }
 }

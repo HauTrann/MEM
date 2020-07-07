@@ -85,6 +85,7 @@
                         <tr>
                             <th scope="col" ><span >Mã thiết bị VT</span> </th>
                             <th scope="col" ><span > Tên thiết bị VT</span> </th>
+                            <th scope="col" ><span > Serial</span> </th>
                             <th scope="col" ><span > Số lượng</span> </th>
                             <th scope="col" ><span> Đơn vị</span> </th>
                         </tr>
@@ -108,12 +109,16 @@
                                 >
                                     <ng-template  ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
                                         <div [title]="item.name" [ngOptionHighlight]="search">{{item.code}}</div>
+                                        <div [title]="item.serial" [ngOptionHighlight]="search">serial - {{item.serial}}</div>
                                         <div [title]="item.name" [ngOptionHighlight]="search">{{item.name}}</div>
                                     </ng-template>
                                 </ng-select>
                             </td>
                             <td>
                                 <input type="text" class="input-cell" name="prodName {{i}}" [(ngModel)]="detail.prodName" />
+                            </td>
+                            <td>
+                                <input [disabled]="true" type="text" class="input-cell" name="serial {{i}}" [(ngModel)]="detail.serial" />
                             </td>
                             <td>
                                 <input currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',', precision : 0 }"
@@ -137,8 +142,12 @@
                             <td>
                                 <input disabled type="text" class="input-cell" name="no"/>
                             </td>
+                            <td>
+                                <input disabled type="text" class="input-cell" name="no"/>
+                            </td>
                         </tr>
                         <tr *ngFor="let l of utilsService.newArr(10 - requestReceiveDeviceDetails?.length)">
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -147,7 +156,7 @@
                         </tbody>
                         <tfoot>
                         <tr>
-                            <td colspan="4"> Số dòng : {{requestReceiveDeviceDetails?.length}}</td>
+                            <td colspan="5"> Số dòng : {{requestReceiveDeviceDetails?.length}}</td>
                         </tr>
                         </tfoot>
                     </table>

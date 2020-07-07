@@ -14,8 +14,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -46,7 +49,7 @@ public class Common {
 
     /**
      * @Author phuonghv
-     * */
+     */
     public static String addMultiSort(Sort sort) {
         StringBuilder orderSql = new StringBuilder();
         if (sort == null) {
@@ -68,29 +71,43 @@ public class Common {
 
     public static Integer getNumberOfDayInMonth(Integer month, Integer year) {
         int number = 0;
-         switch (month) {
-            case 1: case 3: case 5: case 7:case 8: case 10: case 12: number = 31; break;
-            case 4: case 6: case 9: case 11: number = 30; break;
+        switch (month) {
+            case 1:
+            case 3:
+            case 5:
+            case 7:
+            case 8:
+            case 10:
+            case 12:
+                number = 31;
+                break;
+            case 4:
+            case 6:
+            case 9:
+            case 11:
+                number = 30;
+                break;
             case 2: {
-                if ((year%400 == 0) || (year%4 == 0 & year%100 == 0)) {
+                if ((year % 400 == 0) || (year % 4 == 0 & year % 100 == 0)) {
                     number = 29;
                 } else {
                     number = 28;
                 }
                 break;
             }
-            default: number = 0; break;
+            default:
+                number = 0;
+                break;
         }
         return number;
     }
 
     /**
-     * @Author hieugie
-     *
-     * Hàm chung set param cho query
-     *
      * @param query
      * @param params
+     * @Author hieugie
+     * <p>
+     * Hàm chung set param cho query
      */
     public static void setParams(Query query, Map<String, Object> params) {
         if (params != null && !params.isEmpty()) {
@@ -105,13 +122,12 @@ public class Common {
     }
 
     /**
-     * @Author hieugie
-     *
-     * Hàm chung set param và pageable cho query
-     * Set lại giá trị offset trong trong hợp offset > tổng số bản ghi tìm được
-     *
      * @param query
      * @param params
+     * @Author hieugie
+     * <p>
+     * Hàm chung set param và pageable cho query
+     * Set lại giá trị offset trong trong hợp offset > tổng số bản ghi tìm được
      */
     public static void setParamsWithPageable(@NotNull Query query, Map<String, Object> params, @NotNull Pageable pageable, @NotNull Number total) {
         if (params != null && !params.isEmpty()) {
@@ -123,20 +139,19 @@ public class Common {
 //        if (total.intValue() < (int)pageable.getOffset()) {
 //            pageable = PageRequest.of(0, pageable.getPageSize(), pageable.getSort());
 //        }
-        query.setFirstResult((int)pageable.getOffset());
+        query.setFirstResult((int) pageable.getOffset());
         query.setMaxResults(pageable.getPageSize());
     }
 
     /**
-     * @author dungvm
-     *
-     * Thêm điều kiện ngày tháng nằm trong khoảng cho câu lệnh sql
-     *
-     * @param fromDate từ ngày - string yyyyMMdd
-     * @param toDate đến ngày - string yyyyMMdd
-     * @param params map các params
+     * @param fromDate   từ ngày - string yyyyMMdd
+     * @param toDate     đến ngày - string yyyyMMdd
+     * @param params     map các params
      * @param sqlBuilder câu sql
      * @param columnName tên cột ngày tháng cần truy vấn
+     * @author dungvm
+     * <p>
+     * Thêm điều kiện ngày tháng nằm trong khoảng cho câu lệnh sql
      */
     public static void addDateSearch(String fromDate, String toDate, Map<String, Object> params,
                                      StringBuilder sqlBuilder, String columnName) {
@@ -155,15 +170,14 @@ public class Common {
     }
 
     /**
-     * @author phuonghv
-     *
-     * Thêm điều kiện ngày tháng nằm trong khoảng cho câu lệnh sql
-     *
-     * @param fromDate từ ngày - string yyyyMMdd
-     * @param toDate đến ngày - string yyyyMMdd
-     * @param params map các params
+     * @param fromDate   từ ngày - string yyyyMMdd
+     * @param toDate     đến ngày - string yyyyMMdd
+     * @param params     map các params
      * @param sqlBuilder câu sql
      * @param columnName tên cột ngày tháng cần truy vấn
+     * @author phuonghv
+     * <p>
+     * Thêm điều kiện ngày tháng nằm trong khoảng cho câu lệnh sql
      */
     public static void addDateSearchCustom(String fromDate, String toDate, Map<String, Object> params,
                                            StringBuilder sqlBuilder, String columnName, String param) {
@@ -173,7 +187,7 @@ public class Common {
             params.put("from" + param, fromDate);
             params.put("to" + param, toDate);
         } else if (!Strings.isNullOrEmpty(fromDate)) {
-            sqlBuilder.append("AND :from" + param +" <= CONVERT(varchar, " + columnName + ", 112) ");
+            sqlBuilder.append("AND :from" + param + " <= CONVERT(varchar, " + columnName + ", 112) ");
             params.put("from" + param, fromDate);
         } else if (!Strings.isNullOrEmpty(toDate)) {
             sqlBuilder.append("AND :to" + param + " >= CONVERT(varchar, " + columnName + ", 112) ");
@@ -184,9 +198,11 @@ public class Common {
     public static BigDecimal getBigDecimal(Object object) {
         return object != null ? (BigDecimal) object : null;
     }
+
     public static LocalDate getLocalDate(Object object) {
         return object != null ? ((Timestamp) object).toLocalDateTime().toLocalDate() : null;
     }
+
     public static UUID getUUID(Object object) {
         return object != null ? UUID.fromString((String) object) : null;
     }
@@ -194,6 +210,7 @@ public class Common {
     public static Float getFloat(Object object) {
         return object != null ? ((BigDecimal) object).floatValue() : null;
     }
+
     public static Integer getInteger(Object object) {
         return object != null ? ((BigDecimal) object).intValue() : null;
     }
@@ -222,12 +239,11 @@ public class Common {
     }
 
     /**
-     * @author kienpv
-     *
-     * convert string to string format yyyy/mm/dd
-     *
      * @param dateStr
      * @return
+     * @author kienpv
+     * <p>
+     * convert string to string format yyyy/mm/dd
      */
     public static String converDate(String dateStr) {
         try {
@@ -282,19 +298,18 @@ public class Common {
         }
         String data = id.toString();
         String finalData = data.substring(6, 8) + data.substring(4, 6) + data.substring(2, 4) + data.substring(0, 2) + "-"
-            + data.substring(11, 13) + data.substring(9, 11)  + "-"
-            + data.substring(16, 18)+ data.substring(14, 16)
+            + data.substring(11, 13) + data.substring(9, 11) + "-"
+            + data.substring(16, 18) + data.substring(14, 16)
             + data.substring(18);
         return UUID.fromString(finalData);
     }
 
     /**
-     * @author anmt
      * @param input
      * @return
+     * @author anmt
      */
-    public static String getMd5(String input)
-    {
+    public static String getMd5(String input) {
         try {
             // Static getInstance method is called with hashing MD5
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -314,5 +329,64 @@ public class Common {
         catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * @param fromDate
+     * @param toDate
+     * @return
+     * @Author Hautv
+     */
+    public static String getPeriod(LocalDate fromDate, LocalDate toDate) {
+        if (fromDate.getDayOfMonth() == 1 && fromDate.getYear() == toDate.getYear()) {
+            // Năm
+            if (fromDate.getMonthValue() == 1 && toDate.getDayOfMonth() == 31 && toDate.getMonthValue() == 12)
+                return String.format("Năm %1$s", fromDate.getYear());
+            // Quý
+            // List<int> lstMonth = new int[] {1,4,7,10};
+            if (Arrays.asList(1, 4, 7, 10).contains(fromDate.getMonthValue())) {
+                List<String> chars = Arrays.asList("I", "II", "III", "IV");
+                LocalDate test = fromDate.plusMonths(3).plusDays(-1).atTime(0, 0, 0, 0).toLocalDate();
+                if (fromDate.plusMonths(3).plusDays(-1).atTime(0, 0, 0, 0).toLocalDate().equals(toDate.atTime(0, 0, 0, 0).toLocalDate()))
+                    return String.format("Quý %1$s năm %2$s", chars.get(((fromDate.getMonthValue() - 1) / 3)), fromDate.getYear());
+            }
+            // tháng
+            if (fromDate.plusMonths(1).plusDays(-1).atTime(0, 0, 0, 0).toLocalDate().equals(toDate.atTime(0, 0, 0, 0).toLocalDate()))
+                return String.format("Tháng %1$s năm %2$s", fromDate.getMonthValue(), fromDate.getYear());
+        }
+        return String.format("Từ ngày %1$s đến ngày %2$s", convertDate(fromDate), convertDate(toDate));
+    }
+
+    // Convert PostedDate, Date
+    public static String convertDate(LocalDate date) {
+        if (date == null) {
+            return null;
+        } else {
+            return date.format(DateTimeFormatter.ofPattern(DateUtil.C_DD_MM_YYYY));
+        }
+    }
+
+    // Convert PostedDate, Date
+    public static String convertDate_C_DD_MM_YYYY(LocalDateTime date) {
+        if (date == null) {
+            return null;
+        } else {
+            return date.format(DateTimeFormatter.ofPattern(DateUtil.C_DD_MM_YYYY));
+        }
+    }
+
+    // Convert PostedDate, Date
+    public static String convertDate_C_YYYYMMDD_HHMMSS(LocalDateTime date) {
+        if (date == null) {
+            return null;
+        } else {
+            return date.format(DateTimeFormatter.ofPattern(DateUtil.C_YYYYMMDD_HHMMSS));
+        }
+    }
+
+    public static String bigdecimalToString(BigDecimal bigDecimal) {
+        if (bigDecimal == null) return "";
+        DecimalFormat df = new DecimalFormat("###,###,###");
+        return df.format(bigDecimal);
     }
 }

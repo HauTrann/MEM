@@ -6,6 +6,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.time.LocalDate;
 
@@ -40,7 +41,7 @@ public class ReportBrokenEquipment implements Serializable {
     private Long userID;
 
     @Column(name = "time")
-    private LocalDate time;
+    private LocalDateTime time;
 
     @Column(name = "organizationunitid")
     private Long organizationUnitID;
@@ -122,16 +123,16 @@ public class ReportBrokenEquipment implements Serializable {
         this.userID = userID;
     }
 
-    public LocalDate getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 
-    public ReportBrokenEquipment time(LocalDate time) {
+    public ReportBrokenEquipment time(LocalDateTime time) {
         this.time = time;
         return this;
     }
 
-    public void setTime(LocalDate time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
 

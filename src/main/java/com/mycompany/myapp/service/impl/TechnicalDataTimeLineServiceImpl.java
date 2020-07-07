@@ -51,6 +51,11 @@ public class TechnicalDataTimeLineServiceImpl implements TechnicalDataTimeLineSe
         return technicalDataTimeLineRepository.findAll();
     }
 
+    @Override
+    public List<TechnicalDataTimeLine> getNow(String serial) {
+        return technicalDataTimeLineRepository.getNow(serial);
+    }
+
     /**
      * Get one technicalDataTimeLine by id.
      *

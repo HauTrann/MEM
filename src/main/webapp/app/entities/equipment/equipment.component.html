@@ -76,14 +76,14 @@
                             <button type="submit"
                                     *jhiHasAnyAuthority="'ROLE_USER'"
                                     [hidden]="!isDisplayUsing"
-                                    [routerLink]="['/equipment', equipment.id, 'view']"
+                                    (click)="openTSKT(equipment.serial)"
                                     class="btn btn-primary btn-sm">
                                 <span class="d-none d-md-inline"> <i class="mdi mdi-update"></i> Cập nhật thông số hiện tại</span>
                             </button>
                             <button type="submit"
                                     *jhiHasAnyAuthority="'ROLE_USER'"
                                     [hidden]="!isDisplayUsing"
-                                    [routerLink]="['/equipment', equipment.id, 'view']"
+                                    (click)="openBaoHong()"
                                     class="btn btn-danger btn-sm">
                                 <span class="d-none d-md-inline"><i class="mdi mdi-message "> </i> Báo hỏng</span>
                             </button>
@@ -136,6 +136,7 @@
                             <th scope="col"  jhiSortBy="groupOfEquipment"><span >Phân loại</span> <fa-icon icon="sort"></fa-icon></th>
                             <th scope="col"  jhiSortBy="equipmentTypeID"><span jhiTranslate="medicalEquipmentManagerApp.equipment.equipmentTypeID">Equipment Type ID</span> <fa-icon icon="sort"></fa-icon></th>
                             <th scope="col"  jhiSortBy="equipmentTypeID"><span >Trạng thái</span> <fa-icon icon="sort"></fa-icon></th>
+                            <th scope="col"  jhiSortBy="equipmentTypeID"><span ></span> <fa-icon icon="sort"></fa-icon></th>
                         </thead>
                         <tbody>
                         <tr
@@ -146,11 +147,19 @@
                             <td class="text-center">{{ equipment.groupOfEquipment }}</td>
                             <td class="text-center">{{ equipment.equipmentTypeName }}</td>
                             <td class="text-center">{{ equipment.tonKho === 0 ? 'Đã được bàn giao' : 'Sẵn sàng' }}</td>
+                            <td class="text-center">
+                                <button type="submit"
+                                        (click)="openTSKT(equipment.serial)"
+                                        class="btn btn-info btn-sm">
+                                    <fa-icon icon="eye"></fa-icon>
+                                    <span class="d-none d-md-inline" >Thông số kỹ thuật</span>
+                                </button>
+                            </td>
                         </tr>
                         </tbody>
                         <tfoot>
                         <tr>
-                            <td colspan="6"> Số dòng : {{equipmentDT?.length}}</td>
+                            <td colspan="7"> Số dòng : {{equipmentDT?.length}}</td>
                         </tr>
                         </tfoot>
                     </table>
@@ -160,3 +169,88 @@
     </ngb-tabset>
 
 </div>
+<ng-template #content>
+    <form name="deleteForm">
+        <div class="modal-header">
+            <h4 class="modal-title" >Thông số kỹ thuật của thiết bị {{rowSelected?.name}} ký hiệu</h4>
+        </div>
+        <div class="modal-body">
+            <div><label style="font-weight: bold"> Thông số kỹ thuật</label></div>
+            <div class="row">
+                <div class="table-responsive" >
+                    <table class="table table-striped" aria-describedby="page-heading">
+                        <thead>
+                        <tr>
+                            <th scope="col" style="width: 40px" ><span >STT</span> </th>
+                            <th scope="col" ><span > Tên thông số</span> </th>
+                            <th scope="col" ><span > Giá trị</span> </th>
+                            <th scope="col" ><span > Ngày cập nhật</span> </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr
+                            *ngFor="let detail of technicalDataTimeLines ; let i= index;">
+                            <td style="text-align: center">{{i+1}}</td>
+                            <td>
+                                <input type="text" class="input-cell" name="nameTN {{i}}" [ngModelOptions]="{standalone: true}"   [(ngModel)]="detail.name" />
+                            </td>
+                            <td>
+                                <input type="text" class="input-cell" name="ValueTN {{i}}" [ngModelOptions]="{standalone: true}"  [(ngModel)]="detail.value" />
+                            </td>
+                            <td>
+                                {{ detail.time | date:'dd/MM/yy HH:mm' }}
+                            </td>
+                        </tr>
+                        <tr *ngFor="let l of utilsService.newArr(10 - technicalDataTimeLines?.length)">
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <td colspan="4"> Số dòng : {{technicalDataTimeLines?.length}}</td>
+                        </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button (click)="update()" type="button" class="btn btn-success" data-dismiss="modal" >
+                <fa-icon icon="ban"></fa-icon>&nbsp;<span >Cập nhật</span>
+            </button>
+            <button (click)="closeContent()" type="button" class="btn btn-secondary" data-dismiss="modal" >
+                <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+            </button>
+        </div>
+    </form>
+</ng-template>
+
+<ng-template #contentBaoHong>
+    <form name="deleteForm">
+        <div class="modal-header">
+            <h4 class="modal-title">Báo Hỏng thiết bị {{rowSelected?.name}}</h4>
+        </div>
+        <div class="modal-body">
+            <fieldset class="border p-2">
+                <legend class="w-auto">Mô tả tình trạng</legend>
+                <div class="form-group">
+                    <label for="fromDate">Mô tả:</label>
+                    <textarea type="text" [(ngModel)]="description" autocomplete="false" class="form-control" id="fromDate" name="fromDate">
+                    </textarea>
+                </div>
+            </fieldset>
+        </div>
+        <div class="modal-footer">
+            <button (click)="baoHong()" class="btn btn-success">
+                <span>Đồng ý</span>
+            </button>
+            <button type="button" class="btn btn-dark" (click)="closeContentBH()" data-dismiss="modal">
+                <span jhiTranslate="entity.action.cancel">Cancel</span>
+            </button>
+        </div>
+    </form>
+</ng-template>

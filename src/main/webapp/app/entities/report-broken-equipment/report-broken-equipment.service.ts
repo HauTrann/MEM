@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 
-import { DATE_FORMAT } from 'app/shared/constants/input.constants';
+import { DATE_FORMAT, DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { IReportBrokenEquipment } from 'app/shared/model/report-broken-equipment.model';
@@ -51,7 +51,8 @@ export class ReportBrokenEquipmentService {
 
   protected convertDateFromClient(reportBrokenEquipment: IReportBrokenEquipment): IReportBrokenEquipment {
     const copy: IReportBrokenEquipment = Object.assign({}, reportBrokenEquipment, {
-      time: reportBrokenEquipment.time && reportBrokenEquipment.time.isValid() ? reportBrokenEquipment.time.format(DATE_FORMAT) : undefined
+      time:
+        reportBrokenEquipment.time && reportBrokenEquipment.time.isValid() ? reportBrokenEquipment.time.format(DATE_TIME_FORMAT) : undefined
     });
     return copy;
   }

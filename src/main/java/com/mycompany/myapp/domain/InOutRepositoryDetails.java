@@ -64,7 +64,7 @@ public class InOutRepositoryDetails implements Serializable {
     @Transient
     @JsonDeserialize
     @JsonSerialize
-    private List<TechnicalData> technicalDataModel;
+    private List<TechnicalDataTimeLine> technicalDataModel;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -185,11 +185,11 @@ public class InOutRepositoryDetails implements Serializable {
         this.expiryDate = expiryDate;
     }
 
-    public List<TechnicalData> getTechnicalDataModel() {
+    public List<TechnicalDataTimeLine> getTechnicalDataModel() {
         return technicalDataModel;
     }
 
-    public void setTechnicalDataModel(List<TechnicalData> technicalDataModel) {
+    public void setTechnicalDataModel(List<TechnicalDataTimeLine> technicalDataModel) {
         this.technicalDataModel = technicalDataModel;
     }
 

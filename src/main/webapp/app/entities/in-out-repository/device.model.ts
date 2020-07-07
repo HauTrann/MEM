@@ -9,4 +9,9 @@ export class DeviceModel {
   description?: string;
   isMedicalSupplies?: Boolean;
   qrcode?: string;
+  slt?: number;
+  repositoryID?: number;
+  repositoryName?: string;
+  repositoryCode?: string;
+  serial?: string;
 }

@@ -50,5 +50,6 @@ public interface EquipmentService {
 
     List<DeviceModelDTO> findAllbyCodeText(String text);
     List<DeviceModelDTO> findAllDevice();
+    List<DeviceModelDTO> findAllDeviceDTO();
     List<EquipmentDTO> getAllEquipmentDT(Long id);
 }

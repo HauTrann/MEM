@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import * as moment from 'moment';
 
-import { DATE_FORMAT } from 'app/shared/constants/input.constants';
+import { DATE_FORMAT, DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared/util/request-util';
 import { ITechnicalDataTimeLine } from 'app/shared/model/technical-data-time-line.model';
@@ -45,20 +45,32 @@ export class TechnicalDataTimeLineService {
       .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
   }
 
+  getNoww(serial?: string): Observable<EntityArrayResponseType> {
+    const req = { serial };
+    const options = createRequestOption(req);
+    return this.http
+      .get<ITechnicalDataTimeLine[]>(this.resourceUrl + '/get-now/' + req.serial, {
+        params: options,
+        observe: 'response'
+      })
+      .pipe(map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res)));
+  }
+
   delete(id: number): Observable<HttpResponse<{}>> {
     return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
   protected convertDateFromClient(technicalDataTimeLine: ITechnicalDataTimeLine): ITechnicalDataTimeLine {
     const copy: ITechnicalDataTimeLine = Object.assign({}, technicalDataTimeLine, {
-      time: technicalDataTimeLine.time && technicalDataTimeLine.time.isValid() ? technicalDataTimeLine.time.format(DATE_FORMAT) : undefined
+      time:
+        technicalDataTimeLine.time && technicalDataTimeLine.time.isValid() ? technicalDataTimeLine.time.format(DATE_TIME_FORMAT) : undefined
     });
     return copy;
   }
 
   protected convertDateFromServer(res: EntityResponseType): EntityResponseType {
     if (res.body) {
-      res.body.time = res.body.time ? moment(res.body.time) : undefined;
+      res.body.time = res.body.time ? moment(res.body.time, DATE_TIME_FORMAT) : undefined;
     }
     return res;
   }
@@ -66,7 +78,7 @@ export class TechnicalDataTimeLineService {
   protected convertDateArrayFromServer(res: EntityArrayResponseType): EntityArrayResponseType {
     if (res.body) {
       res.body.forEach((technicalDataTimeLine: ITechnicalDataTimeLine) => {
-        technicalDataTimeLine.time = technicalDataTimeLine.time ? moment(technicalDataTimeLine.time) : undefined;
+        technicalDataTimeLine.time = technicalDataTimeLine.time ? moment(technicalDataTimeLine.time, DATE_TIME_FORMAT) : undefined;
       });
     }
     return res;

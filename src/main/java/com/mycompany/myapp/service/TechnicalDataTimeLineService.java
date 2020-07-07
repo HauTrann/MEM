@@ -25,6 +25,8 @@ public interface TechnicalDataTimeLineService {
      */
     List<TechnicalDataTimeLine> findAll();
 
+    List<TechnicalDataTimeLine> getNow(String serial);
+
     /**
      * Get the "id" technicalDataTimeLine.
      *

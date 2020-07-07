@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { JhiEventManager } from 'ng-jhipster';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 import { IEquipment } from 'app/shared/model/equipment.model';
 
@@ -11,12 +11,21 @@ import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { EquipmentService } from './equipment.service';
 import { EquipmentDeleteDialogComponent } from './equipment-delete-dialog.component';
 import { UtilsService } from 'app/entities/utils/utils.service';
+import { ITechnicalDataTimeLine } from 'app/shared/model/technical-data-time-line.model';
+import { TechnicalDataTimeLineService } from 'app/entities/technical-data-time-line/technical-data-time-line.service';
+import { ReportBrokenEquipmentService } from 'app/entities/report-broken-equipment/report-broken-equipment.service';
+import { IReportBrokenEquipment } from 'app/shared/model/report-broken-equipment.model';
+import { ToastrService } from 'ngx-toastr';
+import * as moment from 'moment';
+import { DATE_FORMAT, DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
 
 @Component({
   selector: 'jhi-equipment',
   templateUrl: './equipment.component.html'
 })
 export class EquipmentComponent implements OnInit, OnDestroy {
+  @ViewChild('content') public modalComponent?: NgbModalRef;
+  @ViewChild('contentBaoHong') public modalComponentBaoHong?: NgbModalRef;
   equipment?: IEquipment[];
   equipmentDT?: IEquipment[];
   eventSubscriber?: Subscription;
@@ -28,17 +37,26 @@ export class EquipmentComponent implements OnInit, OnDestroy {
   ngbPaginationPage = 1;
   isDisplayUsing?: boolean;
   rowSelected?: IEquipment;
+  technicalDataTimeLines?: ITechnicalDataTimeLine[];
+  modalRef?: NgbModalRef;
+  modalRefBH?: NgbModalRef;
+  description?: string;
+  reportBrokenEquipment: IReportBrokenEquipment = {};
 
   constructor(
     protected equipmentService: EquipmentService,
     protected activatedRoute: ActivatedRoute,
     protected router: Router,
     protected eventManager: JhiEventManager,
+    protected reportBrokenEquipmentService: ReportBrokenEquipmentService,
     protected modalService: NgbModal,
-    public utilsService: UtilsService
+    public utilsService: UtilsService,
+    public technicalDataTimeLineService: TechnicalDataTimeLineService,
+    private toastr: ToastrService
   ) {
     this.equipmentDT = [];
     this.isDisplayUsing = window.location.href.includes('equipment/using');
+    this.technicalDataTimeLines = [];
   }
 
   loadPage(page?: number): void {
@@ -146,4 +164,56 @@ export class EquipmentComponent implements OnInit, OnDestroy {
       });
     }
   }
+
+  closeContent(): void {
+    if (this.modalRef) {
+      this.modalRef.close();
+    }
+  }
+
+  closeContentBH(): void {
+    if (this.modalRefBH) {
+      this.modalRefBH.close();
+    }
+  }
+
+  baoHong(): void {
+    this.reportBrokenEquipment = {};
+    this.reportBrokenEquipment.serial = this.rowSelected?.serial;
+    this.reportBrokenEquipment.description = this.description;
+    this.reportBrokenEquipment.prodID = this.rowSelected?.id;
+    this.reportBrokenEquipment.prodName = this.rowSelected?.name;
+    this.reportBrokenEquipment.time = moment(new Date());
+    this.reportBrokenEquipment.status = 0;
+    this.reportBrokenEquipmentService.create(this.reportBrokenEquipment).subscribe(res => {
+      if (res.body) {
+        if (this.modalRefBH) {
+          this.modalRefBH.close();
+        }
+        this.toastr.success('Báo hỏng thành công');
+      }
+    });
+  }
+
+  openBaoHong(): void {
+    if (this.modalRefBH) {
+      this.modalRefBH.close();
+    }
+    this.reportBrokenEquipment = {};
+    this.modalRefBH = this.modalService.open(this.modalComponentBaoHong, { backdrop: 'static' });
+  }
+
+  openTSKT(serial: string): void {
+    if (this.modalRef) {
+      this.modalRef.close();
+    }
+    this.technicalDataTimeLineService.getNoww(serial).subscribe(res => {
+      if (res.body) {
+        this.technicalDataTimeLines = res.body;
+        this.modalRef = this.modalService.open(this.modalComponent, { backdrop: 'static' });
+      }
+    });
+  }
+
+  update(): void {}
 }

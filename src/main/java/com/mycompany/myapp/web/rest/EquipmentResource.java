@@ -176,4 +176,15 @@ public class EquipmentResource {
         return new ResponseEntity<>(deviceModelDTOS, HttpStatus.OK);
     }
 
+    /**
+     * {@code GET  /equipment} : get all the equipment.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of equipment in body.
+     */
+    @GetMapping("/device/find-all")
+    public ResponseEntity<List<DeviceModelDTO>> findAllDeviceDTO() {
+        List<DeviceModelDTO> deviceModelDTOS = equipmentService.findAllDeviceDTO();
+        return new ResponseEntity<>(deviceModelDTOS, HttpStatus.OK);
+    }
+
 }

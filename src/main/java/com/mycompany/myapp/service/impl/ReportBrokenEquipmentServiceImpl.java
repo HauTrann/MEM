@@ -1,12 +1,13 @@
 package com.mycompany.myapp.service.impl;
 
+import com.mycompany.myapp.domain.ReportBrokenEquipment;
+import com.mycompany.myapp.domain.User;
+import com.mycompany.myapp.repository.ReportBrokenEquipmentRepository;
+import com.mycompany.myapp.repository.UserRepository;
 import com.mycompany.myapp.security.SecurityUtils;
 import com.mycompany.myapp.service.ReportBrokenEquipmentService;
-import com.mycompany.myapp.domain.ReportBrokenEquipment;
-import com.mycompany.myapp.repository.ReportBrokenEquipmentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -24,9 +25,11 @@ public class ReportBrokenEquipmentServiceImpl implements ReportBrokenEquipmentSe
     private final Logger log = LoggerFactory.getLogger(ReportBrokenEquipmentServiceImpl.class);
 
     private final ReportBrokenEquipmentRepository reportBrokenEquipmentRepository;
+    private final UserRepository userRepository;
 
-    public ReportBrokenEquipmentServiceImpl(ReportBrokenEquipmentRepository reportBrokenEquipmentRepository) {
+    public ReportBrokenEquipmentServiceImpl(ReportBrokenEquipmentRepository reportBrokenEquipmentRepository, UserRepository userRepository) {
         this.reportBrokenEquipmentRepository = reportBrokenEquipmentRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -41,6 +44,9 @@ public class ReportBrokenEquipmentServiceImpl implements ReportBrokenEquipmentSe
         if (reportBrokenEquipment.getOrganizationUnitID() == null) {
             reportBrokenEquipment.setOrganizationUnitID(SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg());
         }
+        Optional<String> username = SecurityUtils.getCurrentUserLogin();
+        Optional<User> user = userRepository.findOneByLogin(username.get());
+        reportBrokenEquipment.setUserID(user.get().getId());
         return reportBrokenEquipmentRepository.save(reportBrokenEquipment);
     }
 
@@ -54,7 +60,7 @@ public class ReportBrokenEquipmentServiceImpl implements ReportBrokenEquipmentSe
     @Transactional(readOnly = true)
     public Page<ReportBrokenEquipment> findAll(Pageable pageable) {
         log.debug("Request to get all ReportBrokenEquipments");
-        return reportBrokenEquipmentRepository.findAll(pageable);
+        return reportBrokenEquipmentRepository.findAllByOrganizationUnitID(pageable, SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg());
     }
 
     /**

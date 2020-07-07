@@ -113,4 +113,15 @@ public class TechnicalDataTimeLineResource {
         technicalDataTimeLineService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
+
+    /**
+     * {@code GET  /technical-data-time-lines} : get all the technicalDataTimeLines.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of technicalDataTimeLines in body.
+     */
+    @GetMapping("/technical-data-time-lines/get-now/{serial}")
+    public List<TechnicalDataTimeLine> getNow(@PathVariable String serial) {
+        log.debug("REST request to get all TechnicalDataTimeLines");
+        return technicalDataTimeLineService.getNow(serial);
+    }
 }

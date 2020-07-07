@@ -119,6 +119,11 @@ public class EquipmentServiceImpl implements EquipmentService {
     }
 
     @Override
+    public List<DeviceModelDTO> findAllDeviceDTO() {
+        return equipmentRepository.findAllDeviceDTO(SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg());
+    }
+
+    @Override
     public List<EquipmentDTO> getAllEquipmentDT(Long id) {
         return equipmentRepository.getAllEquipmentDT(id);
     }

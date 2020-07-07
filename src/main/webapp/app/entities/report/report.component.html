@@ -10,11 +10,21 @@
         </p>
         <div class="main-data">
             <ul class="big-wrap">
-                <li><a>
+                <li><a (click)="getReport('SO_THEO_DOI_DAU_TU')">
+                    <span> Sổ theo dõi đầu tư</span>
+                </a></li>
+                <li><a (click)="getReport('CHI_TIET_NHAP_KHO')">
                     <span> Báo cáo chi tiết nhập kho</span>
                 </a></li>
-                <li><a>
-                    <span> Báo cáo tồn kho</span>
+                <li><a (click)="getReport('CHI_TIET_XUAT_KHO')">
+                    <span> Báo cáo chi tiết xuất kho</span>
+                </a></li>
+                <li><a (click)="getReport('TONG_HOP_TON_KHO')">
+                    <span> Báo cáo tổng hợp tồn kho</span>
+                </a>
+                </li>
+                <li><a (click)="getReport('TONG_HOP_CHI_TIET_TON_KHO')">
+                    <span> Báo cáo tổng hợp chi tiết tồn kho</span>
                 </a>
                 </li>
                 <li><a>
@@ -27,48 +37,32 @@
             </ul>
         </div>
     </div>
-
-    <!-- <div class="data-link">
-         <p class="card-title">&lt;!&ndash;<img src="/content/images/icon/bao-cao/bc-tong-hop.png">&ndash;&gt;
-             <span class="text-uppercase" jhiTranslate="ebwebApp.baoCao.tongHop"></span>
-         </p>
-         <div class="main-data ">
-             <div class="row">
-                 <div class="col-6">
-                     <ul class="list-contents">
-                         <li><a>
-                             <span jhiTranslate="ebwebApp.baoCao.soChiTietCacTaiKhoan"></span>
-                         </a></li>
-                         <li><a>
-                             <span jhiTranslate="ebwebApp.baoCao.s03bDNN"></span>
-                         </a></li>
-                     </ul>
-                 </div>
-
-                 <div class="col-6">
-                     <ul class="list-contents">
-                         <li><a>
-                             <span jhiTranslate="ebwebApp.baoCao.soNhatKyThuTien"></span>
-                         </a></li>
-                         <li><a >
-                             <span jhiTranslate="ebwebApp.baoCao.soNhatKyChiTien"></span>
-                         </a></li>
-
-                     </ul>
-                     <ul class="list-contents">
-                         <li>
-                             <a >
-                                 <span jhiTranslate="ebwebApp.baoCao.bangPhanBoChiPhiTraTruoc"></span>
-                             </a></li>
-
-                     </ul>
-                 </div>
-
-             </div>
-         </div>
-     </div>
-     <div class="row">
-         <div class="col-md-6 dk-pdr-5">
-         </div>
-     </div>-->
 </div>
+<ng-template #content>
+    <form name="deleteForm">
+        <div class="modal-header">
+            <h4 class="modal-title">Báo cáo</h4>
+        </div>
+        <div class="modal-body">
+            <fieldset class="border p-2">
+                <legend class="w-auto">Nhập khoảng thời gian theo dõi</legend>
+                <div class="form-group">
+                    <label for="fromDate">Từ ngày:</label>
+                    <input type="date" [(ngModel)]="fromDate" autocomplete="false" class="form-control" id="fromDate" name="fromDate">
+                </div>
+                <div class="form-group">
+                    <label for="toDate">Từ ngày:</label>
+                    <input type="date" [(ngModel)]="toDate" autocomplete="false" class="form-control" id="toDate" name="toDate">
+                </div>
+            </fieldset>
+        </div>
+        <div class="modal-footer">
+            <button (click)="viewPDF()" class="btn btn-success">
+                <span>Đồng ý</span>
+            </button>
+            <button type="button" class="btn btn-dark" (click)="close()" data-dismiss="modal">
+                <span jhiTranslate="entity.action.cancel">Cancel</span>
+            </button>
+        </div>
+    </form>
+</ng-template>

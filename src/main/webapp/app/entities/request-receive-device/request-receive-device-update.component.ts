@@ -36,7 +36,7 @@ export class RequestReceiveDeviceUpdateComponent implements OnInit {
     protected equipmentService: EquipmentService,
     public utilsService: UtilsService
   ) {
-    this.equipmentService.findAllDevice().subscribe(res => {
+    this.equipmentService.findAll().subscribe(res => {
       this.deviceModels = res.body;
     });
     this.isFromManager = window.location.href.includes('/manager');
@@ -107,7 +107,9 @@ export class RequestReceiveDeviceUpdateComponent implements OnInit {
   }
 
   deviceChange(detail: InOutRepositoryDetails): void {
-    detail.prodName = this.deviceModels?.find(n => n.id === detail.prodID)?.name;
+    const prd = this.deviceModels?.find(n => n.id === detail.prodID);
+    detail.prodName = prd?.name;
+    detail.serial = prd?.serial;
   }
 
   sumDT(prop: string): number {

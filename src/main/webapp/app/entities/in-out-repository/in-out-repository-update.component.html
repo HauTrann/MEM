@@ -5,7 +5,7 @@
     </div>
 </div>
 <div class="row justify-content-center">
-    <div  class="col-10 justify-content-lg-end" style="padding: 0px;">
+    <div  class="col-10 justify-content-lg-end" style="padding: 5px; display: -webkit-inline-box">
         <div class="col-3" style="padding: 0px">
             <label> {{isNhapKho?'Loại nhập kho':'Loại xuất kho'}}</label>
             <ng-select [items]="isNhapKho?utilsService.typeNhapKho:utilsService.typeXuatKho"
@@ -19,6 +19,12 @@
                        [(ngModel)]="inOutRepository.type"
                        (change)="typeChange()"
             ></ng-select>
+        </div>
+        <div class="col-3" style="padding: 0px">
+            <label> Diễn giải</label>
+            <input type="text" class="form-control" name="reason" id="field_reason"
+                   [(ngModel)]="inOutRepository.reason"
+            />
         </div>
     </div>
     <div class="col-10" style="padding: 0px;">
@@ -60,10 +66,10 @@
                         <div class="form-group">
                             <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.inOutRepository.receiver"
                                    for="field_receiver">Deliver</label>
-                            <input *ngIf="inOutRepository.type !== 1 || isNhapKho" type="text" class="form-control" name="deliver" id="field_receiver"
+                            <input *ngIf="(inOutRepository.type !== 1 && inOutRepository.type !== 2) || isNhapKho" type="text" class="form-control" name="deliver" id="field_receiver"
                                    [(ngModel)]="inOutRepository.receiver"
                             />
-                            <ng-select *ngIf="inOutRepository.type === 1 && !isNhapKho" [items]="inOutRepository.type === 1? users: users"
+                            <ng-select *ngIf="(inOutRepository.type === 1 || inOutRepository.type === 2) && !isNhapKho" [items]="inOutRepository.type === 1? users: users"
                                        id="typeNV"
                                        name="typeNV"
                                        bindLabel="firstName"
@@ -77,12 +83,25 @@
                         </div>
                     </div>
                     <div class="col-6" style="padding-right: 0px">
-                        <div class="form-group">
+                        <div *ngIf="inOutRepository.type !== 2" class="form-group">
                             <label class="form-control-label" jhiTranslate="medicalEquipmentManagerApp.inOutRepository.phoneContactReceiver"
                                    for="field_phoneContactreceiver">Phone Contact</label>
                             <input type="text" class="form-control" name="field_phoneContactreceiver" id="field_phoneContactreceiver"
                                    [(ngModel)]="inOutRepository.phoneContactReceiver"
                             />
+                        </div>
+                        <div *ngIf="inOutRepository.type === 2 && !isNhapKho" class="form-group">
+                            <label>Phòng ban</label>
+                            <ng-select [items]="departments"
+                                       id="Deparment"
+                                       name="Deparment"
+                                       bindLabel="name"
+                                       bindValue="id"
+                                       placeholder="Chọn phòng ban"
+                                       style="border-left: none"
+                                       [(ngModel)]="inOutRepository.departmentID"
+                            >
+                            </ng-select>
                         </div>
                     </div>
                 </div>
@@ -155,7 +174,8 @@
                                        (change)="deviceChange(detail)"
                             >
                                 <ng-template  ng-option-tmp let-item="item" let-index="index" let-search="searchTerm">
-                                    <div [title]="item.name" [ngOptionHighlight]="search">{{item.code}}</div>
+                                    <div [title]="item.code" [ngOptionHighlight]="search">{{item.code}}</div>
+                                    <div [title]="item.serial" >serial - {{item.serial}}</div>
                                     <div [title]="item.name" [ngOptionHighlight]="search">{{item.name}}</div>
                                 </ng-template>
                             </ng-select>
@@ -197,16 +217,16 @@
                         <td>
                             <input currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',', precision : 0 }"  class="input-cell" name="amount {{i}}" [(ngModel)]="detail.amount" />
                         </td>
-                        <td>
-                            <input type="text" class="input-cell" name="lotNo {{i}}" [(ngModel)]="detail.lotNo" />
+                        <td [class.dab] = "!getIsVT(detail.prodID)|| !detail.prodID">
+                            <input [disabled]="!getIsVT(detail.prodID)|| !detail.prodID" type="text" class="input-cell" name="lotNo {{i}}" [(ngModel)]="detail.lotNo" />
                         </td>
-                        <td>
-                            <input type="date" class="input-cell" name="expiryDate {{i}}" [(ngModel)]="detail.expiryDate" />
+                        <td [class.dab] ="!getIsVT(detail.prodID)|| !detail.prodID">
+                            <input [disabled]="!getIsVT(detail.prodID)|| !detail.prodID" type="date" class="input-cell" name="expiryDate {{i}}" [(ngModel)]="detail.expiryDate" />
                         </td>
-                        <td>
-                            <a style="text-align: center" (click)="addThongSoKyThuat(detail)">
+                        <td  [class.dab] = "getIsVT(detail.prodID) || !detail.prodID">
+                            <button [disabled]="getIsVT(detail.prodID) || !detail.prodID" style="text-align: center" (click)="addThongSoKyThuat(detail)">
                                 <i class="mdi mdi-plus-box"></i>
-                            </a>
+                            </button><br>
                             <label *ngFor="let item of detail?.technicalDataModel;let j =index"> {{j + '-' + (item.name?item.name:'') + ': ' +( item.value?item.value:'')}}</label>
                         </td>
                     </tr>
@@ -298,6 +318,7 @@
                             <th scope="col" style="width: 40px" ><span >STT</span> </th>
                             <th scope="col" ><span > Tên thông số</span> </th>
                             <th scope="col" ><span > Giá trị</span> </th>
+                            <th scope="col" ><span > Ngày cập nhật</span> </th>
                         </tr>
                         </thead>
                         <tbody>
@@ -322,6 +343,9 @@
                             <td>
                                 <input type="text" class="input-cell" name="ValueTN {{i}}" [ngModelOptions]="{standalone: true}"  [(ngModel)]="detail.value" />
                             </td>
+                            <td>
+                                {{ detail.time | date:'dd/MM/yy HH:mm' }}
+                            </td>
                         </tr>
                         <tr (click)="addNewRowTechnical()">
                             <td colspan="2">
@@ -330,8 +354,12 @@
                             <td>
                                 <input disabled type="text" class="input-cell" name="no"/>
                             </td>
+                            <td>
+                                <input disabled type="text" class="input-cell" name="no1"/>
+                            </td>
                         </tr>
                         <tr *ngFor="let l of utilsService.newArr(10 - rowSelect?.technicalDataModel?.length)">
+                            <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
@@ -339,7 +367,7 @@
                         </tbody>
                         <tfoot>
                         <tr>
-                            <td colspan="3"> Số dòng : {{rowSelect?.technicalDataModel?.length}}</td>
+                            <td colspan="4"> Số dòng : {{rowSelect?.technicalDataModel?.length}}</td>
                         </tr>
                         </tfoot>
                     </table>

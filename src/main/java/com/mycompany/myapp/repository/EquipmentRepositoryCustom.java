@@ -19,6 +19,8 @@ public interface EquipmentRepositoryCustom {
 
     List<DeviceModelDTO> findAllDevice(Long org);
 
+    List<DeviceModelDTO> findAllDeviceDTO(Long org);
+
     Page<EquipmentDTO> findAllByOrganizationUnitIDCustom(Pageable pageable, Long id);
 
     Page<EquipmentDTO> getAllEquipmentUsing(Pageable pageable, Long org, Long userID);

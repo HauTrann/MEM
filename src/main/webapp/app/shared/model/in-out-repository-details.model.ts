@@ -1,5 +1,6 @@
 import { Moment } from 'moment';
 import { TechnicalDataModel } from 'app/entities/equipment/technical-data.model';
+import { ITechnicalDataTimeLine } from 'app/shared/model/technical-data-time-line.model';
 
 export interface IInOutRepositoryDetails {
   id?: number;
@@ -14,7 +15,7 @@ export interface IInOutRepositoryDetails {
   serial?: string;
   expiryDate?: Moment;
   devi?: Moment;
-  technicalDataModel?: TechnicalDataModel[];
+  technicalDataModel?: ITechnicalDataTimeLine[];
 }
 
 export class InOutRepositoryDetails implements IInOutRepositoryDetails {
@@ -30,6 +31,6 @@ export class InOutRepositoryDetails implements IInOutRepositoryDetails {
     public lotNo?: string,
     public serial?: string,
     public expiryDate?: Moment,
-    public technicalDataModel?: TechnicalDataModel[]
+    public technicalDataModel?: ITechnicalDataTimeLine[]
   ) {}
 }

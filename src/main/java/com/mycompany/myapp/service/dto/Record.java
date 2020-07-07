@@ -3,6 +3,7 @@ package com.mycompany.myapp.service.dto;
 public class Record {
     private Long id;
     private int status;
+    private String mess;
 
     public Long getId() {
         return id;
@@ -18,5 +19,13 @@ public class Record {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getMess() {
+        return mess;
+    }
+
+    public void setMess(String mess) {
+        this.mess = mess;
     }
 }

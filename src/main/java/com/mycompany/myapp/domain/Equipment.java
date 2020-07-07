@@ -4,12 +4,14 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.mycompany.myapp.service.dto.DeviceModelDTO;
 import com.mycompany.myapp.service.dto.EquipmentDTO;
+import com.mycompany.myapp.service.dto.SoTheoDoiDauTu;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,6 +37,26 @@ import java.util.Set;
                     @ColumnResult(name = "status", type = Integer.class),
                     @ColumnResult(name = "description", type = String.class),
                     @ColumnResult(name = "isMedicalSupplies", type = Boolean.class),
+                }
+            )
+        }
+    ),
+    @SqlResultSetMapping(
+        name = "DeviceModelDTO1",
+        classes = {
+            @ConstructorResult(
+                targetClass = DeviceModelDTO.class,
+                columns = {
+                    @ColumnResult(name = "id", type = Long.class),
+                    @ColumnResult(name = "organizationUnitID", type = Long.class),
+                    @ColumnResult(name = "code", type = String.class),
+                    @ColumnResult(name = "name", type = String.class),
+                    @ColumnResult(name = "equipmentTypeID", type = Long.class),
+                    @ColumnResult(name = "medicalSuppliesTypeID", type = Long.class),
+                    @ColumnResult(name = "status", type = Integer.class),
+                    @ColumnResult(name = "description", type = String.class),
+                    @ColumnResult(name = "isMedicalSupplies", type = Boolean.class),
+                    @ColumnResult(name = "serial", type = String.class),
                 }
             )
         }
@@ -73,6 +95,57 @@ import java.util.Set;
                     @ColumnResult(name = "repositoryCode", type = String.class),
                     @ColumnResult(name = "repositoryName", type = String.class),
                     @ColumnResult(name = "tonKho", type = BigDecimal.class),
+                }
+            )
+        }
+    ),
+    @SqlResultSetMapping(
+        name = "SoTheoDoiDauTu",
+        classes = {
+            @ConstructorResult(
+                targetClass = SoTheoDoiDauTu.class,
+                columns = {
+                    @ColumnResult(name = "date", type = LocalDateTime.class),
+                    @ColumnResult(name = "postedDate", type = LocalDateTime.class),
+                    @ColumnResult(name = "no", type = String.class),
+                    @ColumnResult(name = "reason", type = String.class),
+                    @ColumnResult(name = "deliver", type = String.class),
+                    @ColumnResult(name = "phoneContact", type = String.class),
+                    @ColumnResult(name = "amount", type = BigDecimal.class),
+                    @ColumnResult(name = "unitPrice", type = BigDecimal.class),
+                    @ColumnResult(name = "quantity", type = BigDecimal.class),
+                    @ColumnResult(name = "prodName", type = String.class),
+                }
+            )
+        }
+    ),
+    @SqlResultSetMapping(
+        name = "TongHopTonKho",
+        classes = {
+            @ConstructorResult(
+                targetClass = SoTheoDoiDauTu.class,
+                columns = {
+                    @ColumnResult(name = "prodName", type = String.class),
+                    @ColumnResult(name = "repositoryName", type = String.class),
+                    @ColumnResult(name = "nhapKho", type = BigDecimal.class),
+                    @ColumnResult(name = "xuatKho", type = BigDecimal.class),
+                    @ColumnResult(name = "tonKho", type = BigDecimal.class),
+                }
+            )
+        }
+    ),
+    @SqlResultSetMapping(
+        name = "TongHopTonKhoCT",
+        classes = {
+            @ConstructorResult(
+                targetClass = SoTheoDoiDauTu.class,
+                columns = {
+                    @ColumnResult(name = "prodName", type = String.class),
+                    @ColumnResult(name = "repositoryName", type = String.class),
+                    @ColumnResult(name = "nhapKho", type = BigDecimal.class),
+                    @ColumnResult(name = "xuatKho", type = BigDecimal.class),
+                    @ColumnResult(name = "tonKho", type = BigDecimal.class),
+                    @ColumnResult(name = "serial", type = String.class),
                 }
             )
         }

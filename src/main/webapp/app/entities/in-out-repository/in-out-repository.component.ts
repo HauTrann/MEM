@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -11,9 +11,8 @@ import { ITEMS_PER_PAGE } from 'app/shared/constants/pagination.constants';
 import { InOutRepositoryService } from './in-out-repository.service';
 import { InOutRepositoryDeleteDialogComponent } from './in-out-repository-delete-dialog.component';
 import { RepositoryLedgerService } from 'app/entities/repository-ledger/repository-ledger.service';
-import { ParsedProperty } from '@angular/compiler';
 import { UtilsService } from 'app/entities/utils/utils.service';
-import { AccountService } from 'app/core/auth/account.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'jhi-in-out-repository',
@@ -38,7 +37,8 @@ export class InOutRepositoryComponent implements OnInit, OnDestroy {
     protected eventManager: JhiEventManager,
     protected modalService: NgbModal,
     protected utilsService: UtilsService,
-    protected repositoryLedgerService: RepositoryLedgerService
+    protected repositoryLedgerService: RepositoryLedgerService,
+    private toastr: ToastrService
   ) {
     this.isNhapKho = window.location.href.includes('in-out-repository/in');
     if (this.isNhapKho) {
@@ -146,6 +146,9 @@ export class InOutRepositoryComponent implements OnInit, OnDestroy {
     this.repositoryLedgerService.record(inOutRepository.id).subscribe((res: HttpResponse<any>) => {
       if (res.body.status === 1) {
         inOutRepository.recorded = true;
+      } else {
+        this.toastr.error(res.body.mess);
+        return;
       }
     });
   }

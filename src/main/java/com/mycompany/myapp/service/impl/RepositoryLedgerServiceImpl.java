@@ -7,8 +7,10 @@ import com.mycompany.myapp.repository.InOutRepositoryRepository;
 import com.mycompany.myapp.repository.RepositoryLedgerRepository;
 import com.mycompany.myapp.security.SecurityUtils;
 import com.mycompany.myapp.service.RepositoryLedgerService;
+import com.mycompany.myapp.service.dto.CheckTonKhoDTO;
 import com.mycompany.myapp.service.dto.Record;
 import com.mycompany.myapp.service.util.Constants;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -121,6 +123,13 @@ public class RepositoryLedgerServiceImpl implements RepositoryLedgerService {
                 repositoryLedger.setInquantity(item.getQuantity());
             }
             repositoryLedgers.add(repositoryLedger);
+            if (Boolean.TRUE.equals(inOutRepository.getOutOfStock())) {
+                if (checkTonKho(SecurityUtils.getCurrentUserLoginAndOrg().get().getOrg(), item.getSerial(), item.getQuantity(), item.getRepositoryID(), item.getProdID()).intValue() == 0) {
+                    record1.setStatus(Constants.ResponeStatus.Fail);
+                    record1.setMess("Thiết bị " + item.getProdName() + " vượt quá số lượng tồn");
+                    return record1;
+                }
+            }
         }
         inOutRepository.setRecorded(true);
         inOutRepositoryRepository.save(inOutRepository);
@@ -154,5 +163,26 @@ public class RepositoryLedgerServiceImpl implements RepositoryLedgerService {
 
         return null;
     }
+
+    @Override
+    public CheckTonKhoDTO checkTonKho(String serial, BigDecimal quantity, Long id) {
+
+        return null;
+    }
+
+    @Override
+    public Number checkTonKho(Long org, String serial, BigDecimal quantity, Long id, Long prodID) {
+        if (serial == null || StringUtils.isEmpty(serial)) {
+            Number stt = repositoryLedgerRepository.checkTonKhoVT(org, prodID, id);
+            if (new BigDecimal(stt.toString()).compareTo(quantity) >= 0) {
+                return 1;
+            } else {
+                return 0;
+            }
+        } else {
+            return repositoryLedgerRepository.checkTonKho(org, serial, id);
+        }
+    }
+
 
 }
