@@ -31,7 +31,7 @@
     "angular2-qrcode": "^2.0.3",
     "angular2-qrscanner": "^1.0.7",
     "bootstrap": "4.4.1",
-    "moment": "2.24.0",
+    "moment": "2.29.2",
     "ng-jhipster": "0.12.0",
     "ng2-currency-mask": "^9.0.2",
     "ngx-cookie": "4.0.2",
